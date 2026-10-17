@@ -10,7 +10,7 @@ export_allowed: true
 last_reviewed: 2026-08-30
 verified_state: verified
 ---
-<!-- artifact-hardened: Verified @ 2fa8f02 on 2026-08-30 via three-pass-v1 -->
+<!-- artifact-hardened: Verified @ fe55da5 on 2026-08-30 via three-pass-v1 -->
 
 # Threat model — what the git moat defends against, and what it does not
 

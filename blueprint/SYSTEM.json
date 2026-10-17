@@ -7505,15 +7505,15 @@
       },
       "tools.docgen.hooks": {
         "state": "verified",
-        "why": "reached rung 5 (`detail`); stamp at 2fa8f02 still covers the body"
+        "why": "reached rung 5 (`detail`); stamp at fe55da5 still covers the body"
       },
       "tools.docgen.hooks.materialise": {
         "state": "verified",
-        "why": "reached rung 5 (`detail`); stamp at 2fa8f02 still covers the body"
+        "why": "reached rung 5 (`detail`); stamp at fe55da5 still covers the body"
       },
       "tools.docgen.hooks.staged_content_scanner": {
         "state": "verified",
-        "why": "reached rung 5 (`detail`); stamp at 2fa8f02 still covers the body"
+        "why": "reached rung 5 (`detail`); stamp at fe55da5 still covers the body"
       },
       "tools.docgen.i18n": {
         "state": "documented",
