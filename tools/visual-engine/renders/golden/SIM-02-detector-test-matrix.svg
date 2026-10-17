@@ -1,0 +1,283 @@
+<svg data-engine="echarts" role="img" aria-label="Detector × test class" data-fig="ve-SIM-02-detector-test-matrix" data-fig-kind="heatmap" data-fig-focus="item" data-fig-legend="none" class="ve-fig" width="800" height="480" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" baseProfile="full" viewBox="0 0 800 480"><style data-ve="ve-SIM-02-detector-test-matrix"><![CDATA[/* ve-fig v1 · scoped to ve-SIM-02-detector-test-matrix · never recolours, never fills an open path, never steals the pointer */
+svg[data-fig="ve-SIM-02-detector-test-matrix"] text,svg[data-fig="ve-SIM-02-detector-test-matrix"] tspan{pointer-events:none;stroke:none}
+svg[data-fig="ve-SIM-02-detector-test-matrix"] [data-s],svg[data-fig="ve-SIM-02-detector-test-matrix"] [data-t="legend"][fill="none"]{cursor:pointer}
+svg[data-fig="ve-SIM-02-detector-test-matrix"] [data-s]{transition:opacity .14s ease,filter .14s ease,stroke-width .14s ease}
+@media (prefers-reduced-motion:reduce){svg[data-fig="ve-SIM-02-detector-test-matrix"] [data-s]{transition:none}}
+svg[data-fig="ve-SIM-02-detector-test-matrix"] [data-s]:not([data-k="series"]):not([data-k="edge"]):not([fill="none"]):not([data-sk="own"]):hover,svg[data-fig="ve-SIM-02-detector-test-matrix"] [data-s]:not([data-k="series"]):not([data-k="edge"]):not([fill="none"]):not([data-sk="own"]):focus-visible{stroke:#EAEEF5;stroke-width:1.6px;vector-effect:non-scaling-stroke;stroke-opacity:.95;filter:brightness(1.16) saturate(1.1);outline:none}
+svg[data-fig="ve-SIM-02-detector-test-matrix"] [data-s]:not([data-k="series"]):not([data-k="edge"]):not([fill="none"])[data-sk="own"]:hover,svg[data-fig="ve-SIM-02-detector-test-matrix"] [data-s]:not([data-k="series"]):not([data-k="edge"]):not([fill="none"])[data-sk="own"]:focus-visible{stroke-width:2.6px;vector-effect:non-scaling-stroke;stroke-opacity:1;filter:brightness(1.12) saturate(1.15);outline:none}
+svg[data-fig="ve-SIM-02-detector-test-matrix"] [data-s][fill="none"]:hover,svg[data-fig="ve-SIM-02-detector-test-matrix"] [data-s][fill="none"]:focus-visible{fill:none;stroke-width:3.4px;vector-effect:non-scaling-stroke;stroke-opacity:1;filter:none;outline:none}
+svg[data-fig="ve-SIM-02-detector-test-matrix"] [data-s][fill="none"]{pointer-events:visibleStroke}
+svg[data-fig="ve-SIM-02-detector-test-matrix"] [data-t="legend"][fill="none"]:hover{fill:rgba(234,238,245,0.18);fill-opacity:.55}
+svg[data-fig="ve-SIM-02-detector-test-matrix"]:not([data-ve-js]):has([data-s]:not([data-k="series"]):not([data-k="edge"]):hover) [data-s]:not([data-k="series"]):not([data-k="edge"]):not(:hover){opacity:0.7}
+svg[data-fig="ve-SIM-02-detector-test-matrix"][data-ve-js][data-ve-on] [data-s]:not(.ve-on):not([data-t="legend"]){opacity:.2}
+svg[data-fig="ve-SIM-02-detector-test-matrix"][data-ve-js] [data-s].ve-on[data-k="edge"]{stroke-opacity:1;stroke-width:3px;vector-effect:non-scaling-stroke}
+svg[data-fig="ve-SIM-02-detector-test-matrix"][data-ve-js] [data-s].ve-on[data-k="edge"]:not([fill="none"]){fill-opacity:1}
+svg[data-fig="ve-SIM-02-detector-test-matrix"] .ve-pin:not([fill="none"]):not([data-sk="own"]){stroke:#EAEEF5;stroke-width:2.2px;vector-effect:non-scaling-stroke;stroke-opacity:1}
+svg[data-fig="ve-SIM-02-detector-test-matrix"] .ve-pin[data-sk="own"]{stroke-width:3.2px;vector-effect:non-scaling-stroke;stroke-opacity:1;filter:brightness(1.12) saturate(1.15)}
+svg[data-fig="ve-SIM-02-detector-test-matrix"] .ve-pin[fill="none"]{stroke-width:3.8px;vector-effect:non-scaling-stroke;stroke-opacity:1}]]></style>
+<rect width="800" height="480" x="0" y="0" fill="none"></rect>
+<path d="M145.5 172.3l558.5 0l0 124.3l-558.5 0Z" fill="rgb(234,237,245)" fill-opacity="0.5"></path>
+<path d="M145.5 296.7l558.5 0l0 124.3l-558.5 0Z" fill="rgb(255,255,255)" fill-opacity="0"></path>
+<path d="M145.5 421l558.5 0l0 -124.3l-558.5 0Z" fill="rgb(234,237,245)" fill-opacity="0.5"></path>
+<path d="M145.5 48l186.2 0l0 373l-186.2 0Z" fill="rgb(234,237,245)" fill-opacity="0.5"></path>
+<path d="M331.7 48l186.2 0l0 373l-186.2 0Z" fill="rgb(255,255,255)" fill-opacity="0"></path>
+<path d="M517.8 48l186.2 0l0 373l-186.2 0Z" fill="rgb(234,237,245)" fill-opacity="0.5"></path>
+<path d="M145.5 48L145.5 421" fill="none" pointer-events="visible" stroke="rgb(234,238,245)" stroke-opacity="0.18" stroke-linecap="round"></path>
+<path d="M145.5 421.5L704 421.5" fill="none" pointer-events="visible" stroke="rgb(234,238,245)" stroke-opacity="0.18" stroke-linecap="round"></path>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:Inter, system-ui, sans-serif;" transform="translate(137.51 110.1667)" fill="#8A96AE">reentrancy-basic</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:Inter, system-ui, sans-serif;" transform="translate(137.51 234.5)" fill="#8A96AE">oracle-twap</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:Inter, system-ui, sans-serif;" transform="translate(137.51 358.8333)" fill="#8A96AE">access-owner</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:Inter, system-ui, sans-serif;" y="5.5" transform="translate(238.5917 429)" fill="#8A96AE">unit</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:Inter, system-ui, sans-serif;" y="5.5" transform="translate(424.755 429)" fill="#8A96AE">integration</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:Inter, system-ui, sans-serif;" y="5.5" transform="translate(610.9183 429)" fill="#8A96AE">adversarial</text>
+<path d="M145.3 47.8l186.7 0l0 124.8l-186.7 0Z" fill="rgb(237,184,74)" stroke="#060608" data-s="0" data-i="0" data-t="chart" data-id="s0.0"><title>reentrancy-basic
+unit
+value: 1</title></path>
+<path d="M331.4 47.8l186.7 0l0 124.8l-186.7 0Z" fill="rgb(237,184,74)" stroke="#060608" data-s="0" data-i="1" data-t="chart" data-id="s0.1"><title>reentrancy-basic
+integration
+value: 1</title></path>
+<path d="M145.3 172.1l186.7 0l0 124.8l-186.7 0Z" fill="rgb(237,184,74)" stroke="#060608" data-s="0" data-i="3" data-t="chart" data-id="s0.3"><title>oracle-twap
+unit
+value: 1</title></path>
+<path d="M517.6 172.1l186.7 0l0 124.8l-186.7 0Z" fill="rgb(15,32,64)" stroke="#060608" data-s="0" data-i="5" data-t="chart" data-id="s0.5"><title>oracle-twap
+adversarial
+value: -1</title></path>
+<path d="M145.3 296.4l186.7 0l0 124.8l-186.7 0Z" fill="rgb(237,184,74)" stroke="#060608" data-s="0" data-i="6" data-t="chart" data-id="s0.6"><title>access-owner
+unit
+value: 1</title></path>
+<path d="M331.4 296.4l186.7 0l0 124.8l-186.7 0Z" fill="rgb(237,184,74)" stroke="#060608" data-s="0" data-i="7" data-t="chart" data-id="s0.7"><title>access-owner
+integration
+value: 1</title></path>
+<path d="M517.6 296.4l186.7 0l0 124.8l-186.7 0Z" fill="rgb(237,184,74)" stroke="#060608" data-s="0" data-i="8" data-t="chart" data-id="s0.8"><title>access-owner
+adversarial
+value: 1</title></path>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:10px;font-family:Inter, system-ui, sans-serif;" transform="translate(238.5917 110.1667)" fill="#0B0E14">1</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:10px;font-family:Inter, system-ui, sans-serif;" transform="translate(424.755 110.1667)" fill="#0B0E14">1</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:10px;font-family:Inter, system-ui, sans-serif;" transform="translate(238.5917 234.5)" fill="#0B0E14">1</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:10px;font-family:Inter, system-ui, sans-serif;" transform="translate(610.9183 234.5)" fill="#FFFFFF">-1</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:10px;font-family:Inter, system-ui, sans-serif;" transform="translate(238.5917 358.8333)" fill="#0B0E14">1</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:10px;font-family:Inter, system-ui, sans-serif;" transform="translate(424.755 358.8333)" fill="#0B0E14">1</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:10px;font-family:Inter, system-ui, sans-serif;" transform="translate(610.9183 358.8333)" fill="#0B0E14">1</text>
+<path d="M-27 -155l42 0l0 190l-42 0Z" transform="translate(777 300)" fill="rgb(0,0,0)" fill-opacity="0" stroke="#cfd2d7" stroke-width="0"></path>
+<g clip-path="url(#ve-SIM-02-detector-test-matrix-c0)">
+<polygon points="0 0 12 0 12 120 0 120" transform="matrix(-1,0,0,-1,777,300)" fill="url(#ve-SIM-02-detector-test-matrix-g0)"></polygon>
+<polygon points="0 0 12 0 12 120 0 120" transform="matrix(-1,0,0,-1,777,300)" fill="url(#ve-SIM-02-detector-test-matrix-g1)"></polygon>
+</g>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:10px;font-family:Inter, system-ui, sans-serif;" x="-6" y="15" transform="translate(777 300)" fill="#8A96AE">-1</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:10px;font-family:Inter, system-ui, sans-serif;" x="-6" y="-135" transform="translate(777 300)" fill="#8A96AE">1</text>
+<path d="M-5 -5l162.5 0l0 26l-162.5 0Z" transform="translate(13 11)" fill="rgb(0,0,0)" fill-opacity="0" stroke="#3c3c41" stroke-width="0"></path>
+<text dominant-baseline="central" text-anchor="start" style="font-size:16px;font-family:Space Grotesk, system-ui, sans-serif;font-weight:600;" xml:space="preserve" y="8" transform="translate(13 11)" fill="#EAEEF5">Detector × test class</text>
+<defs >
+<clipPath id="ve-SIM-02-detector-test-matrix-c0">
+<path d="M3 0L9 0A3 3 0 0 1 12 3L12 117A3 3 0 0 1 9 120L3 120A3 3 0 0 1 0 117L0 3A3 3 0 0 1 3 0Z" transform="matrix(-1,0,0,-1,777,300)" fill="#000"></path>
+</clipPath>
+<linearGradient gradientUnits="objectBoundingBox" x1="0" y1="0" x2="0" y2="1" id="ve-SIM-02-detector-test-matrix-g0">
+<stop offset="0%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="1%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="2%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="3%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="4%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="5%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="6%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="7.000000000000001%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="8%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="9%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="10%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="11%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="12%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="13%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="14.000000000000002%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="15%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="16%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="17%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="18%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="19%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="20%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="21%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="22%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="23%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="24%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="25%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="26%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="27%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="28.000000000000004%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="28.999999999999996%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="30%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="31%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="32%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="33%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="34%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="35%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="36%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="37%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="38%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="39%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="40%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="41%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="42%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="43%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="44%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="45%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="46%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="47%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="48%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="49%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="50%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="51%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="52%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="53%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="54%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="55.00000000000001%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="56.00000000000001%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="56.99999999999999%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="57.99999999999999%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="59%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="60%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="61%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="62%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="63%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="64%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="65%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="66%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="67%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="68%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="69%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="70%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="71%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="72%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="73%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="74%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="75%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="76%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="77%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="78%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="79%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="80%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="81%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="82%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="83%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="84%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="85%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="86%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="87%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="88%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="89%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="90%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="91%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="92%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="93%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="94%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="95%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="96%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="97%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="98%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="99%" stop-color="rgb(207,210,215)"></stop>
+<stop offset="100%" stop-color="rgb(207,210,215)"></stop>
+</linearGradient>
+<linearGradient gradientUnits="objectBoundingBox" x1="0" y1="0" x2="0" y2="1" id="ve-SIM-02-detector-test-matrix-g1">
+<stop offset="0%" stop-color="rgb(15,32,64)"></stop>
+<stop offset="1%" stop-color="rgb(16,34,67)"></stop>
+<stop offset="2%" stop-color="rgb(17,36,69)"></stop>
+<stop offset="3%" stop-color="rgb(19,38,72)"></stop>
+<stop offset="4%" stop-color="rgb(20,40,74)"></stop>
+<stop offset="5%" stop-color="rgb(21,42,77)"></stop>
+<stop offset="6%" stop-color="rgb(22,43,79)"></stop>
+<stop offset="7.000000000000001%" stop-color="rgb(23,45,82)"></stop>
+<stop offset="8%" stop-color="rgb(24,47,85)"></stop>
+<stop offset="9%" stop-color="rgb(26,49,87)"></stop>
+<stop offset="10%" stop-color="rgb(27,51,90)"></stop>
+<stop offset="11%" stop-color="rgb(28,53,92)"></stop>
+<stop offset="12%" stop-color="rgb(29,55,95)"></stop>
+<stop offset="13%" stop-color="rgb(30,57,98)"></stop>
+<stop offset="14.000000000000002%" stop-color="rgb(32,59,100)"></stop>
+<stop offset="15%" stop-color="rgb(33,61,103)"></stop>
+<stop offset="16%" stop-color="rgb(34,62,105)"></stop>
+<stop offset="17%" stop-color="rgb(35,64,108)"></stop>
+<stop offset="18%" stop-color="rgb(36,66,110)"></stop>
+<stop offset="19%" stop-color="rgb(37,68,113)"></stop>
+<stop offset="20%" stop-color="rgb(39,70,116)"></stop>
+<stop offset="21%" stop-color="rgb(40,72,118)"></stop>
+<stop offset="22%" stop-color="rgb(41,74,121)"></stop>
+<stop offset="23%" stop-color="rgb(42,76,123)"></stop>
+<stop offset="24%" stop-color="rgb(43,78,126)"></stop>
+<stop offset="25%" stop-color="rgb(45,80,129)"></stop>
+<stop offset="26%" stop-color="rgb(46,81,131)"></stop>
+<stop offset="27%" stop-color="rgb(47,83,134)"></stop>
+<stop offset="28.000000000000004%" stop-color="rgb(48,85,136)"></stop>
+<stop offset="28.999999999999996%" stop-color="rgb(49,87,139)"></stop>
+<stop offset="30%" stop-color="rgb(50,89,141)"></stop>
+<stop offset="31%" stop-color="rgb(52,91,144)"></stop>
+<stop offset="32%" stop-color="rgb(53,93,147)"></stop>
+<stop offset="33%" stop-color="rgb(54,95,149)"></stop>
+<stop offset="34%" stop-color="rgb(55,97,152)"></stop>
+<stop offset="35%" stop-color="rgb(56,99,154)"></stop>
+<stop offset="36%" stop-color="rgb(57,100,157)"></stop>
+<stop offset="37%" stop-color="rgb(59,102,159)"></stop>
+<stop offset="38%" stop-color="rgb(60,104,162)"></stop>
+<stop offset="39%" stop-color="rgb(61,106,165)"></stop>
+<stop offset="40%" stop-color="rgb(62,108,167)"></stop>
+<stop offset="41%" stop-color="rgb(63,110,170)"></stop>
+<stop offset="42%" stop-color="rgb(65,112,172)"></stop>
+<stop offset="43%" stop-color="rgb(66,114,175)"></stop>
+<stop offset="44%" stop-color="rgb(67,116,178)"></stop>
+<stop offset="45%" stop-color="rgb(68,118,180)"></stop>
+<stop offset="46%" stop-color="rgb(69,119,183)"></stop>
+<stop offset="47%" stop-color="rgb(70,121,185)"></stop>
+<stop offset="48%" stop-color="rgb(72,123,188)"></stop>
+<stop offset="49%" stop-color="rgb(73,125,190)"></stop>
+<stop offset="50%" stop-color="rgb(74,127,193)"></stop>
+<stop offset="51%" stop-color="rgb(77,128,191)"></stop>
+<stop offset="52%" stop-color="rgb(81,129,188)"></stop>
+<stop offset="53%" stop-color="rgb(84,130,186)"></stop>
+<stop offset="54%" stop-color="rgb(87,132,183)"></stop>
+<stop offset="55.00000000000001%" stop-color="rgb(90,133,181)"></stop>
+<stop offset="56.00000000000001%" stop-color="rgb(94,134,179)"></stop>
+<stop offset="56.99999999999999%" stop-color="rgb(97,135,176)"></stop>
+<stop offset="57.99999999999999%" stop-color="rgb(100,136,174)"></stop>
+<stop offset="59%" stop-color="rgb(103,137,172)"></stop>
+<stop offset="60%" stop-color="rgb(107,138,169)"></stop>
+<stop offset="61%" stop-color="rgb(110,140,167)"></stop>
+<stop offset="62%" stop-color="rgb(113,141,164)"></stop>
+<stop offset="63%" stop-color="rgb(116,142,162)"></stop>
+<stop offset="64%" stop-color="rgb(120,143,160)"></stop>
+<stop offset="65%" stop-color="rgb(123,144,157)"></stop>
+<stop offset="66%" stop-color="rgb(126,145,155)"></stop>
+<stop offset="67%" stop-color="rgb(129,146,153)"></stop>
+<stop offset="68%" stop-color="rgb(133,148,150)"></stop>
+<stop offset="69%" stop-color="rgb(136,149,148)"></stop>
+<stop offset="70%" stop-color="rgb(139,150,145)"></stop>
+<stop offset="71%" stop-color="rgb(142,151,143)"></stop>
+<stop offset="72%" stop-color="rgb(146,152,141)"></stop>
+<stop offset="73%" stop-color="rgb(149,153,138)"></stop>
+<stop offset="74%" stop-color="rgb(152,154,136)"></stop>
+<stop offset="75%" stop-color="rgb(156,156,134)"></stop>
+<stop offset="76%" stop-color="rgb(159,157,131)"></stop>
+<stop offset="77%" stop-color="rgb(162,158,129)"></stop>
+<stop offset="78%" stop-color="rgb(165,159,126)"></stop>
+<stop offset="79%" stop-color="rgb(169,160,124)"></stop>
+<stop offset="80%" stop-color="rgb(172,161,122)"></stop>
+<stop offset="81%" stop-color="rgb(175,162,119)"></stop>
+<stop offset="82%" stop-color="rgb(178,163,117)"></stop>
+<stop offset="83%" stop-color="rgb(182,165,114)"></stop>
+<stop offset="84%" stop-color="rgb(185,166,112)"></stop>
+<stop offset="85%" stop-color="rgb(188,167,110)"></stop>
+<stop offset="86%" stop-color="rgb(191,168,107)"></stop>
+<stop offset="87%" stop-color="rgb(195,169,105)"></stop>
+<stop offset="88%" stop-color="rgb(198,170,103)"></stop>
+<stop offset="89%" stop-color="rgb(201,171,100)"></stop>
+<stop offset="90%" stop-color="rgb(204,173,98)"></stop>
+<stop offset="91%" stop-color="rgb(208,174,95)"></stop>
+<stop offset="92%" stop-color="rgb(211,175,93)"></stop>
+<stop offset="93%" stop-color="rgb(214,176,91)"></stop>
+<stop offset="94%" stop-color="rgb(217,177,88)"></stop>
+<stop offset="95%" stop-color="rgb(221,178,86)"></stop>
+<stop offset="96%" stop-color="rgb(224,179,84)"></stop>
+<stop offset="97%" stop-color="rgb(227,181,81)"></stop>
+<stop offset="98%" stop-color="rgb(230,182,79)"></stop>
+<stop offset="99%" stop-color="rgb(234,183,76)"></stop>
+<stop offset="100%" stop-color="rgb(237,184,74)"></stop>
+</linearGradient>
+</defs>
+
+</svg>
+<!-- generated-by visual-engine v1.0.0 · echarts@6.1.0 · theme:project-theme · content-sha256:14c5403ef99cc0cf39a517993f53b57a8549832af63c318b672be2f29909567f -->

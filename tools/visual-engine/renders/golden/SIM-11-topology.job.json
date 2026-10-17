@@ -1,0 +1,48 @@
+{
+  "visual_id": "SIM-11-topology",
+  "classification": "internal",
+  "theme": "project-theme",
+  "reader_question": "Which services depend on which?",
+  "text_summary": "Simulation text summary for accessibility gate.",
+  "selected_visual": "graph",
+  "preset": "service-topology",
+  "layout": "circular",
+  "title": "App-tier topology (data-annotated)",
+  "data": {
+    "nodes": [
+      {
+        "name": "nginx"
+      },
+      {
+        "name": "api-public"
+      },
+      {
+        "name": "web"
+      },
+      {
+        "name": "postgres"
+      },
+      {
+        "name": "redis"
+      }
+    ],
+    "links": [
+      {
+        "source": "nginx",
+        "target": "api-public"
+      },
+      {
+        "source": "nginx",
+        "target": "web"
+      },
+      {
+        "source": "api-public",
+        "target": "postgres"
+      },
+      {
+        "source": "api-public",
+        "target": "redis"
+      }
+    ]
+  }
+}

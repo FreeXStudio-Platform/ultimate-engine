@@ -1,0 +1,47 @@
+{
+  "visual_id": "SIM-10-tiers",
+  "classification": "public",
+  "theme": "project-theme",
+  "reader_question": "What does each pricing tier include?",
+  "text_summary": "Simulation text summary for accessibility gate.",
+  "selected_visual": "heatmap",
+  "preset": "tier-entitlement-matrix",
+  "title": "Tier entitlements",
+  "subtitle": "1 included · 0.5 limited · 0 excluded (sanitized source)",
+  "data": {
+    "rows": [
+      "$9.90 audit",
+      "$49 audit",
+      "$99 audit"
+    ],
+    "cols": [
+      "static-pass",
+      "ai-tier-1",
+      "ai-tier-2",
+      "pdf-report"
+    ],
+    "matrix": [
+      [
+        1,
+        0.5,
+        0,
+        1
+      ],
+      [
+        1,
+        1,
+        0.5,
+        1
+      ],
+      [
+        1,
+        1,
+        1,
+        1
+      ]
+    ]
+  },
+  "scale_min": 0,
+  "scale_max": 1,
+  "show_values": true
+}

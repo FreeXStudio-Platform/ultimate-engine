@@ -1,0 +1,51 @@
+<svg data-engine="echarts" role="img" aria-label="S183 ingest-gate incident" data-fig="ve-SIM-09-incident" data-fig-kind="timeline" data-fig-focus="item" data-fig-legend="none" class="ve-fig" width="800" height="480" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" baseProfile="full" viewBox="0 0 800 480"><style data-ve="ve-SIM-09-incident"><![CDATA[/* ve-fig v1 · scoped to ve-SIM-09-incident · never recolours, never fills an open path, never steals the pointer */
+svg[data-fig="ve-SIM-09-incident"] text,svg[data-fig="ve-SIM-09-incident"] tspan{pointer-events:none;stroke:none}
+svg[data-fig="ve-SIM-09-incident"] [data-s],svg[data-fig="ve-SIM-09-incident"] [data-t="legend"][fill="none"]{cursor:pointer}
+svg[data-fig="ve-SIM-09-incident"] [data-s]{transition:opacity .14s ease,filter .14s ease,stroke-width .14s ease}
+@media (prefers-reduced-motion:reduce){svg[data-fig="ve-SIM-09-incident"] [data-s]{transition:none}}
+svg[data-fig="ve-SIM-09-incident"] [data-s]:not([data-k="series"]):not([data-k="edge"]):not([fill="none"]):not([data-sk="own"]):hover,svg[data-fig="ve-SIM-09-incident"] [data-s]:not([data-k="series"]):not([data-k="edge"]):not([fill="none"]):not([data-sk="own"]):focus-visible{stroke:#EAEEF5;stroke-width:1.6px;vector-effect:non-scaling-stroke;stroke-opacity:.95;filter:brightness(1.16) saturate(1.1);outline:none}
+svg[data-fig="ve-SIM-09-incident"] [data-s]:not([data-k="series"]):not([data-k="edge"]):not([fill="none"])[data-sk="own"]:hover,svg[data-fig="ve-SIM-09-incident"] [data-s]:not([data-k="series"]):not([data-k="edge"]):not([fill="none"])[data-sk="own"]:focus-visible{stroke-width:2.6px;vector-effect:non-scaling-stroke;stroke-opacity:1;filter:brightness(1.12) saturate(1.15);outline:none}
+svg[data-fig="ve-SIM-09-incident"] [data-s][fill="none"]:hover,svg[data-fig="ve-SIM-09-incident"] [data-s][fill="none"]:focus-visible{fill:none;stroke-width:3.4px;vector-effect:non-scaling-stroke;stroke-opacity:1;filter:none;outline:none}
+svg[data-fig="ve-SIM-09-incident"] [data-s][fill="none"]{pointer-events:visibleStroke}
+svg[data-fig="ve-SIM-09-incident"] [data-t="legend"][fill="none"]:hover{fill:rgba(234,238,245,0.18);fill-opacity:.55}
+svg[data-fig="ve-SIM-09-incident"]:not([data-ve-js]):has([data-s]:not([data-k="series"]):not([data-k="edge"]):hover) [data-s]:not([data-k="series"]):not([data-k="edge"]):not(:hover){opacity:0.42}
+svg[data-fig="ve-SIM-09-incident"][data-ve-js][data-ve-on] [data-s]:not(.ve-on):not([data-t="legend"]){opacity:.2}
+svg[data-fig="ve-SIM-09-incident"][data-ve-js] [data-s].ve-on[data-k="edge"]{stroke-opacity:1;stroke-width:3px;vector-effect:non-scaling-stroke}
+svg[data-fig="ve-SIM-09-incident"][data-ve-js] [data-s].ve-on[data-k="edge"]:not([fill="none"]){fill-opacity:1}
+svg[data-fig="ve-SIM-09-incident"] .ve-pin:not([fill="none"]):not([data-sk="own"]){stroke:#EAEEF5;stroke-width:2.2px;vector-effect:non-scaling-stroke;stroke-opacity:1}
+svg[data-fig="ve-SIM-09-incident"] .ve-pin[data-sk="own"]{stroke-width:3.2px;vector-effect:non-scaling-stroke;stroke-opacity:1;filter:brightness(1.12) saturate(1.15)}
+svg[data-fig="ve-SIM-09-incident"] .ve-pin[fill="none"]{stroke-width:3.8px;vector-effect:non-scaling-stroke;stroke-opacity:1}]]></style>
+<rect width="800" height="480" x="0" y="0" fill="none"></rect>
+<path d="M104 234.5L728 234.5" fill="none" pointer-events="visible" stroke="rgb(234,238,245)" stroke-opacity="0.18" stroke-linecap="round"></path>
+<path d="M158.5 234L158.5 239" fill="none" pointer-events="visible" stroke="rgb(234,238,245)" stroke-opacity="0.18"></path>
+<path d="M267.5 234L267.5 239" fill="none" pointer-events="visible" stroke="rgb(234,238,245)" stroke-opacity="0.18"></path>
+<path d="M375.5 234L375.5 239" fill="none" pointer-events="visible" stroke="rgb(234,238,245)" stroke-opacity="0.18"></path>
+<path d="M484.5 234L484.5 239" fill="none" pointer-events="visible" stroke="rgb(234,238,245)" stroke-opacity="0.18"></path>
+<path d="M592.5 234L592.5 239" fill="none" pointer-events="visible" stroke="rgb(234,238,245)" stroke-opacity="0.18"></path>
+<path d="M701.5 234L701.5 239" fill="none" pointer-events="visible" stroke="rgb(234,238,245)" stroke-opacity="0.18"></path>
+<text dominant-baseline="central" text-anchor="middle" style="font: normal normal 10px JetBrains Mono, ui-monospace, monospace" y="5" transform="translate(158.2609 412)" fill="#8A96AE">12:00</text>
+<text dominant-baseline="central" text-anchor="middle" style="font: normal normal 10px JetBrains Mono, ui-monospace, monospace" y="5" transform="translate(266.7826 412)" fill="#8A96AE">16:00</text>
+<text dominant-baseline="central" text-anchor="middle" style="font: normal normal 10px JetBrains Mono, ui-monospace, monospace" y="5" transform="translate(375.3043 412)" fill="#8A96AE">20:00</text>
+<text dominant-baseline="central" text-anchor="middle" style="font: normal normal 10px JetBrains Mono, ui-monospace, monospace" y="5" transform="translate(592.3478 412)" fill="#8A96AE">04:00</text>
+<text dominant-baseline="central" text-anchor="middle" style="font: normal normal 10px JetBrains Mono, ui-monospace, monospace" y="5" transform="translate(700.8696 412)" fill="#8A96AE">08:00</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:10px;font-family:JetBrains Mono, ui-monospace, monospace;font-weight:bold;" y="5" transform="translate(483.8261 412)" fill="#EAEEF5">4</text>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(6,0,0,6,104,174.5)" fill="#4A7FC1" fill-opacity="0.9" data-s="0" data-i="0" data-t="chart" data-id="s0.0"><title>gate bypass detected
+when: 2026-08-03T10:00:00Z</title></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(6,0,0,6,226.087,293.5)" fill="#4A7FC1" fill-opacity="0.9" data-s="0" data-i="1" data-t="chart" data-id="s0.1"><title>type allowlist patched
+when: 2026-08-03T14:30:00Z</title></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(6,0,0,6,728,174.5)" fill="#4A7FC1" fill-opacity="0.9" data-s="0" data-i="2" data-t="chart" data-id="s0.2"><title>re-scan clean
+when: 2026-08-04T09:00:00Z</title></path>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:10px;font-family:Inter, system-ui, sans-serif;" xml:space="preserve" y="-5" transform="translate(104 163.5)" fill="#EAEEF5" fill-opacity="0.9">gate bypass detected</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:10px;font-family:Inter, system-ui, sans-serif;" xml:space="preserve" y="-5" transform="translate(226.087 282.5)" fill="#EAEEF5" fill-opacity="0.9">type allowlist patched</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:10px;font-family:Inter, system-ui, sans-serif;" xml:space="preserve" y="-5" transform="translate(728 163.5)" fill="#EAEEF5" fill-opacity="0.9">re-scan clean</text>
+<path d="M104.5 404L104.5 64" fill="none" pointer-events="visible" stroke="#4A7FC1" stroke-opacity="0.3" stroke-dasharray="4,2" data-s="0" data-i="0" data-t="chart" data-id="s0.0" data-sk="own"><title>gate bypass detected
+when: 2026-08-03T10:00:00Z</title></path>
+<path d="M226.5 404L226.5 64" fill="none" pointer-events="visible" stroke="#4A7FC1" stroke-opacity="0.3" stroke-dasharray="4,2" data-s="0" data-i="1" data-t="chart" data-id="s0.1" data-sk="own"><title>type allowlist patched
+when: 2026-08-03T14:30:00Z</title></path>
+<path d="M728.5 404L728.5 64" fill="none" pointer-events="visible" stroke="#4A7FC1" stroke-opacity="0.3" stroke-dasharray="4,2" data-s="0" data-i="2" data-t="chart" data-id="s0.2" data-sk="own"><title>re-scan clean
+when: 2026-08-04T09:00:00Z</title></path>
+<path d="M-5 -5l191.4 0l0 26l-191.4 0Z" transform="translate(13 11)" fill="rgb(0,0,0)" fill-opacity="0" stroke="#3c3c41" stroke-width="0"></path>
+<text dominant-baseline="central" text-anchor="start" style="font-size:16px;font-family:Space Grotesk, system-ui, sans-serif;font-weight:600;" xml:space="preserve" y="8" transform="translate(13 11)" fill="#EAEEF5">S183 ingest-gate incident</text>
+
+</svg>
+<!-- generated-by visual-engine v1.0.0 · echarts@6.1.0 · theme:project-theme · content-sha256:2eea0efc297059fc35c3a4a665ab7f9b3d2640a409363dfb414c9f48f0c9942d -->

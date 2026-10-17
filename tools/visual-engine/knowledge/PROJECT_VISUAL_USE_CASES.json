@@ -1,0 +1,103 @@
+{
+  "_readme": "DOCUMENTATION — a human/agent-facing inventory of this project's own candidate chart use cases (detector estate, gate scoreboard, docs estate, tier pricing, bank blueprint), captured at the Phase-0 inventory dated below. No code reads this file back; it is a planning artifact for an agent choosing what to visualize next, not a live registry, and it is not kept in sync as the corpus it describes changes. Labelled 2026-08-23 (P8-084).",
+  "version": "1.0.0",
+  "generated": "2026-08-08",
+  "source_evidence": "Phase-0 inventory 2026-08-08: detector registry (514 detectors), gates (docs/system/SYSTEM.json gates[]), docs estate (1,124 docs measured S185), J1-J10 journey scoreboard, tier pricing (GP-2 signed), bank blueprint B1-B9 (203 mermaid fences)",
+  "use_cases": [
+    {
+      "id": "detector-estate",
+      "presets": [
+        "detector-coverage-heatmap",
+        "detector-test-matrix",
+        "detector-stage-reconciliation",
+        "detector-severity-confidence",
+        "detector-performance"
+      ],
+      "data_sources": [
+        "src/detectors registry",
+        "tests evidence"
+      ],
+      "invariants": [
+        "detector ID/family/chain preserved",
+        "explicit unknown state",
+        "stage counts reconcile with registry"
+      ]
+    },
+    {
+      "id": "audit-workflow",
+      "presets": [
+        "workflow-pipeline",
+        "workflow-sequence",
+        "usage-funnel"
+      ],
+      "invariants": [
+        "document-grade pipeline diagrams stay on docgen VisualSpec",
+        "Sankey only for real quantities"
+      ]
+    },
+    {
+      "id": "gatekeepers",
+      "presets": [
+        "gatekeeper-status-matrix",
+        "incident-timeline"
+      ],
+      "invariants": [
+        "pass/fail/unknown/degraded all visible",
+        "never average a failed gate away (T-R3)"
+      ]
+    },
+    {
+      "id": "current-vs-destination",
+      "presets": [
+        "current-target-conformance",
+        "implementation-gap-heatmap"
+      ],
+      "invariants": [
+        "never blend current reality and destination blueprint without explicit labeling (spec §14.4)"
+      ]
+    },
+    {
+      "id": "documentation-system",
+      "presets": [
+        "document-coverage-matrix",
+        "blueprint-link-graph",
+        "evidence-coverage-heatmap"
+      ],
+      "invariants": [
+        "stale is its own state, distinct from missing (T-R1)"
+      ]
+    },
+    {
+      "id": "llm-knowledge",
+      "presets": [
+        "knowledge-promotion-flow",
+        "llm-routing-state"
+      ],
+      "invariants": [
+        "cost/latency charts carry time window + aggregation basis"
+      ]
+    },
+    {
+      "id": "tier-billing",
+      "presets": [
+        "tier-entitlement-matrix",
+        "usage-funnel"
+      ],
+      "invariants": [
+        "commercial surfaces render from sanitized sources only (§31); prices cite the signed GP-2 source"
+      ]
+    },
+    {
+      "id": "operations",
+      "presets": [
+        "service-topology",
+        "queue-latency",
+        "incident-timeline",
+        "backup-restore-flow"
+      ],
+      "invariants": [
+        "VPS3 engine-tier internals never appear in public/commercial visuals"
+      ]
+    }
+  ]
+}

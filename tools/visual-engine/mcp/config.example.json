@@ -1,0 +1,10 @@
+{
+  "_readme": "TEMPLATE, not a live config — nothing in this engine reads this file. Named explicitly in P8-084's spot-check of unconsulted declarative files; it stays unconsulted by design, since its whole purpose is to be copied by a HOST project's own tooling, not this one's. Labelled 2026-08-23.",
+  "_comment": "This package ships no .mcp.json of its own — add one at your consuming project's repo root to register project-scoped, or use this file's shape for user-scoped registration in other MCP clients.",
+  "mcpServers": {
+    "doc-visuals": {
+      "command": "node",
+      "args": ["tools/visual-engine/mcp/server.mjs"]
+    }
+  }
+}

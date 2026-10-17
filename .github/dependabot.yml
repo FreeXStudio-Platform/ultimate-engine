@@ -1,0 +1,29 @@
+# Weekly, grouped, small: a human reviews every bump. A lockfile bump changes the
+# `npm_lockfile_sha256` attestation in the sibling VERSION_LOCK.json — re-derive it (health says how).
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: "/"
+    schedule: {interval: weekly}
+    open-pull-requests-limit: 3
+    groups: {root-dev-toolchain: {patterns: ["*"]}}
+  - package-ecosystem: npm
+    directory: "/tools/visual-engine"
+    schedule: {interval: weekly}
+    open-pull-requests-limit: 3
+    groups: {visual-engine: {patterns: ["*"]}}
+    # zod 4 is a breaking major; the chart server is validated against 3.x. Taking it is a deliberate migration, not a bump.
+    ignore: [{dependency-name: "zod", update-types: ["version-update:semver-major"]}]
+  - package-ecosystem: npm
+    directory: "/tools/mermaid-engine"
+    schedule: {interval: weekly}
+    open-pull-requests-limit: 3
+    groups: {mermaid-engine: {patterns: ["*"]}}
+  - package-ecosystem: pip
+    directory: "/tools/docgen"
+    schedule: {interval: weekly}
+    open-pull-requests-limit: 3
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule: {interval: weekly}
+    open-pull-requests-limit: 3

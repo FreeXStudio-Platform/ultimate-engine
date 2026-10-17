@@ -1,0 +1,18 @@
+name: Feature request
+description: A figure kind, a gate, an option, an integration
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: The problem you are trying to solve
+      description: What question should a reader be able to answer that they cannot today?
+    validations: {required: true}
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What you would like
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives you considered

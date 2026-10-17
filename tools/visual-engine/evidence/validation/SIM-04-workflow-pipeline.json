@@ -1,0 +1,16 @@
+{
+  "_readme": "Gate G9 render-evidence record, written by writeEvidence() (adapters/echarts/render.mjs). Documentation/audit trail only — no code in this engine reads this file back; shape is schemas/render-result.schema.json (also unvalidated, see its own _status).",
+  "visual_id": "SIM-04-workflow-pipeline",
+  "selected_visual": "graph",
+  "preset": "workflow-pipeline",
+  "theme": "project-theme",
+  "classification": "internal",
+  "engine": "echarts@6.1.0",
+  "adapter": "visual-engine@1.0.0",
+  "width": 800,
+  "height": 480,
+  "svg_sha256": "5f9b824b7d884473d17228f4a075e09befe801dc7145b8e2c60771978a79c9a8",
+  "option_sha256": "6f2cc05d0b1d3bc32b41632f29ca10381e4ee0210feefeea634df52e23139228",
+  "job_sha256": "46d4c66afbf0e0f935c7f0409098843146d84387aca540b55600bd8a4aad298d",
+  "warnings": []
+}

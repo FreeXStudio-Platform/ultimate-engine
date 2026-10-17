@@ -1,0 +1,18 @@
+{
+  "version": "1.2.17",
+  "gate": "tools/docgen/validate_doc_system.py",
+  "rulebook_files": [
+    "docs/design/doc-system/RULEBOOK.md",
+    "docs/design/doc-system/TAXONOMY.md",
+    "docs/design/doc-system/CONTRADICTION.md",
+    "docs/design/doc-system/update_impact_map.json",
+    "docs/design/doc-system/DOC_MANIFEST.md",
+    "docs/framework/DOC_WRITING_DOCTRINE.md",
+    "docs/process/DEEP_VERIFICATION_PASS.md",
+    "tools/hooks/install.sh",
+    "tools/hooks/pre-push",
+    "tools/hooks/pre-commit"
+  ],
+  "rulebook_sha256": "23b4a254e9e4bb464b751f758e8953d72f636821fa2ad36fffe9e67355620d05",
+  "notes": "RULEBOOK L9. rulebook_files and rulebook_sha256 are READ by the gate: the listed files are resolved relative to the host root, read in this exact order, their raw bytes concatenated, and SHA-256'd. Order is part of the hash -- reordering this list changes the digest without changing a single rule, so do not reorder it casually. 'gate' is declarative metadata that no code reads; 'version' IS read -- tools/health CONS-08 uses it as ground truth for the rulebook-version claims in the handover documents (corrected 2026-08-22, OG-91); 'gate' names the module that owns the hash-gate, per ENGINE_PLAN.md 4b. TO RE-BASELINE after a deliberate, recorded rule change, BOTH steps are required and in this order: (1) set rulebook_sha256 back to the literal 'PENDING', then (2) run 'python3 -m tools.docgen.validate_doc_system --write-hash'. Running --write-hash on a live mismatch does NOTHING by design -- the gate refuses to paper over real drift, and only the PENDING sentinel authorises a write. The two moat hooks joined this list on 2026-08-20 (OG-29): STRUCT-03/STRUCT-04 assert the INSTALLED hook is byte-identical to its source, so hash-locking the source is what makes neutering the moat a declared, recorded act rather than a silent edit. It is the only structural defence pre-push has against a subtle weakening -- pre-commit is additionally probed behaviourally each health run, but pre-push cannot be, because it runs health itself and the probe would recurse. Measured 2026-08-20."
+}

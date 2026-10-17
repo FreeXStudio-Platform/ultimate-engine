@@ -1,0 +1,16 @@
+{
+  "id": "detector-performance",
+  "visual": "boxplot",
+  "family": "distribution",
+  "summary": "Per-family detector latency distribution",
+  "canonical_reader_question": "Which detector families are slowest?",
+  "required_fields": [
+    "data.categories",
+    "data.values"
+  ],
+  "defaults": {},
+  "semantics": {},
+  "job_extras": {},
+  "notes": "values are pre-computed [min,q1,med,q3,max] — engine does no stats",
+  "provenance": "visual-engine preset v1.0.0 — derived from spec §24 + project data shapes (detector registry, gates, docs estate)."
+}

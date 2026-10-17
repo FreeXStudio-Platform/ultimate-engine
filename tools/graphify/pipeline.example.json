@@ -1,0 +1,16 @@
+{
+  "_readme": "Worked EXAMPLE pipeline (a security-scanner's scan->detect->AI->report flow) shipped so build-pipeline.mjs has something real to render out of the box. This is NOT your project's actual pipeline. Author your own file in this exact shape (steps: [id, label, module, lane, [downstream ids]]) and point engine.config.json's graphify.pipelineStepsFile at it — or set the ENGINE_GRAPHIFY_PIPELINE_STEPS_FILE env var — to describe your own flow as DATA instead of editing build-pipeline.mjs's source code.",
+  "laneColors": { "in": "#10b981", "parse": "#f59e0b", "detect": "#e11d48", "know": "#8b5cf6", "ai": "#3b82f6", "cal": "#ec4899", "out": "#64748b" },
+  "steps": [
+    ["intake",    "Intake (upload / address)",     "src/api/routes/scan.py",                            "in",     ["parse"]],
+    ["parse",     "Parse to AST",                   "src/parsers/{solidity,vyper,cairo,yul}",            "parse",  ["t0"]],
+    ["t0",        "T0 detectors (deterministic)",   "src/analysis/run_all_detectors (514)",              "detect", ["dynamic","knowledge","calibrate"]],
+    ["dynamic",   "Dynamic / proof (opt)",          "src/dynamic/foundry",                               "detect", ["calibrate"]],
+    ["knowledge", "Knowledge / RAG enrich",         "src/knowledge/rag (retrieve_for_finding, bank)",    "know",   ["t1","t2"]],
+    ["t1",        "T1 AI (Haiku) — summarize",      "src/config/ai_routing (T1)",                        "ai",     ["report"]],
+    ["t2",        "T2 AI (Sonnet/Opus) — reason",   "src/config/ai_routing (T2) · exploit chains",       "ai",     ["calibrate","report"]],
+    ["calibrate", "Calibrate (oracle / suppress)",  "src/knowledge/{bank_suppression,calibration}",      "cal",    ["report"]],
+    ["report",    "Report build",                   "src/reports/{markdown,pdf,json,test_gen}",          "out",    ["output"]],
+    ["output",    "Findings / share page",          "Finding JSON · report/[shareId]",                   "out",    []]
+  ]
+}

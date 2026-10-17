@@ -1,0 +1,87 @@
+{
+  "_readme": "DOCUMENTATION \u2014 a human/agent-facing catalogue of chart anti-patterns and why the engine refuses them. No code loads this file back; most of the rules it lists are separately enforced in code the reader can check directly (adapters/echarts/validate.mjs's G-CHART/G-SIZE gates: pie-slice cap, zero-baseline bars, node cap, Sankey conservation; the graph builder's SSR-only layout restriction) \u2014 this file is the rationale companion to those gates, not itself a gate. Labelled 2026-08-23 (P8-084).",
+  "version": "1.0.0",
+  "generated": "2026-08-08",
+  "anti_patterns": [
+    {
+      "id": "AP-3D-DECOR",
+      "rule": "No 3D bars/pies \u2014 3D only for genuine spatial/3-axis structure (docgen isometric3d owns document 2.5D)",
+      "enforcement": "no 3D route exists in this adapter; requests \u2192 NO_CHART or docgen"
+    },
+    {
+      "id": "AP-PIE-MANY",
+      "rule": "No pies >6 slices",
+      "enforcement": "validator G-CHART hard-fails (mirrors docgen _PIE_MAX_SLICES)"
+    },
+    {
+      "id": "AP-TRUNC-BAR",
+      "rule": "No truncated bar baselines",
+      "enforcement": "validator G-CHART requires zero baseline unless allow_negative deltas"
+    },
+    {
+      "id": "AP-HAIRBALL",
+      "rule": "No network hairballs",
+      "enforcement": "validator G-SIZE caps nodes at 1500; catalog routes dense graphs to adjacency heatmap"
+    },
+    {
+      "id": "AP-FAKE-SANKEY",
+      "rule": "No Sankey without conservation meaning",
+      "enforcement": "validator G-CHART requires positive, endpoint-valid flows; catalog requires reconciliation"
+    },
+    {
+      "id": "AP-DUAL-AXIS",
+      "rule": "No dual y-axes (ambiguity)",
+      "enforcement": "no builder emits a second y-axis"
+    },
+    {
+      "id": "AP-COLOR-ONLY",
+      "rule": "Color never the only critical signal",
+      "enforcement": "heatmap value labels default on; status presets label states; a11y decal available"
+    },
+    {
+      "id": "AP-SCORE-AGG",
+      "rule": "No aggregate health percentages",
+      "enforcement": "T-R3 project law \u2014 scorecards show per-item status counts"
+    },
+    {
+      "id": "AP-FORCE-LAYOUT",
+      "rule": "No force layouts in SSR",
+      "enforcement": "graph builder allows circular/none/preset only \u2014 force is non-deterministic"
+    },
+    {
+      "id": "AP-CLOUD-LEAK",
+      "rule": "No cloud-backed chart storage for internal data",
+      "enforcement": "engine is local-only; apache/echarts-mcp rejected on this ground (mcp/approved-server.json)"
+    },
+    {
+      "id": "AP-MOTION-DECOR",
+      "rule": "Motion only when it explains sequence/direction/change",
+      "enforcement": "SSR always static; interactive HTML ships a static fallback via prefers-reduced-motion/print"
+    },
+    {
+      "id": "AP-HOVER-RECOLOUR",
+      "rule": "A hover or focus state never changes a mark's hue, never fills an open path, never moves a mark and never takes the pointer from it \u2014 brightness, outline, thickness and opacity only",
+      "enforcement": "the figure layer owns hover (adapters/echarts/figure-layer.mjs); tests/figure-layer.test.mjs 'hover law' fails any rule that recolours; docs/design/FIGURE_SYSTEM.md \u00a74"
+    },
+    {
+      "id": "AP-LABEL-HALO",
+      "rule": "No outline round a label, and never a fixed ink on a coloured fill \u2014 the label takes the near-black or white (pure black/white in the mid-tone band) that clears WCAG AA against its own fill",
+      "enforcement": "textBorderWidth 0 everywhere (NOHALO); adapters/echarts/contrast.mjs inkFor; tests/figure-layer.test.mjs 'labels carry no halo' and the contrast sweep"
+    },
+    {
+      "id": "AP-UNNAMED-MARK",
+      "rule": "No anonymous dots: a scatter, bubble or timeline row has a name, a bubble says what its size measures, and a figure with numbered circles prints a key to them",
+      "enforcement": "data.names / data.notes / data.size_label with gate G-STRUCT (rows must correspond one to one); docgen prints the reading key and mark table under every figure"
+    },
+    {
+      "id": "AP-SEVERITY-BY-SLOT",
+      "rule": "Severity and status words are never coloured by palette position (Critical is not blue because blue is slot 0; Low is blue in the Atlas scale)",
+      "enforcement": "adapters/echarts/semantic-colors.mjs applies the reserved colours by label; job.semantic_colors:false is the only opt-out"
+    },
+    {
+      "id": "AP-GLOBAL-FIGURE",
+      "rule": "A figure is never written as if it were the only one on the page: no unscoped CSS, no unscoped ids, no class names shared between figures",
+      "enforcement": "every selector starts svg[data-fig=\u2026]; every declared id and its references carry the figure scope (figure_support.scope_svg_ids, mirrored in the chart engine); docs/design/FIGURE_SYSTEM.md \u00a73"
+    }
+  ]
+}

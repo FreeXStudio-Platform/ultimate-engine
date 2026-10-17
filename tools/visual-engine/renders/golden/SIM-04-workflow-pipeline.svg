@@ -1,0 +1,121 @@
+<svg data-engine="echarts" role="img" aria-label="Audit pipeline" data-fig="ve-SIM-04-workflow-pipeline" data-fig-kind="graph" data-fig-focus="adjacency" data-fig-legend="none" class="ve-fig" width="800" height="480" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" baseProfile="full" viewBox="0 0 800 480"><style data-ve="ve-SIM-04-workflow-pipeline"><![CDATA[/* ve-fig v1 · scoped to ve-SIM-04-workflow-pipeline · never recolours, never fills an open path, never steals the pointer */
+svg[data-fig="ve-SIM-04-workflow-pipeline"] text,svg[data-fig="ve-SIM-04-workflow-pipeline"] tspan{pointer-events:none;stroke:none}
+svg[data-fig="ve-SIM-04-workflow-pipeline"] [data-s],svg[data-fig="ve-SIM-04-workflow-pipeline"] [data-t="legend"][fill="none"]{cursor:pointer}
+svg[data-fig="ve-SIM-04-workflow-pipeline"] [data-s]{transition:opacity .14s ease,filter .14s ease,stroke-width .14s ease}
+@media (prefers-reduced-motion:reduce){svg[data-fig="ve-SIM-04-workflow-pipeline"] [data-s]{transition:none}}
+svg[data-fig="ve-SIM-04-workflow-pipeline"] [data-s]:not([data-k="series"]):not([data-k="edge"]):not([fill="none"]):not([data-sk="own"]):hover,svg[data-fig="ve-SIM-04-workflow-pipeline"] [data-s]:not([data-k="series"]):not([data-k="edge"]):not([fill="none"]):not([data-sk="own"]):focus-visible{stroke:#EAEEF5;stroke-width:1.6px;vector-effect:non-scaling-stroke;stroke-opacity:.95;filter:brightness(1.16) saturate(1.1);outline:none}
+svg[data-fig="ve-SIM-04-workflow-pipeline"] [data-s]:not([data-k="series"]):not([data-k="edge"]):not([fill="none"])[data-sk="own"]:hover,svg[data-fig="ve-SIM-04-workflow-pipeline"] [data-s]:not([data-k="series"]):not([data-k="edge"]):not([fill="none"])[data-sk="own"]:focus-visible{stroke-width:2.6px;vector-effect:non-scaling-stroke;stroke-opacity:1;filter:brightness(1.12) saturate(1.15);outline:none}
+svg[data-fig="ve-SIM-04-workflow-pipeline"] [data-s][fill="none"]:hover,svg[data-fig="ve-SIM-04-workflow-pipeline"] [data-s][fill="none"]:focus-visible{fill:none;stroke-width:3.4px;vector-effect:non-scaling-stroke;stroke-opacity:1;filter:none;outline:none}
+svg[data-fig="ve-SIM-04-workflow-pipeline"] [data-s][fill="none"]{pointer-events:visibleStroke}
+svg[data-fig="ve-SIM-04-workflow-pipeline"] [data-t="legend"][fill="none"]:hover{fill:rgba(234,238,245,0.18);fill-opacity:.55}
+svg[data-fig="ve-SIM-04-workflow-pipeline"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n0"]:hover),:has([data-k="main"][data-id="n0"]:hover)) :is([data-k="node"],[data-k="main"]):not(:is([data-id="n0"],[data-id="n1"],[data-id="e0"])){opacity:0.3}
+svg[data-fig="ve-SIM-04-workflow-pipeline"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n0"]:hover),:has([data-k="main"][data-id="n0"]:hover)) [data-k="edge"]:not(:is([data-id="n0"],[data-id="n1"],[data-id="e0"])){opacity:0.1}
+svg[data-fig="ve-SIM-04-workflow-pipeline"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n0"]:hover),:has([data-k="main"][data-id="n0"]:hover)) :is([data-id="e0"])[data-k="edge"]{stroke-opacity:1;stroke-width:3px;vector-effect:non-scaling-stroke;opacity:1}
+svg[data-fig="ve-SIM-04-workflow-pipeline"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n0"]:hover),:has([data-k="main"][data-id="n0"]:hover)) :is([data-id="e0"])[fill="none"]{stroke:var(--ve-out);stroke-opacity:1}
+svg[data-fig="ve-SIM-04-workflow-pipeline"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n0"]:hover),:has([data-k="main"][data-id="n0"]:hover)) :is([data-id="e0"]):not([fill="none"]){fill:var(--ve-out);fill-opacity:1}
+svg[data-fig="ve-SIM-04-workflow-pipeline"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n1"]:hover),:has([data-k="main"][data-id="n1"]:hover)) :is([data-k="node"],[data-k="main"]):not(:is([data-id="n1"],[data-id="n0"],[data-id="n2"],[data-id="e0"],[data-id="e1"])){opacity:0.3}
+svg[data-fig="ve-SIM-04-workflow-pipeline"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n1"]:hover),:has([data-k="main"][data-id="n1"]:hover)) [data-k="edge"]:not(:is([data-id="n1"],[data-id="n0"],[data-id="n2"],[data-id="e0"],[data-id="e1"])){opacity:0.1}
+svg[data-fig="ve-SIM-04-workflow-pipeline"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n1"]:hover),:has([data-k="main"][data-id="n1"]:hover)) :is([data-id="e0"],[data-id="e1"])[data-k="edge"]{stroke-opacity:1;stroke-width:3px;vector-effect:non-scaling-stroke;opacity:1}
+svg[data-fig="ve-SIM-04-workflow-pipeline"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n1"]:hover),:has([data-k="main"][data-id="n1"]:hover)) :is([data-id="e1"])[fill="none"]{stroke:var(--ve-out);stroke-opacity:1}
+svg[data-fig="ve-SIM-04-workflow-pipeline"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n1"]:hover),:has([data-k="main"][data-id="n1"]:hover)) :is([data-id="e1"]):not([fill="none"]){fill:var(--ve-out);fill-opacity:1}
+svg[data-fig="ve-SIM-04-workflow-pipeline"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n1"]:hover),:has([data-k="main"][data-id="n1"]:hover)) :is([data-id="e0"])[fill="none"]{stroke:var(--ve-in);stroke-opacity:1}
+svg[data-fig="ve-SIM-04-workflow-pipeline"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n1"]:hover),:has([data-k="main"][data-id="n1"]:hover)) :is([data-id="e0"]):not([fill="none"]){fill:var(--ve-in);fill-opacity:1}
+svg[data-fig="ve-SIM-04-workflow-pipeline"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n2"]:hover),:has([data-k="main"][data-id="n2"]:hover)) :is([data-k="node"],[data-k="main"]):not(:is([data-id="n2"],[data-id="n1"],[data-id="n3"],[data-id="e1"],[data-id="e2"])){opacity:0.3}
+svg[data-fig="ve-SIM-04-workflow-pipeline"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n2"]:hover),:has([data-k="main"][data-id="n2"]:hover)) [data-k="edge"]:not(:is([data-id="n2"],[data-id="n1"],[data-id="n3"],[data-id="e1"],[data-id="e2"])){opacity:0.1}
+svg[data-fig="ve-SIM-04-workflow-pipeline"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n2"]:hover),:has([data-k="main"][data-id="n2"]:hover)) :is([data-id="e1"],[data-id="e2"])[data-k="edge"]{stroke-opacity:1;stroke-width:3px;vector-effect:non-scaling-stroke;opacity:1}
+svg[data-fig="ve-SIM-04-workflow-pipeline"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n2"]:hover),:has([data-k="main"][data-id="n2"]:hover)) :is([data-id="e2"])[fill="none"]{stroke:var(--ve-out);stroke-opacity:1}
+svg[data-fig="ve-SIM-04-workflow-pipeline"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n2"]:hover),:has([data-k="main"][data-id="n2"]:hover)) :is([data-id="e2"]):not([fill="none"]){fill:var(--ve-out);fill-opacity:1}
+svg[data-fig="ve-SIM-04-workflow-pipeline"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n2"]:hover),:has([data-k="main"][data-id="n2"]:hover)) :is([data-id="e1"])[fill="none"]{stroke:var(--ve-in);stroke-opacity:1}
+svg[data-fig="ve-SIM-04-workflow-pipeline"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n2"]:hover),:has([data-k="main"][data-id="n2"]:hover)) :is([data-id="e1"]):not([fill="none"]){fill:var(--ve-in);fill-opacity:1}
+svg[data-fig="ve-SIM-04-workflow-pipeline"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n3"]:hover),:has([data-k="main"][data-id="n3"]:hover)) :is([data-k="node"],[data-k="main"]):not(:is([data-id="n3"],[data-id="n2"],[data-id="n4"],[data-id="e2"],[data-id="e3"])){opacity:0.3}
+svg[data-fig="ve-SIM-04-workflow-pipeline"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n3"]:hover),:has([data-k="main"][data-id="n3"]:hover)) [data-k="edge"]:not(:is([data-id="n3"],[data-id="n2"],[data-id="n4"],[data-id="e2"],[data-id="e3"])){opacity:0.1}
+svg[data-fig="ve-SIM-04-workflow-pipeline"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n3"]:hover),:has([data-k="main"][data-id="n3"]:hover)) :is([data-id="e2"],[data-id="e3"])[data-k="edge"]{stroke-opacity:1;stroke-width:3px;vector-effect:non-scaling-stroke;opacity:1}
+svg[data-fig="ve-SIM-04-workflow-pipeline"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n3"]:hover),:has([data-k="main"][data-id="n3"]:hover)) :is([data-id="e3"])[fill="none"]{stroke:var(--ve-out);stroke-opacity:1}
+svg[data-fig="ve-SIM-04-workflow-pipeline"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n3"]:hover),:has([data-k="main"][data-id="n3"]:hover)) :is([data-id="e3"]):not([fill="none"]){fill:var(--ve-out);fill-opacity:1}
+svg[data-fig="ve-SIM-04-workflow-pipeline"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n3"]:hover),:has([data-k="main"][data-id="n3"]:hover)) :is([data-id="e2"])[fill="none"]{stroke:var(--ve-in);stroke-opacity:1}
+svg[data-fig="ve-SIM-04-workflow-pipeline"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n3"]:hover),:has([data-k="main"][data-id="n3"]:hover)) :is([data-id="e2"]):not([fill="none"]){fill:var(--ve-in);fill-opacity:1}
+svg[data-fig="ve-SIM-04-workflow-pipeline"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n4"]:hover),:has([data-k="main"][data-id="n4"]:hover)) :is([data-k="node"],[data-k="main"]):not(:is([data-id="n4"],[data-id="n3"],[data-id="n5"],[data-id="e3"],[data-id="e4"])){opacity:0.3}
+svg[data-fig="ve-SIM-04-workflow-pipeline"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n4"]:hover),:has([data-k="main"][data-id="n4"]:hover)) [data-k="edge"]:not(:is([data-id="n4"],[data-id="n3"],[data-id="n5"],[data-id="e3"],[data-id="e4"])){opacity:0.1}
+svg[data-fig="ve-SIM-04-workflow-pipeline"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n4"]:hover),:has([data-k="main"][data-id="n4"]:hover)) :is([data-id="e3"],[data-id="e4"])[data-k="edge"]{stroke-opacity:1;stroke-width:3px;vector-effect:non-scaling-stroke;opacity:1}
+svg[data-fig="ve-SIM-04-workflow-pipeline"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n4"]:hover),:has([data-k="main"][data-id="n4"]:hover)) :is([data-id="e4"])[fill="none"]{stroke:var(--ve-out);stroke-opacity:1}
+svg[data-fig="ve-SIM-04-workflow-pipeline"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n4"]:hover),:has([data-k="main"][data-id="n4"]:hover)) :is([data-id="e4"]):not([fill="none"]){fill:var(--ve-out);fill-opacity:1}
+svg[data-fig="ve-SIM-04-workflow-pipeline"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n4"]:hover),:has([data-k="main"][data-id="n4"]:hover)) :is([data-id="e3"])[fill="none"]{stroke:var(--ve-in);stroke-opacity:1}
+svg[data-fig="ve-SIM-04-workflow-pipeline"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n4"]:hover),:has([data-k="main"][data-id="n4"]:hover)) :is([data-id="e3"]):not([fill="none"]){fill:var(--ve-in);fill-opacity:1}
+svg[data-fig="ve-SIM-04-workflow-pipeline"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n5"]:hover),:has([data-k="main"][data-id="n5"]:hover)) :is([data-k="node"],[data-k="main"]):not(:is([data-id="n5"],[data-id="n4"],[data-id="e4"])){opacity:0.3}
+svg[data-fig="ve-SIM-04-workflow-pipeline"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n5"]:hover),:has([data-k="main"][data-id="n5"]:hover)) [data-k="edge"]:not(:is([data-id="n5"],[data-id="n4"],[data-id="e4"])){opacity:0.1}
+svg[data-fig="ve-SIM-04-workflow-pipeline"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n5"]:hover),:has([data-k="main"][data-id="n5"]:hover)) :is([data-id="e4"])[data-k="edge"]{stroke-opacity:1;stroke-width:3px;vector-effect:non-scaling-stroke;opacity:1}
+svg[data-fig="ve-SIM-04-workflow-pipeline"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n5"]:hover),:has([data-k="main"][data-id="n5"]:hover)) :is([data-id="e4"])[fill="none"]{stroke:var(--ve-in);stroke-opacity:1}
+svg[data-fig="ve-SIM-04-workflow-pipeline"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n5"]:hover),:has([data-k="main"][data-id="n5"]:hover)) :is([data-id="e4"]):not([fill="none"]){fill:var(--ve-in);fill-opacity:1}
+svg[data-fig="ve-SIM-04-workflow-pipeline"]:not([data-ve-js]):has([data-k="edge"][data-id="e0"]:hover) :is([data-k="node"],[data-k="main"]):not(:is([data-id="e0"],[data-id="n0"],[data-id="n1"])){opacity:0.3}
+svg[data-fig="ve-SIM-04-workflow-pipeline"]:not([data-ve-js]):has([data-k="edge"][data-id="e0"]:hover) [data-k="edge"]:not(:is([data-id="e0"],[data-id="n0"],[data-id="n1"])){opacity:0.1}
+svg[data-fig="ve-SIM-04-workflow-pipeline"]:not([data-ve-js]):has([data-k="edge"][data-id="e0"]:hover) :is([data-id="e0"])[data-k="edge"]{stroke-opacity:1;stroke-width:3px;vector-effect:non-scaling-stroke;opacity:1}
+svg[data-fig="ve-SIM-04-workflow-pipeline"]:not([data-ve-js]):has([data-k="edge"][data-id="e1"]:hover) :is([data-k="node"],[data-k="main"]):not(:is([data-id="e1"],[data-id="n1"],[data-id="n2"])){opacity:0.3}
+svg[data-fig="ve-SIM-04-workflow-pipeline"]:not([data-ve-js]):has([data-k="edge"][data-id="e1"]:hover) [data-k="edge"]:not(:is([data-id="e1"],[data-id="n1"],[data-id="n2"])){opacity:0.1}
+svg[data-fig="ve-SIM-04-workflow-pipeline"]:not([data-ve-js]):has([data-k="edge"][data-id="e1"]:hover) :is([data-id="e1"])[data-k="edge"]{stroke-opacity:1;stroke-width:3px;vector-effect:non-scaling-stroke;opacity:1}
+svg[data-fig="ve-SIM-04-workflow-pipeline"]:not([data-ve-js]):has([data-k="edge"][data-id="e2"]:hover) :is([data-k="node"],[data-k="main"]):not(:is([data-id="e2"],[data-id="n2"],[data-id="n3"])){opacity:0.3}
+svg[data-fig="ve-SIM-04-workflow-pipeline"]:not([data-ve-js]):has([data-k="edge"][data-id="e2"]:hover) [data-k="edge"]:not(:is([data-id="e2"],[data-id="n2"],[data-id="n3"])){opacity:0.1}
+svg[data-fig="ve-SIM-04-workflow-pipeline"]:not([data-ve-js]):has([data-k="edge"][data-id="e2"]:hover) :is([data-id="e2"])[data-k="edge"]{stroke-opacity:1;stroke-width:3px;vector-effect:non-scaling-stroke;opacity:1}
+svg[data-fig="ve-SIM-04-workflow-pipeline"]:not([data-ve-js]):has([data-k="edge"][data-id="e3"]:hover) :is([data-k="node"],[data-k="main"]):not(:is([data-id="e3"],[data-id="n3"],[data-id="n4"])){opacity:0.3}
+svg[data-fig="ve-SIM-04-workflow-pipeline"]:not([data-ve-js]):has([data-k="edge"][data-id="e3"]:hover) [data-k="edge"]:not(:is([data-id="e3"],[data-id="n3"],[data-id="n4"])){opacity:0.1}
+svg[data-fig="ve-SIM-04-workflow-pipeline"]:not([data-ve-js]):has([data-k="edge"][data-id="e3"]:hover) :is([data-id="e3"])[data-k="edge"]{stroke-opacity:1;stroke-width:3px;vector-effect:non-scaling-stroke;opacity:1}
+svg[data-fig="ve-SIM-04-workflow-pipeline"]:not([data-ve-js]):has([data-k="edge"][data-id="e4"]:hover) :is([data-k="node"],[data-k="main"]):not(:is([data-id="e4"],[data-id="n4"],[data-id="n5"])){opacity:0.3}
+svg[data-fig="ve-SIM-04-workflow-pipeline"]:not([data-ve-js]):has([data-k="edge"][data-id="e4"]:hover) [data-k="edge"]:not(:is([data-id="e4"],[data-id="n4"],[data-id="n5"])){opacity:0.1}
+svg[data-fig="ve-SIM-04-workflow-pipeline"]:not([data-ve-js]):has([data-k="edge"][data-id="e4"]:hover) :is([data-id="e4"])[data-k="edge"]{stroke-opacity:1;stroke-width:3px;vector-effect:non-scaling-stroke;opacity:1}
+svg[data-fig="ve-SIM-04-workflow-pipeline"][data-ve-js][data-ve-on] [data-s]:not(.ve-on):not([data-t="legend"]){opacity:.2}
+svg[data-fig="ve-SIM-04-workflow-pipeline"][data-ve-js] [data-s].ve-on[data-k="edge"]{stroke-opacity:1;stroke-width:3px;vector-effect:non-scaling-stroke}
+svg[data-fig="ve-SIM-04-workflow-pipeline"][data-ve-js] [data-s].ve-on[data-k="edge"]:not([fill="none"]){fill-opacity:1}
+svg[data-fig="ve-SIM-04-workflow-pipeline"]{--ve-out:#4CC9F0;--ve-in:#F58AC0;--ve-both:#FFFFFF}
+svg[data-fig="ve-SIM-04-workflow-pipeline"]:is([data-theme="light"] *){--ve-out:#0A7AA1;--ve-in:#B8337D;--ve-both:#0B0E14}
+svg[data-fig="ve-SIM-04-workflow-pipeline"][data-ve-js] [data-s].ve-out[data-k="edge"][fill="none"]{stroke:var(--ve-out);stroke-opacity:1}
+svg[data-fig="ve-SIM-04-workflow-pipeline"][data-ve-js] [data-s].ve-out[data-k="edge"]:not([fill="none"]){fill:var(--ve-out);fill-opacity:1}
+svg[data-fig="ve-SIM-04-workflow-pipeline"][data-ve-js] [data-s].ve-in[data-k="edge"][fill="none"]{stroke:var(--ve-in);stroke-opacity:1}
+svg[data-fig="ve-SIM-04-workflow-pipeline"][data-ve-js] [data-s].ve-in[data-k="edge"]:not([fill="none"]){fill:var(--ve-in);fill-opacity:1}
+svg[data-fig="ve-SIM-04-workflow-pipeline"][data-ve-js] [data-s].ve-both[data-k="edge"][fill="none"]{stroke:var(--ve-both);stroke-opacity:1}
+svg[data-fig="ve-SIM-04-workflow-pipeline"][data-ve-js] [data-s].ve-both[data-k="edge"]:not([fill="none"]){fill:var(--ve-both);fill-opacity:1}
+svg[data-fig="ve-SIM-04-workflow-pipeline"] .ve-pin:not([fill="none"]):not([data-sk="own"]){stroke:#EAEEF5;stroke-width:2.2px;vector-effect:non-scaling-stroke;stroke-opacity:1}
+svg[data-fig="ve-SIM-04-workflow-pipeline"] .ve-pin[data-sk="own"]{stroke-width:3.2px;vector-effect:non-scaling-stroke;stroke-opacity:1;filter:brightness(1.12) saturate(1.15)}
+svg[data-fig="ve-SIM-04-workflow-pipeline"] .ve-pin[fill="none"]{stroke-width:3.8px;vector-effect:non-scaling-stroke;stroke-opacity:1}]]></style>
+<rect width="800" height="480" x="0" y="0" fill="none"></rect>
+<path d="M288.5 88.5Q164.3 181.5 10.4 177.4" transform="matrix(1.155,0,0,1,403.3,255)" fill="none" pointer-events="visible" stroke="#4A7FC1" stroke-width="1.6" stroke-opacity="0.55" data-s="0" data-i="0" data-t="chart" data-k="edge" data-id="e0" data-sk="own" data-en="n0 n1"><title>intake → normalize</title></path>
+<path d="M0 0L5.3 8L0 6L-5.3 8L0 0Z" transform="matrix(0.027,-0.866,1,0.023,415.2919,432.3894)" fill="#4A7FC1" fill-opacity="0.55" data-s="0" data-i="0" data-t="chart" data-k="edge" data-id="e0" data-en="n0 n1"><title>intake → normalize</title></path>
+<path d="M0 177Q-155 184.4 -280.1 94.6" transform="matrix(1.155,0,0,1,403.3,255)" fill="none" pointer-events="visible" stroke="#4A7FC1" stroke-width="1.6" stroke-opacity="0.55" data-s="0" data-i="1" data-t="chart" data-k="edge" data-id="e1" data-sk="own" data-en="n1 n2"><title>normalize → compile</title></path>
+<path d="M0 0L5.3 8L0 6L-5.3 8L0 0Z" transform="matrix(0.583,-0.704,0.813,0.505,79.8766,349.6465)" fill="#4A7FC1" fill-opacity="0.55" data-s="0" data-i="1" data-t="chart" data-k="edge" data-id="e1" data-en="n1 n2"><title>normalize → compile</title></path>
+<path d="M-288.5 88.5Q-318.6 4.9 -291.8 -78.7" transform="matrix(1.155,0,0,1,403.3,255)" fill="none" pointer-events="visible" stroke="#4A7FC1" stroke-width="1.6" stroke-opacity="0.55" data-s="0" data-i="2" data-t="chart" data-k="edge" data-id="e2" data-sk="own" data-en="n2 n3"><title>compile → detect</title></path>
+<path d="M0 0L5.3 8L0 6L-5.3 8L0 0Z" transform="matrix(0.952,0.264,-0.305,0.825,66.3371,176.3396)" fill="#4A7FC1" fill-opacity="0.55" data-s="0" data-i="2" data-t="chart" data-k="edge" data-id="e2" data-en="n2 n3"><title>compile → detect</title></path>
+<path d="M-288.5 -88.5Q-164.3 -181.5 -10.4 -177.4" transform="matrix(1.155,0,0,1,403.3,255)" fill="none" pointer-events="visible" stroke="#4A7FC1" stroke-width="1.6" stroke-opacity="0.55" data-s="0" data-i="3" data-t="chart" data-k="edge" data-id="e3" data-sk="own" data-en="n3 n4"><title>detect → verify</title></path>
+<path d="M0 0L5.3333 8L0 6L-5.3333 8L0 0Z" transform="matrix(-0.027,0.866,-1,-0.023,391.3081,77.6106)" fill="#4A7FC1" fill-opacity="0.55" data-s="0" data-i="3" data-t="chart" data-k="edge" data-id="e3" data-en="n3 n4"><title>detect → verify</title></path>
+<path d="M0 -177Q155 -184.4 280.1 -94.6" transform="matrix(1.155,0,0,1,403.3,255)" fill="none" pointer-events="visible" stroke="#4A7FC1" stroke-width="1.6" stroke-opacity="0.55" data-s="0" data-i="4" data-t="chart" data-k="edge" data-id="e4" data-sk="own" data-en="n4 n5"><title>verify → report</title></path>
+<path d="M0 0L5.3333 8L0 6L-5.3333 8L0 0Z" transform="matrix(-0.583,0.704,-0.813,-0.505,726.7234,160.3535)" fill="#4A7FC1" fill-opacity="0.55" data-s="0" data-i="4" data-t="chart" data-k="edge" data-id="e4" data-en="n4 n5"><title>verify → report</title></path>
+<path d="M1 0A1 1 0 1 1 1 -0.01" transform="matrix(12,0,0,10.392,736.4,343.5)" fill="#4A7FC1" data-s="0" data-i="0" data-t="chart" data-k="node" data-id="n0" data-nb="n1" data-eg="e0"><title>intake
+1 connection
+→ normalize</title></path>
+<path d="M1 0A1 1 0 1 1 1 -0.01" transform="matrix(12,0,0,10.392,403.3,432)" fill="#4A7FC1" data-s="0" data-i="1" data-t="chart" data-k="node" data-id="n1" data-nb="n0 n2" data-eg="e0 e1"><title>normalize
+2 connections
+→ compile
+← intake</title></path>
+<path d="M1 0A1 1 0 1 1 1 -0.01" transform="matrix(12,0,0,10.392,70.2,343.5)" fill="#4A7FC1" data-s="0" data-i="2" data-t="chart" data-k="node" data-id="n2" data-nb="n1 n3" data-eg="e1 e2"><title>compile
+2 connections
+→ detect
+← normalize</title></path>
+<path d="M1 0A1 1 0 1 1 1 -0.01" transform="matrix(12,0,0,10.392,70.2,166.5)" fill="#4A7FC1" data-s="0" data-i="3" data-t="chart" data-k="node" data-id="n3" data-nb="n2 n4" data-eg="e2 e3"><title>detect
+2 connections
+→ verify
+← compile</title></path>
+<path d="M1 0A1 1 0 1 1 1 -0.01" transform="matrix(12,0,0,10.392,403.3,78)" fill="#4A7FC1" data-s="0" data-i="4" data-t="chart" data-k="node" data-id="n4" data-nb="n3 n5" data-eg="e3 e4"><title>verify
+2 connections
+→ report
+← detect</title></path>
+<path d="M1 0A1 1 0 1 1 1 -0.01" transform="matrix(12,0,0,10.392,736.4,166.5)" fill="#4A7FC1" data-s="0" data-i="5" data-t="chart" data-k="node" data-id="n5" data-nb="n4" data-eg="e4"><title>report
+1 connection
+← verify</title></path>
+<text dominant-baseline="central" text-anchor="start" style="font-size:11px;font-family:Inter, system-ui, sans-serif;" transform="translate(754.4 343.5)" fill="#EAEEF5">intake</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:Inter, system-ui, sans-serif;" y="5.5" transform="translate(403.3 448.3923)" fill="#EAEEF5">normalize</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:Inter, system-ui, sans-serif;" transform="translate(52.2 343.5)" fill="#EAEEF5">compile</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:Inter, system-ui, sans-serif;" transform="translate(52.2 166.5)" fill="#EAEEF5">detect</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:Inter, system-ui, sans-serif;" y="-5.5" transform="translate(403.3 61.6077)" fill="#EAEEF5">verify</text>
+<text dominant-baseline="central" text-anchor="start" style="font-size:11px;font-family:Inter, system-ui, sans-serif;" transform="translate(754.4 166.5)" fill="#EAEEF5">report</text>
+<path d="M-5 -5l106.5 0l0 26l-106.5 0Z" transform="translate(13 11)" fill="rgb(0,0,0)" fill-opacity="0" stroke="#3c3c41" stroke-width="0"></path>
+<text dominant-baseline="central" text-anchor="start" style="font-size:16px;font-family:Space Grotesk, system-ui, sans-serif;font-weight:600;" xml:space="preserve" y="8" transform="translate(13 11)" fill="#EAEEF5">Audit pipeline</text>
+
+</svg>
+<!-- generated-by visual-engine v1.0.0 · echarts@6.1.0 · theme:project-theme · content-sha256:5f9b824b7d884473d17228f4a075e09befe801dc7145b8e2c60771978a79c9a8 -->

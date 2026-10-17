@@ -1,0 +1,53 @@
+{
+  "visual_id": "SIM-05-conformance",
+  "classification": "internal",
+  "theme": "project-theme",
+  "reader_question": "Which components diverge from the blueprint?",
+  "text_summary": "Simulation text summary for accessibility gate.",
+  "selected_visual": "heatmap",
+  "preset": "current-target-conformance",
+  "title": "Blueprint conformance",
+  "subtitle": "1 conforms · 0.5 partial · 0 diverges — current vs D-39 blueprint, never blended",
+  "data": {
+    "rows": [
+      "ingest-gate",
+      "fingerprint",
+      "bank-storage",
+      "report-pipeline"
+    ],
+    "cols": [
+      "design",
+      "build",
+      "wiring",
+      "proof"
+    ],
+    "matrix": [
+      [
+        1,
+        1,
+        0.5,
+        0
+      ],
+      [
+        1,
+        0.5,
+        0.5,
+        0
+      ],
+      [
+        1,
+        1,
+        1,
+        0.5
+      ],
+      [
+        1,
+        1,
+        1,
+        1
+      ]
+    ]
+  },
+  "scale_min": 0,
+  "scale_max": 1
+}

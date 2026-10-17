@@ -1,0 +1,12 @@
+{
+  "locked": "2026-10-17",
+  "node_tested": "v26.5.0",
+  "npm_lockfile_sha256": "6679b9473a9c0aa664010e3cb2ac53aafd4b0885b2ae8455df471bc9db8b4fdb",
+  "pinned": {
+    "eslint": "^10.12.0"
+  },
+  "policy": "DEV-ONLY lint toolchain. Nothing here is a runtime dependency: the engine's Node code (tools/graphify, tools/lib, tools/mermaid-engine) has zero third-party runtime deps by design, and node_modules/ is gitignored and regenerated on demand. Upgrades re-run `npm run lint:js` and re-derive this hash.",
+  "_review": "Reviewed before attesting, 2026-08-23, because an attestation asserted without reading the lockfile is a signature on an unread document. 70 packages, entirely eslint's transitive tree; ZERO carry an install script (`hasInstallScript`), which is the install-time code-execution surface that matters most for a lockfile nobody reads line by line. devDependencies only.",
+  "_why_this_file_exists": "STRUCT-09 requires a sibling VERSION_LOCK.json for EVERY tracked npm lockfile, derived from `git ls-files` rather than a hardcoded path. This repository tracked two lockfiles while the check verified one, and a third (this one) arrived the same day the check was generalised — which is precisely the rot the generalisation exists to prevent, demonstrated within hours.",
+  "_npm_lockfile_sha256_note": "Re-derived 2026-10-17 (Dependabot #3, eslint 10.9.0 -> 10.12.0). The lockfile diff was READ first: 5 packages changed version (eslint, @eslint/plugin-kit, file-entry-cache, flat-cache, keyv), 9 added (the cacheable/keyv cache stack) and 1 removed (json-buffer); 78 entries as npm counts them; every `resolved` URL on registry.npmjs.org; none carries an install script (`hasInstallScript`). All of it sits under eslint's dev-only tree, so nothing here is a runtime dependency. `npm run lint:js` is clean."
+}

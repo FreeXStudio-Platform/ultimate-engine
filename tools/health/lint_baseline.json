@@ -1,0 +1,14 @@
+{
+  "_readme": "Pinned lint/type baseline, gated by tools.health SUITE-04. It exists because OG-02's error count drifted across three different values in three documents over two phases, with nothing measuring it \u2014 and because this session's own edits silently took ruff from 22 to 26 before a manual measurement caught it. A number nobody compares is decoration.",
+  "measured": "2026-10-10",
+  "invocations": {
+    "ruff": "uvx ruff check tools/",
+    "mypy": "uvx mypy --strict tools/"
+  },
+  "max_errors": {
+    "ruff": 0,
+    "mypy_strict": 0
+  },
+  "_mypy_note": "Zero since 2026-10-10 (OG-268). It had been 22 and, measured on the 1.0.14 tag with the current `uvx mypy`, was already 30: the check runs the LATEST mypy and ruff, and a newer mypy flags what an older one did not (bundled PyYAML stubs dropped, bare `dict` generics, `Returning Any` from json boundaries). Fixed in the code, not re-pinned upward: annotations, `str()` at the json boundaries, and `# type: ignore[import-untyped,unused-ignore]` / `[import-untyped,import-not-found,unused-ignore]` on the two optional or stub-less imports (PyYAML, weasyprint) so the result does not depend on which stubs happen to be installed. The ceiling may only go DOWN.",
+  "_ruff_note": "Zero is the pin, not a baseline to live with. Reached 2026-08-20 by fixing two real bugs (an undefined `RoutedEdge` annotation, two ambiguous implicit string concatenations inside list literals) plus safe autofixes."
+}

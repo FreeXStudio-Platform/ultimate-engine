@@ -1,0 +1,13 @@
+{
+  "locked": "2026-08-23",
+  "node_tested": "v26.5.0",
+  "npm_lockfile_sha256": "56461cd5e9e1c6de5d51276b582ad60b092bba679a7bf4294739e9d6bc28a838",
+  "pinned": {
+    "beautiful-mermaid": "1.1.3",
+    "elkjs": "0.11.1",
+    "entities": "7.0.1"
+  },
+  "policy": "Exact pins, no floating ranges — the same policy tools/visual-engine/VERSION_LOCK.json states. Upgrades re-run `node tools/mermaid-engine/test.mjs` and a full `python3 -m tools.health --full` (BUILD-01 renders every doc-system document through render.mjs) before re-pinning.",
+  "_why_this_file_exists": "tools/mermaid-engine/render.mjs EXECUTES at build time, so this lockfile is an execution surface — yet STRUCT-09 attested only tools/visual-engine/package-lock.json, hardcoded by path, while `git ls-files '*package-lock.json'` returned TWO tracked lockfiles. The only thing that read this one was tools/docgen/build_cache.py, and it reads it as a CACHE-INVALIDATION fingerprint: it rebuilds when the lockfile changes, it never refuses. STRUCT-09 now DERIVES its subject set from the tracked lockfiles and requires a sibling VERSION_LOCK.json for each, so a third package directory arrives already covered.",
+  "_npm_lockfile_sha256_note": "Re-derived 2026-10-16 (engine 1.1.2): the only lockfile change is the root entry's `license` field, MIT -> Apache-2.0, when the repository adopted the Apache-2.0 licence; no package added, removed or re-versioned. Previous value 617e881e24ad7f54... Derived 2026-08-23 from the committed lockfile, read first: 3 packages, one direct dependency (beautiful-mermaid 1.1.3) and its two transitives (elkjs, entities), every one an exact pin with an integrity hash. Re-derive with: python3 -c \"import hashlib,pathlib;print(hashlib.sha256(pathlib.Path('tools/mermaid-engine/package-lock.json').read_bytes()).hexdigest())\""
+}

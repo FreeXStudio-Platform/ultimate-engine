@@ -1,0 +1,1301 @@
+[
+  {
+    "id": "build-pipeline",
+    "kind": "flowchart",
+    "title": "docgen build — where a document can be refused",
+    "caption": "Fig. 1 — The build path, with the four fail-closed gates marked. Each was deliberately triggered during this document's verification pass.",
+    "width": 1050,
+    "height": 660,
+    "motion": true,
+    "reader_question": "At which points in a docgen build can a document be refused, and what refuses it?",
+    "insight": "Refusal is not one final check. The manifest gate runs before any figure is rendered, and the collision/L16 gates run per figure inside the renderer — so a document with a bad id-prefix never reaches figure rendering at all, while a document with an unsourced number fails mid-render. All four gates shown were triggered deliberately and each exited 1 with nothing written to disk.",
+    "nodes": [
+      {
+        "id": "src",
+        "type": "source",
+        "label": "Markdown + sidecar",
+        "x": 20,
+        "y": 300,
+        "w": 160,
+        "h": 48
+      },
+      {
+        "id": "hdr",
+        "type": "process",
+        "label": "Parse header",
+        "x": 270,
+        "y": 300,
+        "w": 140,
+        "h": 48
+      },
+      {
+        "id": "mfst",
+        "type": "gate",
+        "label": "manifest_drift",
+        "x": 540,
+        "y": 130,
+        "w": 170,
+        "h": 48
+      },
+      {
+        "id": "rndr",
+        "type": "process",
+        "label": "Render figures",
+        "x": 540,
+        "y": 470,
+        "w": 170,
+        "h": 48
+      },
+      {
+        "id": "gates",
+        "type": "gate",
+        "label": "collision + L16",
+        "x": 800,
+        "y": 470,
+        "w": 170,
+        "h": 48
+      },
+      {
+        "id": "out",
+        "type": "output",
+        "label": "HTML document",
+        "x": 800,
+        "y": 130,
+        "w": 170,
+        "h": 48
+      }
+    ],
+    "edges": [
+      {
+        "src": "src",
+        "dst": "hdr",
+        "style": "solid",
+        "main": true
+      },
+      {
+        "src": "hdr",
+        "dst": "mfst",
+        "label": "id prefix",
+        "style": "solid",
+        "main": true
+      },
+      {
+        "src": "mfst",
+        "dst": "rndr",
+        "label": "row found",
+        "style": "solid",
+        "main": true
+      },
+      {
+        "src": "rndr",
+        "dst": "gates",
+        "style": "solid",
+        "main": true
+      },
+      {
+        "src": "gates",
+        "dst": "out",
+        "label": "all pass",
+        "style": "solid",
+        "main": true
+      }
+    ],
+    "legend": [
+      {
+        "kind": "node",
+        "key": "gate",
+        "label": "Fail-closed gate"
+      },
+      {
+        "kind": "node",
+        "key": "output",
+        "label": "Written artifact"
+      }
+    ],
+    "data_sources": []
+  },
+  {
+    "id": "doc-states",
+    "kind": "state",
+    "title": "Document build states",
+    "caption": "Fig. 2 — The states a document passes through, and the two ways it can end in BLOCKED.",
+    "width": 1120,
+    "height": 620,
+    "motion": false,
+    "reader_question": "Once a build starts, what states can a document actually end in?",
+    "insight": "There are exactly two terminal states, and BLOCKED is reachable from two different earlier states — from VALIDATED when the manifest registry disagrees with the header, and from RENDERED when a figure's geometry or sourcing fails. That distinction is operational: the same exit code, two entirely different fixes.",
+    "nodes": [
+      {
+        "id": "draft",
+        "type": "state",
+        "label": "DRAFT",
+        "x": 30,
+        "y": 250,
+        "w": 140,
+        "h": 48
+      },
+      {
+        "id": "valid",
+        "type": "state",
+        "label": "VALIDATED",
+        "x": 310,
+        "y": 250,
+        "w": 160,
+        "h": 48
+      },
+      {
+        "id": "rendered",
+        "type": "state",
+        "label": "RENDERED",
+        "x": 610,
+        "y": 250,
+        "w": 160,
+        "h": 48
+      },
+      {
+        "id": "written",
+        "type": "state",
+        "label": "WRITTEN",
+        "x": 910,
+        "y": 250,
+        "w": 160,
+        "h": 48
+      },
+      {
+        "id": "blocked",
+        "type": "state",
+        "label": "BLOCKED",
+        "x": 460,
+        "y": 450,
+        "w": 160,
+        "h": 48
+      }
+    ],
+    "edges": [
+      {
+        "src": "draft",
+        "dst": "valid",
+        "label": "header ok",
+        "style": "solid"
+      },
+      {
+        "src": "valid",
+        "dst": "rendered",
+        "label": "row found",
+        "style": "solid"
+      },
+      {
+        "src": "rendered",
+        "dst": "written",
+        "label": "gates pass",
+        "style": "solid"
+      },
+      {
+        "src": "valid",
+        "dst": "blocked",
+        "style": "dashed"
+      },
+      {
+        "src": "rendered",
+        "dst": "blocked",
+        "style": "dashed"
+      }
+    ],
+    "legend": [
+      {
+        "kind": "line",
+        "key": "solid",
+        "label": "Advance"
+      },
+      {
+        "kind": "line",
+        "key": "dashed",
+        "label": "Refuse"
+      }
+    ],
+    "data_sources": []
+  },
+  {
+    "id": "cred-structure",
+    "kind": "system_map",
+    "title": "Directory structure map (graphify → codemap)",
+    "caption": "Fig. 3 — The six largest directories of the measured tree, as mapped by graphify. Source: fs-dircount.",
+    "width": 900,
+    "height": 740,
+    "motion": false,
+    "reader_question": "How is the measured tree's file population distributed across its directories?",
+    "insight": "No single directory dominates: the largest holds 11 of the tree's files and the sixth-largest holds 4, so the whole top-six accounts for 43 files out of 96 graph nodes. This is a flat, wide tree rather than one deep hot spot — which is why the depth view in section 7 is more informative about its shape than the directory view is.",
+    "nodes": [
+      {
+        "id": "root",
+        "type": "datastore",
+        "label": "measured tree · 29 dirs",
+        "x": 40,
+        "y": 318,
+        "w": 240,
+        "h": 64
+      },
+      {
+        "id": "tests",
+        "type": "process",
+        "label": "tests · 11 files",
+        "x": 430,
+        "y": 80,
+        "w": 220,
+        "h": 40
+      },
+      {
+        "id": "lib",
+        "type": "process",
+        "label": "lib · 9 files",
+        "x": 430,
+        "y": 180,
+        "w": 220,
+        "h": 40
+      },
+      {
+        "id": "dash",
+        "type": "process",
+        "label": "dashboard · 7 files",
+        "x": 430,
+        "y": 280,
+        "w": 220,
+        "h": 40
+      },
+      {
+        "id": "dev",
+        "type": "process",
+        "label": "dev · 7 files",
+        "x": 430,
+        "y": 380,
+        "w": 220,
+        "h": 40
+      },
+      {
+        "id": "docs",
+        "type": "process",
+        "label": "docs · 5 files",
+        "x": 430,
+        "y": 480,
+        "w": 220,
+        "h": 40
+      },
+      {
+        "id": "wallets",
+        "type": "process",
+        "label": "wallets · 4 files",
+        "x": 430,
+        "y": 580,
+        "w": 220,
+        "h": 40
+      }
+    ],
+    "edges": [
+      {
+        "src": "root",
+        "dst": "tests",
+        "style": "solid"
+      },
+      {
+        "src": "root",
+        "dst": "lib",
+        "style": "solid"
+      },
+      {
+        "src": "root",
+        "dst": "dash",
+        "style": "solid"
+      },
+      {
+        "src": "root",
+        "dst": "dev",
+        "style": "solid"
+      },
+      {
+        "src": "root",
+        "dst": "docs",
+        "style": "solid"
+      },
+      {
+        "src": "root",
+        "dst": "wallets",
+        "style": "solid"
+      }
+    ],
+    "legend": [
+      {
+        "kind": "node",
+        "key": "datastore",
+        "label": "Tree root"
+      }
+    ],
+    "data_sources": [
+      {
+        "kind": "metric",
+        "ref": "fs-dircount",
+        "retrieved": "2026-08-19"
+      }
+    ]
+  },
+  {
+    "id": "engine-deps",
+    "kind": "dependency_graph",
+    "title": "Engine-to-engine dependencies",
+    "caption": "Fig. 4 — Which engine calls which, and through what. Verified against the bridge modules' source this session.",
+    "width": 1000,
+    "height": 560,
+    "motion": false,
+    "reader_question": "Which of this package's engines depend on which others, and can any of them be removed independently?",
+    "insight": "Only docgen has outbound dependencies, and both are one-way bridges. graphify's only dependency is the external codemap binary — it shares no code with the document path at all, which is why removing graphify cannot break a document build, and why an absent codemap cannot break one either.",
+    "nodes": [
+      {
+        "id": "codemap",
+        "type": "datastore",
+        "label": "codemap (external)",
+        "x": 40,
+        "y": 80,
+        "w": 190,
+        "h": 48
+      },
+      {
+        "id": "graphify",
+        "type": "process",
+        "label": "graphify",
+        "x": 40,
+        "y": 400,
+        "w": 190,
+        "h": 48
+      },
+      {
+        "id": "docgen",
+        "type": "process",
+        "label": "docgen",
+        "x": 400,
+        "y": 240,
+        "w": 180,
+        "h": 48,
+        "highlight": true
+      },
+      {
+        "id": "ve",
+        "type": "process",
+        "label": "visual-engine",
+        "x": 760,
+        "y": 80,
+        "w": 190,
+        "h": 48
+      },
+      {
+        "id": "me",
+        "type": "process",
+        "label": "mermaid-engine",
+        "x": 760,
+        "y": 400,
+        "w": 190,
+        "h": 48
+      }
+    ],
+    "edges": [
+      {
+        "src": "graphify",
+        "dst": "codemap",
+        "label": "--json",
+        "style": "solid"
+      },
+      {
+        "src": "docgen",
+        "dst": "ve",
+        "label": "echarts_bridge",
+        "style": "solid",
+        "main": true
+      },
+      {
+        "src": "docgen",
+        "dst": "me",
+        "label": "mermaid_bridge",
+        "style": "solid"
+      }
+    ],
+    "legend": [
+      {
+        "kind": "node",
+        "key": "datastore",
+        "label": "External tool"
+      }
+    ],
+    "data_sources": []
+  },
+  {
+    "id": "build-sequence",
+    "kind": "sequence",
+    "title": "One docgen build, call by call",
+    "caption": "Fig. 5 — The actual call order inside a build, read off generator.py this session.",
+    "width": 900,
+    "height": 540,
+    "reader_question": "In what order does a build consult the registry, render figures, and run the export gates?",
+    "insight": "The export sanitizer runs last, over the FINAL rendered bytes — not over the source Markdown. That ordering is the reason a figure cannot smuggle content past the leak gates: whatever a renderer emits is still gated before anything reaches disk.",
+    "actors": [
+      {
+        "id": "cli",
+        "label": "cli.py"
+      },
+      {
+        "id": "gen",
+        "label": "generator"
+      },
+      {
+        "id": "mfst",
+        "label": "doc_manifest"
+      },
+      {
+        "id": "rend",
+        "label": "renderers"
+      },
+      {
+        "id": "san",
+        "label": "sanitizer"
+      },
+      {
+        "id": "disk",
+        "label": "disk"
+      }
+    ],
+    "messages": [
+      {
+        "src": "cli",
+        "dst": "gen",
+        "label": "build(md_path)",
+        "order": 1,
+        "style": "solid"
+      },
+      {
+        "src": "gen",
+        "dst": "mfst",
+        "label": "read_manifest()",
+        "order": 2,
+        "style": "solid"
+      },
+      {
+        "src": "mfst",
+        "dst": "gen",
+        "label": "rows",
+        "order": 3,
+        "style": "dashed"
+      },
+      {
+        "src": "gen",
+        "dst": "rend",
+        "label": "render specs",
+        "order": 4,
+        "style": "solid"
+      },
+      {
+        "src": "rend",
+        "dst": "gen",
+        "label": "svg",
+        "order": 5,
+        "style": "dashed"
+      },
+      {
+        "src": "gen",
+        "dst": "san",
+        "label": "run_gates(html)",
+        "order": 6,
+        "style": "solid"
+      },
+      {
+        "src": "san",
+        "dst": "gen",
+        "label": "GateResult",
+        "order": 7,
+        "style": "dashed"
+      },
+      {
+        "src": "gen",
+        "dst": "disk",
+        "label": "write",
+        "order": 8,
+        "style": "solid"
+      }
+    ],
+    "legend": [
+      {
+        "kind": "line",
+        "key": "solid",
+        "label": "Call"
+      },
+      {
+        "kind": "line",
+        "key": "dashed",
+        "label": "Return"
+      }
+    ],
+    "data_sources": []
+  },
+  {
+    "id": "dir-volumes",
+    "kind": "isometric3d",
+    "title": "Directory file counts as volume",
+    "caption": "Fig. 6 — Box height is proportional to file count (8px per file). Source: fs-dircount.",
+    "width": 900,
+    "height": 520,
+    "motion": false,
+    "reader_question": "How lopsided is the file distribution across the five busiest directories?",
+    "insight": "Rendered as volume rather than as a bar, the spread reads as mild: the tallest column is 11 files against the shortest at 5, barely a 2:1 ratio. Compare section 11, where the same tree's per-module line counts span 17:1 — file count and code mass are not the same measure, and only one of them is concentrated.",
+    "boxes": [
+      {
+        "id": "tests",
+        "label": "tests · 11",
+        "x": -150,
+        "y": 150,
+        "z": 0,
+        "w": 70,
+        "d": 70,
+        "h": 88,
+        "highlight": true
+      },
+      {
+        "id": "lib",
+        "label": "lib · 9",
+        "x": -60,
+        "y": 60,
+        "z": 0,
+        "w": 70,
+        "d": 70,
+        "h": 72
+      },
+      {
+        "id": "dash",
+        "label": "dashboard · 7",
+        "x": 30,
+        "y": -30,
+        "z": 0,
+        "w": 70,
+        "d": 70,
+        "h": 56
+      },
+      {
+        "id": "dev",
+        "label": "dev · 7",
+        "x": 120,
+        "y": -120,
+        "z": 0,
+        "w": 70,
+        "d": 70,
+        "h": 56
+      },
+      {
+        "id": "docs",
+        "label": "docs · 5",
+        "x": 210,
+        "y": -210,
+        "z": 0,
+        "w": 70,
+        "d": 70,
+        "h": 40
+      }
+    ],
+    "connectors": [],
+    "layer_labels": [],
+    "legend": [],
+    "data_sources": [
+      {
+        "kind": "metric",
+        "ref": "fs-dircount",
+        "retrieved": "2026-08-19"
+      }
+    ]
+  },
+  {
+    "id": "depth-layers",
+    "kind": "layered_workflow",
+    "title": "Where the files actually live, by path depth",
+    "caption": "Fig. 7 — All 198 files bucketed by path-segment depth. Source: fs-depth.",
+    "width": 900,
+    "height": 480,
+    "reader_question": "How deeply nested is the measured tree — is it flat, or does it bury its content?",
+    "insight": "Depth 2 and depth 3 together hold 173 of 198 files (87%). Almost nothing sits at the root and almost nothing goes four levels deep, so a reader looking for any given file has essentially two places to look. This is the same tree section 3 showed as wide-and-flat, seen from the other axis.",
+    "layer_labels": [
+      "depth 1 · 11 files",
+      "depth 2 · 98 files",
+      "depth 3 · 75 files",
+      "depth 4 · 14 files"
+    ],
+    "nodes": [
+      {
+        "id": "d1",
+        "label": "file",
+        "layer": 0,
+        "col": 0
+      },
+      {
+        "id": "d2",
+        "label": "dir / file",
+        "layer": 1,
+        "col": 0
+      },
+      {
+        "id": "d3",
+        "label": "dir / sub / file",
+        "layer": 2,
+        "col": 0
+      },
+      {
+        "id": "d4",
+        "label": "dir / sub / sub / file",
+        "layer": 3,
+        "col": 0
+      }
+    ],
+    "connectors": [
+      {
+        "src": "d1",
+        "dst": "d2"
+      },
+      {
+        "src": "d2",
+        "dst": "d3"
+      },
+      {
+        "src": "d3",
+        "dst": "d4"
+      }
+    ],
+    "data_sources": [
+      {
+        "kind": "metric",
+        "ref": "fs-depth",
+        "retrieved": "2026-08-19"
+      }
+    ]
+  },
+  {
+    "id": "polygon-hotspots",
+    "kind": "geo_map",
+    "title": "Most polygon-expensive countries in the bundled dataset",
+    "caption": "Fig. 8 — Plotted at each country's computed centroid. NOT filesystem data: a directory tree has no geographic dimension, so this figure and Fig. 9 are sourced from this engine's own bundled boundary dataset.",
+    "width": 900,
+    "height": 500,
+    "show_base": true,
+    "reader_question": "Which countries cost this engine's bundled boundary dataset the most geometry to draw?",
+    "insight": "The three most expensive countries after Canada all sit on the same side of the map — Russia, Indonesia and the Philippines — because polygon cost tracks archipelagos and Arctic island chains, not land area or population. Canada alone needs 30 of the dataset's 286 polygons.",
+    "points": [
+      {
+        "id": "ca",
+        "label": "Canada · 30",
+        "lon": -90.62,
+        "lat": 56.48,
+        "value": 30,
+        "hot": true
+      },
+      {
+        "id": "us",
+        "label": "USA · 10",
+        "lon": -90.24,
+        "lat": 38.28,
+        "value": 10
+      },
+      {
+        "id": "ru",
+        "label": "Russia · 13",
+        "lon": 91.28,
+        "lat": 59.34,
+        "value": 13
+      },
+      {
+        "id": "id",
+        "label": "Indonesia · 13",
+        "lon": 121.64,
+        "lat": -2.03,
+        "value": 13
+      }
+    ],
+    "links": [],
+    "data_sources": [
+      {
+        "kind": "cited",
+        "ref": "geojson-110m",
+        "retrieved": "2026-08-19"
+      }
+    ]
+  },
+  {
+    "id": "polygon-choropleth",
+    "kind": "choropleth",
+    "title": "Polygons per country, real boundaries",
+    "caption": "Fig. 9 — Value-per-country over real country boundaries. Same non-filesystem source as Fig. 8.",
+    "width": 900,
+    "height": 500,
+    "unit": " polygons",
+    "reader_question": "Is boundary complexity concentrated in a few countries, or spread evenly across the world?",
+    "insight": "It is sharply concentrated: 149 of the dataset's 177 countries are a single polygon, while the eight shaded here account for 90 polygons between them — nearly a third of all 286. A sequential single-hue ramp is the correct convention here because the underlying quantity has a genuine low-to-high order with no meaningful midpoint.",
+    "values": {
+      "Canada": 30,
+      "Russia": 13,
+      "Indonesia": 13,
+      "USA": 10,
+      "Antarctica": 8,
+      "Philippines": 7,
+      "Solomon Islands": 5,
+      "Papua New Guinea": 4
+    },
+    "data_sources": [
+      {
+        "kind": "cited",
+        "ref": "geojson-110m",
+        "retrieved": "2026-08-19"
+      }
+    ]
+  },
+  {
+    "id": "file-partition",
+    "kind": "sankey",
+    "title": "How 198 files partition",
+    "caption": "Fig. 10 — Reconciles the two file-count denominators used in this document. Sources: fs-ext-mix, fs-depth.",
+    "width": 900,
+    "height": 460,
+    "unit": " files",
+    "reader_question": "Why do different figures in this document count 198 files and 155 files?",
+    "insight": "43 files sit inside the vault-scoped directories that the extension survey deliberately excluded, which is the entire difference between the two denominators. Of the 155 that remain, 53 carry none of the five counted extensions — so the extension pie in section 13 describes two thirds of the surveyed files, not all of them.",
+    "nodes": [
+      {
+        "id": "all",
+        "label": "All files · 198",
+        "col": 0
+      },
+      {
+        "id": "tracked",
+        "label": "Surveyed · 155",
+        "col": 1
+      },
+      {
+        "id": "vault",
+        "label": "Vault-scoped · 43",
+        "col": 1
+      },
+      {
+        "id": "md",
+        "label": "Markdown · 41",
+        "col": 2
+      },
+      {
+        "id": "js",
+        "label": "JavaScript · 27",
+        "col": 2
+      },
+      {
+        "id": "oth",
+        "label": "gz/log/json · 34",
+        "col": 2
+      },
+      {
+        "id": "noext",
+        "label": "Other · 53",
+        "col": 2
+      }
+    ],
+    "flows": [
+      {
+        "src": "all",
+        "dst": "tracked",
+        "value": 155,
+        "emphasis": true
+      },
+      {
+        "src": "all",
+        "dst": "vault",
+        "value": 43
+      },
+      {
+        "src": "tracked",
+        "dst": "md",
+        "value": 41
+      },
+      {
+        "src": "tracked",
+        "dst": "js",
+        "value": 27
+      },
+      {
+        "src": "tracked",
+        "dst": "oth",
+        "value": 34
+      },
+      {
+        "src": "tracked",
+        "dst": "noext",
+        "value": 53
+      }
+    ],
+    "data_sources": [
+      {
+        "kind": "metric",
+        "ref": "fs-ext-mix",
+        "retrieved": "2026-08-19"
+      },
+      {
+        "kind": "metric",
+        "ref": "fs-depth",
+        "retrieved": "2026-08-19"
+      }
+    ]
+  },
+  {
+    "id": "module-size",
+    "kind": "bar",
+    "title": "Six largest library modules by line count",
+    "caption": "Fig. 11 — Zero-baseline, as the engine enforces. Source: fs-linecount.",
+    "width": 900,
+    "height": 440,
+    "unit": " lines",
+    "reader_question": "Is the library's code mass spread across its modules, or concentrated in one?",
+    "insight": "One module carries 2,326 lines — more than the next three combined (1,719) and 45% of the library's entire 5,224 lines. That single file is where any review, refactor, or test-coverage effort has to start; the flat file-count view in section 6 hides this completely.",
+    "items": [
+      {
+        "label": "store.js",
+        "value": 2326
+      },
+      {
+        "label": "server.js",
+        "value": 971
+      },
+      {
+        "label": "changelog.js",
+        "value": 442
+      },
+      {
+        "label": "crypto.js",
+        "value": 306
+      },
+      {
+        "label": "migrate.js",
+        "value": 280
+      },
+      {
+        "label": "lock.js",
+        "value": 274
+      }
+    ],
+    "data_sources": [
+      {
+        "kind": "metric",
+        "ref": "fs-linecount",
+        "retrieved": "2026-08-19"
+      }
+    ]
+  },
+  {
+    "id": "dir-profile",
+    "kind": "radar",
+    "title": "File count across the five busiest directories",
+    "caption": "Fig. 12 — Five axes, one series. Source: fs-dircount.",
+    "width": 520,
+    "height": 520,
+    "max_value": 12,
+    "reader_question": "Does the tree have a lopsided shape across its main directories, or a balanced one?",
+    "insight": "The polygon is close to regular — 11, 9, 7, 7, 5 — so no directory is an outlier by file count. A radar makes that near-symmetry immediately legible in a way the same five numbers in a table do not.",
+    "axes": [
+      "tests",
+      "lib",
+      "dashboard",
+      "dev",
+      "docs"
+    ],
+    "series": [
+      {
+        "label": "files",
+        "values": [
+          11,
+          9,
+          7,
+          7,
+          5
+        ]
+      }
+    ],
+    "legend": [
+      {
+        "kind": "swatch",
+        "key": "files",
+        "label": "Files per directory"
+      }
+    ],
+    "data_sources": [
+      {
+        "kind": "metric",
+        "ref": "fs-dircount",
+        "retrieved": "2026-08-19"
+      }
+    ]
+  },
+  {
+    "id": "ext-mix",
+    "kind": "pie",
+    "title": "Extension mix of the 102 extension-bearing files",
+    "caption": "Fig. 13 — Five slices, inside the engine's six-slice readability cap. Source: fs-ext-mix.",
+    "width": 520,
+    "height": 520,
+    "donut": true,
+    "reader_question": "What kind of file is this tree mostly made of?",
+    "insight": "Markdown outnumbers JavaScript 41 to 27 — a documentation-heavy tree, not a code-heavy one. Together they are 68 of the 102 files carrying a counted extension; the remaining 34 are archives, logs and config, none of which is authored by hand.",
+    "slices": [
+      {
+        "label": "md",
+        "value": 41
+      },
+      {
+        "label": "js",
+        "value": 27
+      },
+      {
+        "label": "gz",
+        "value": 12
+      },
+      {
+        "label": "log",
+        "value": 11
+      },
+      {
+        "label": "json",
+        "value": 11
+      }
+    ],
+    "legend": [],
+    "data_sources": [
+      {
+        "kind": "metric",
+        "ref": "fs-ext-mix",
+        "retrieved": "2026-08-19"
+      }
+    ]
+  },
+  {
+    "id": "activity-months",
+    "kind": "timeline",
+    "title": "Files last modified, by month",
+    "caption": "Fig. 14 — Point events, not durations. Source: fs-mtime.",
+    "width": 900,
+    "height": 280,
+    "reader_question": "Was this tree built steadily, or in bursts?",
+    "insight": "Bursts. 34 files in April, then six files across all of May and June combined, then 158 across July and August. The two-month trough is invisible in a total count and obvious on an axis — which is exactly what a timeline is for.",
+    "events": [
+      {
+        "label": "34 files",
+        "date_label": "2026-04",
+        "t": 0.0
+      },
+      {
+        "label": "3 files",
+        "date_label": "2026-05",
+        "t": 0.25
+      },
+      {
+        "label": "3 files",
+        "date_label": "2026-06",
+        "t": 0.5
+      },
+      {
+        "label": "71 files",
+        "date_label": "2026-07",
+        "t": 0.75
+      },
+      {
+        "label": "87 files",
+        "date_label": "2026-08",
+        "t": 1.0
+      }
+    ],
+    "data_sources": [
+      {
+        "kind": "metric",
+        "ref": "fs-mtime",
+        "retrieved": "2026-08-19"
+      }
+    ]
+  },
+  {
+    "id": "dir-ext-matrix",
+    "kind": "heatmap",
+    "title": "Directory × extension",
+    "caption": "Fig. 15 — Ships with its colour-scale legend, as the engine requires. Source: fs-ext-mix.",
+    "width": 720,
+    "height": 420,
+    "min_value": 0,
+    "max_value": 11,
+    "reader_question": "Do any directories mix code and documentation, or is each one single-purpose?",
+    "insight": "Eleven of the twelve cells are zero or single-purpose: every directory holds exactly one of these three file types, except dashboard, which holds two JavaScript files and one JSON. Code directories contain no Markdown and the docs directory contains no code, so in this tree the directory name alone predicts the file type.",
+    "row_labels": [
+      "lib",
+      "tests",
+      "dashboard",
+      "docs"
+    ],
+    "col_labels": [
+      "js",
+      "md",
+      "json"
+    ],
+    "matrix": [
+      [
+        9,
+        0,
+        0
+      ],
+      [
+        11,
+        0,
+        0
+      ],
+      [
+        2,
+        0,
+        1
+      ],
+      [
+        0,
+        5,
+        0
+      ]
+    ],
+    "data_sources": [
+      {
+        "kind": "metric",
+        "ref": "fs-ext-mix",
+        "retrieved": "2026-08-19"
+      }
+    ]
+  },
+  {
+    "id": "graphify-pipeline",
+    "kind": "mermaid",
+    "caption": "Fig. 16 — Mermaid syntax, rendered offline by mermaid-engine. No browser, no CDN.",
+    "reader_question": "What does graphify actually produce when you point it at a tree, and what consumes each output?",
+    "insight": "One build writes three artifacts for two different consumers: graph.json for the query CLI and graph-data.js for the browser viewer, from a single codemap pass. Re-running the build is cheap; nothing downstream re-invokes codemap.",
+    "code": "graph LR\n  A[codemap --json] --> B[build.mjs]\n  B --> C[graph.json]\n  B --> D[graph-data.js]\n  C --> E[graphify query]\n  D --> F[graph-view.html]"
+  },
+  {
+    "id": "cumulative-files",
+    "data_sources": [{ "kind": "metric", "ref": "fs-mtime", "retrieved": "2026-08-19" }],
+    "kind": "echarts",
+    "caption": "Fig. 17 — chart-engine, line family. Source: fs-mtime.",
+    "job": {
+      "visual_id": "cumulative-files",
+      "reader_question": "What does the tree's growth look like cumulatively rather than month by month?",
+      "classification": "public",
+      "data_shape": "table",
+      "selected_visual": "line",
+      "title": "Cumulative files by last-modified month",
+      "units": [
+        "files"
+      ],
+      "text_summary": "The curve is flat from April to June — 34 files to 40 — then almost quintuples to 198 across July and August. Cumulatively the trough reads as a plateau, which is a more honest picture of stalled work than the per-month view in Fig. 14.",
+      "data": {
+        "dimensions": [
+          "month",
+          "files"
+        ],
+        "source": [
+          [
+            "2026-04",
+            34
+          ],
+          [
+            "2026-05",
+            37
+          ],
+          [
+            "2026-06",
+            40
+          ],
+          [
+            "2026-07",
+            111
+          ],
+          [
+            "2026-08",
+            198
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "id": "dir-treemap",
+    "data_sources": [{ "kind": "metric", "ref": "fs-dircount", "retrieved": "2026-08-19" }],
+    "kind": "echarts",
+    "caption": "Fig. 18 — chart-engine, hierarchy family. Source: fs-dircount.",
+    "job": {
+      "visual_id": "dir-treemap",
+      "reader_question": "How much of the tree's file population does each directory actually occupy?",
+      "classification": "public",
+      "data_shape": "tree",
+      "selected_visual": "treemap",
+      "title": "Directory share of files",
+      "text_summary": "Nine directories hold 50 files between them and no tile is more than 22% of the total. A treemap earns its place here precisely because it shows there is no dominant tile — the answer to the question is 'evenly'.",
+      "data": {
+        "items": [
+          {
+            "name": "tests",
+            "value": 11
+          },
+          {
+            "name": "lib",
+            "value": 9
+          },
+          {
+            "name": "dashboard",
+            "value": 7
+          },
+          {
+            "name": "dev",
+            "value": 7
+          },
+          {
+            "name": "docs",
+            "value": 5
+          },
+          {
+            "name": "wallets",
+            "value": 4
+          },
+          {
+            "name": "keys",
+            "value": 3
+          },
+          {
+            "name": "examples",
+            "value": 2
+          },
+          {
+            "name": "native",
+            "value": 2
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "linecount-spread",
+    "data_sources": [{ "kind": "metric", "ref": "fs-linecount", "retrieved": "2026-08-19" }],
+    "kind": "echarts",
+    "caption": "Fig. 19 — chart-engine, distribution family. Pre-computed five-number summary. Source: fs-linecount.",
+    "job": {
+      "visual_id": "linecount-spread",
+      "reader_question": "How far from typical is the largest library module?",
+      "classification": "public",
+      "data_shape": "boxplot",
+      "selected_visual": "boxplot",
+      "title": "Line-count distribution across 9 modules",
+      "units": [
+        "lines"
+      ],
+      "text_summary": "Median 280, upper quartile 706.5, maximum 2,326 — the largest module sits more than three times beyond the upper quartile. A box plot names it as a genuine outlier rather than just the top of a ranking, which a bar chart cannot do.",
+      "data": {
+        "categories": [
+          "lib/*.js"
+        ],
+        "values": [
+          [
+            134,
+            245.5,
+            280,
+            706.5,
+            2326
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "id": "filter-funnel",
+    "data_sources": [{ "kind": "metric", "ref": "fs-ext-mix", "retrieved": "2026-08-19" }],
+    "kind": "echarts",
+    "caption": "Fig. 20 — chart-engine, flow family. Successive strict subsets. Sources: fs-ext-mix, fs-depth.",
+    "job": {
+      "visual_id": "filter-funnel",
+      "reader_question": "How much of the tree survives each successive narrowing to 'hand-authored source'?",
+      "classification": "public",
+      "data_shape": "items",
+      "selected_visual": "funnel",
+      "title": "From all files to hand-written JavaScript",
+      "units": [
+        "files"
+      ],
+      "text_summary": "198 files narrow to 27 JavaScript modules — 14% of the tree. Each stage is a strict subset of the one above it, so the funnel form is honest here; it would not be if the stages merely correlated.",
+      "data": {
+        "items": [
+          {
+            "name": "All files",
+            "value": 198
+          },
+          {
+            "name": "Outside vault dirs",
+            "value": 155
+          },
+          {
+            "name": "Counted extension",
+            "value": 102
+          },
+          {
+            "name": "Markdown or JS",
+            "value": 68
+          },
+          {
+            "name": "JavaScript only",
+            "value": 27
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "polygon-bars",
+    "data_sources": [{ "kind": "cited", "ref": "geojson-110m", "retrieved": "2026-08-19" }],
+    "kind": "echarts",
+    "caption": "Fig. 21 — chart-engine, comparison family, horizontal orientation. Source: geojson-110m.",
+    "job": {
+      "visual_id": "polygon-bars",
+      "reader_question": "Ranked strictly, how big is the gap between the most polygon-expensive country and the rest?",
+      "classification": "public",
+      "data_shape": "table",
+      "selected_visual": "bar_horizontal",
+      "title": "Polygons per country, top six",
+      "units": [
+        "polygons"
+      ],
+      "text_summary": "Canada's 30 polygons are more than Russia's 13 and Indonesia's 13 combined. Horizontal orientation is the right call for ranked categorical labels of unequal length — the country names read left-to-right without rotation.",
+      "data": {
+        "dimensions": [
+          "country",
+          "polygons"
+        ],
+        "source": [
+          [
+            "Canada",
+            30
+          ],
+          [
+            "Russia",
+            13
+          ],
+          [
+            "Indonesia",
+            13
+          ],
+          [
+            "USA",
+            10
+          ],
+          [
+            "Antarctica",
+            8
+          ],
+          [
+            "Philippines",
+            7
+          ]
+        ]
+      }
+    }
+  }
+]

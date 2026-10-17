@@ -1,0 +1,52 @@
+graph LR
+  tools["tools"]
+  tools_corpus_check["tools.corpus_check"]
+  tools_health["tools.health"]
+  tools_blueprint["tools.blueprint"]
+  tools_docgen["tools.docgen"]
+  tools_census["tools.census"]
+  tools_lib["tools.lib"]
+  tools_corpus_check_guards["tools.corpus_check.guards"]
+  tools_docgen_assets["tools.docgen.assets"]
+  tools_docgen_hooks["tools.docgen.hooks"]
+  tools_draft["tools.draft"]
+  tools_project_index["tools.project_index"]
+  tools_tests["tools.tests"]
+  tools -->|1| tools_corpus_check
+  tools -->|1| tools_health
+  tools_blueprint ==>|10| tools
+  tools_blueprint -->|3| tools_corpus_check
+  tools_blueprint ==>|5| tools_docgen
+  tools_blueprint -->|3| tools_health
+  tools_census ==>|7| tools
+  tools_corpus_check -->|2| tools
+  tools_corpus_check -->|1| tools_lib
+  tools_corpus_check_guards ==>|7| tools
+  tools_corpus_check_guards ==>|29| tools_corpus_check
+  tools_corpus_check_guards ==>|5| tools_docgen
+  tools_docgen ==>|19| tools
+  tools_docgen -->|3| tools_docgen_assets
+  tools_docgen -->|1| tools_docgen_hooks
+  tools_docgen -->|2| tools_lib
+  tools_docgen_assets -->|1| tools_docgen
+  tools_docgen_hooks -->|1| tools
+  tools_docgen_hooks -->|2| tools_docgen
+  tools_draft -->|1| tools
+  tools_draft -->|3| tools_corpus_check
+  tools_health -->|3| tools
+  tools_health -->|2| tools_blueprint
+  tools_health ==>|5| tools_corpus_check
+  tools_health -->|2| tools_corpus_check_guards
+  tools_health -->|2| tools_docgen
+  tools_health -->|1| tools_lib
+  tools_project_index -->|4| tools
+  tools_project_index -->|1| tools_docgen
+  tools_tests ==>|41| tools
+  tools_tests ==>|6| tools_blueprint
+  tools_tests ==>|14| tools_corpus_check
+  tools_tests -->|3| tools_corpus_check_guards
+  tools_tests ==>|34| tools_docgen
+  tools_tests -->|1| tools_docgen_assets
+  tools_tests ==>|6| tools_docgen_hooks
+  tools_tests ==>|8| tools_health
+  tools_tests -->|1| tools_lib

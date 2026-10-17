@@ -1,0 +1,16 @@
+{
+  "_readme": "Gate G9 render-evidence record, written by writeEvidence() (adapters/echarts/render.mjs). Documentation/audit trail only — no code in this engine reads this file back; shape is schemas/render-result.schema.json (also unvalidated, see its own _status).",
+  "visual_id": "SIM-03-stage-reconciliation",
+  "selected_visual": "funnel",
+  "preset": "detector-stage-reconciliation",
+  "theme": "project-theme",
+  "classification": "internal",
+  "engine": "echarts@6.1.0",
+  "adapter": "visual-engine@1.0.0",
+  "width": 800,
+  "height": 480,
+  "svg_sha256": "d8c4e71266f3446b88729a9285728f7fba36e7a97bde3917c9c86eb998e17e41",
+  "option_sha256": "932a5d851cb1949018116d8b2589126fcdc5514c18efe4f7f5a9b4074c51855c",
+  "job_sha256": "68a5a7755e4e6fbace81654b44c6daaf2d17aa7f7edf8366f6a810fd66b48ad3",
+  "warnings": []
+}

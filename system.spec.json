@@ -1,0 +1,115 @@
+{
+  "$schema": "self-describing — read _readme; `python3 -m tools.blueprint verify` is the enforcement",
+  "_readme": "THE SYSTEM SPEC. This file carries ONLY what no artifact in the tree owns: the system's name, the containers a reader should think in, each container's purpose in one sentence, and the document that owns it. Everything else in blueprint/ — the modules, the import edges, the depth of each node, its gatekeepers, the registries, the surfaces — is DERIVED on every build from the artifact that owns it (RULES.md Rule 2). `depthFloor` is the one number here that is checked in BOTH directions: a container measuring below it is a regression, and a floor written beneath the measurement is slack the ratchet refuses. Raise it when a container earns it; it may never be lowered. Do not add a derivable fact here; `verify` will not catch prose, and a hand-kept fact rots. Every fact that IS here is checked against the tree by `python3 -m tools.blueprint verify`, which exits 1 when a container names a package that matches nothing, a module is claimed by nobody or by two containers at once, or an owning document does not resolve to tracked content.",
+  "system": {
+    "name": "Ultimate Engine",
+    "purpose": "A documentation engine with a governance layer: it turns authored Markdown into design-system HTML with deterministic, sourced figures, and enforces a rule layer over the corpus. This repository is also its own first test corpus (docs/CHARTER.md).",
+    "document": "docs/CHARTER.md"
+  },
+  "containers": [
+    {
+      "id": "docgen",
+      "name": "The document engine",
+      "purpose": "Parse a Markdown document and its sidecar figures, adjudicate it against the rule layer, render it to design-system HTML/SVG/PDF, and refuse to write anything a blocking gate rejected.",
+      "packages": [
+        "tools.docgen"
+      ],
+      "document": "docs/design/ARCHITECTURE.md",
+      "depthFloor": 2
+    },
+    {
+      "id": "moat",
+      "name": "The git moat",
+      "purpose": "Content gates installed into .git/hooks: classification placement and a secret scan over the index at commit time, and over every commit in the pushed range at push time.",
+      "packages": [
+        "tools.docgen.hooks"
+      ],
+      "document": "docs/process/THREAT_MODEL.md",
+      "depthFloor": 5
+    },
+    {
+      "id": "corpus-check",
+      "name": "The corpus checker",
+      "purpose": "Run the guard set over this repository's own tracked documents, so a stale count, a dead citation, a present-tense plan or a contradicting register row fails a check instead of waiting for a verification pass to find it by hand.",
+      "packages": [
+        "tools.corpus_check"
+      ],
+      "document": "docs/framework/DOC_WRITING_DOCTRINE.md",
+      "depthFloor": 1
+    },
+    {
+      "id": "health",
+      "name": "The health run",
+      "purpose": "The single entry point that runs every gate in one command — structure, rule layer, cross-file consistency, build, and both npm suites — and never reports a SKIP as a pass.",
+      "packages": [
+        "tools.health"
+      ],
+      "document": "docs/design/ARCHITECTURE.md",
+      "depthFloor": 1
+    },
+    {
+      "id": "blueprint",
+      "name": "The blueprint layer",
+      "purpose": "Derive the system map an agent reads INSTEAD of the tree, verify the committed copy against a fresh derivation, and build the gitignored SQLite index that answers joins over it.",
+      "packages": [
+        "tools.blueprint"
+      ],
+      "document": "docs/plan/BUILD_PLAN.md",
+      "depthFloor": 1
+    },
+    {
+      "id": "draft",
+      "name": "The draft gate",
+      "purpose": "Splice a candidate document into a throwaway copy of the working tree and report the DIFFERENCE it would introduce — including findings that land on other documents because this one moved a fact they state.",
+      "packages": [
+        "tools.draft"
+      ],
+      "document": "docs/process/RULES.md",
+      "depthFloor": 1
+    },
+    {
+      "id": "census",
+      "name": "The project census",
+      "purpose": "Measure a project's documentation system from its own git tree (documents, freshness, what is crossed out, stamps and whether they hold, completeness by dimension) and its Python code hierarchy, then compose them into a report of varied figures and two explorers. Reads git and writes only where told; composes the document, chart and Mermaid engines without changing them.",
+      "packages": [
+        "tools.census"
+      ],
+      "document": "docs/design/PROJECT_CENSUS.md",
+      "depthFloor": 1
+    },
+    {
+      "id": "project-index",
+      "name": "The artifact index",
+      "purpose": "Enumerate the project's registered artifacts and render the browsable dashboard over them.",
+      "packages": [
+        "tools.project_index"
+      ],
+      "document": "tools/project_index/README.md",
+      "depthFloor": 2
+    },
+    {
+      "id": "lib",
+      "name": "Shared primitives",
+      "purpose": "The primitives more than one container depends on — chiefly the ONE Markdown table reader, which replaced five readers measured disagreeing on the manifest's own header cell.",
+      "packages": [
+        "tools.lib"
+      ],
+      "modules": [
+        "tools",
+        "tools.gitenv"
+      ],
+      "document": "docs/design/ARCHITECTURE.md",
+      "depthFloor": 2
+    },
+    {
+      "id": "tests",
+      "name": "The retained counter-examples",
+      "purpose": "Every assertion this engine makes about itself, retained as a probe that was shown RED before it was trusted. Run by the health suite on every pass.",
+      "packages": [
+        "tools.tests"
+      ],
+      "document": "docs/process/DEEP_VERIFICATION_PASS.md",
+      "depthFloor": 2
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "id": "workflow-pipeline",
+  "visual": "graph",
+  "family": "process",
+  "summary": "Audit pipeline stage DAG with layout preset",
+  "canonical_reader_question": "How do audit stages depend on each other?",
+  "required_fields": [
+    "data.nodes",
+    "data.links"
+  ],
+  "defaults": {},
+  "semantics": {},
+  "job_extras": {
+    "layout": "none"
+  },
+  "notes": "prefer tools/docgen VisualSpec for document-grade pipeline diagrams; this preset is for quick data-annotated DAGs",
+  "provenance": "visual-engine preset v1.0.0 — derived from spec §24 + project data shapes (detector registry, gates, docs estate)."
+}

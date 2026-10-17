@@ -1,0 +1,16 @@
+{
+  "name": "ultimate-engine",
+  "private": true,
+  "license": "Apache-2.0",
+  "homepage": "https://freexstudio.com",
+  "description": "Lint/tooling manifest for this repo's JavaScript/mjs surface. No runtime package is published from here — the engine's Node code (tools/graphify, tools/lib, tools/mermaid-engine, tools/visual-engine) has zero third-party runtime dependencies by design (see CONFIGURATION.md). This file exists solely so `npm install` reproduces a pinned lint toolchain: `node_modules/` is gitignored and regenerated on demand, matching the same 'regenerable dependencies, not vendored' policy already used for tools/docgen/requirements.txt.",
+  "scripts": {
+    "lint:js": "eslint ."
+  },
+  "devDependencies": {
+    "eslint": "^10.12.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

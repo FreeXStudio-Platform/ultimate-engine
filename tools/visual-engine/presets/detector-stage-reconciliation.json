@@ -1,0 +1,15 @@
+{
+  "id": "detector-stage-reconciliation",
+  "visual": "funnel",
+  "family": "flow",
+  "summary": "Detector counts across execution stages",
+  "canonical_reader_question": "Where do detector executions attrit between stages?",
+  "required_fields": [
+    "data.items"
+  ],
+  "defaults": {},
+  "semantics": {},
+  "job_extras": {},
+  "notes": "stage counts must reconcile with the registry; funnel not sankey unless flows split",
+  "provenance": "visual-engine preset v1.0.0 — derived from spec §24 + project data shapes (detector registry, gates, docs estate)."
+}

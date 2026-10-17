@@ -1,0 +1,33 @@
+[
+  {
+    "id": "customer-map",
+    "kind": "choropleth",
+    "title": "Customers by Country",
+    "caption": "Customers by country, CRM export.",
+    "unit": " customers",
+    "values": { "USA": 420, "Germany": 210, "India": 340, "Brazil": 88, "Australia": 65 },
+    "data_sources": [{ "kind": "metric", "ref": "crm-2026-08" }]
+  },
+  {
+    "id": "deploy-flow",
+    "kind": "mermaid",
+    "caption": "Deploy pipeline, current state.",
+    "code": "graph TD\n  A[Push] --> B{Tests pass?}\n  B -->|Yes| C[Deploy staging]\n  B -->|No| D[Notify]\n  C --> E[Deploy prod]"
+  },
+  {
+    "id": "incident-chart",
+    "data_sources": [{ "kind": "cited", "ref": "illustrative demo data, defined in this sidecar", "retrieved": "2026-08-24" }],
+    "kind": "echarts",
+    "caption": "Incidents per week, last quarter.",
+    "job": {
+      "visual_id": "incident-chart",
+      "reader_question": "How many incidents occurred each week last quarter?",
+      "classification": "public",
+      "data_shape": "table",
+      "selected_visual": "line",
+      "title": "Weekly incidents",
+      "text_summary": "Incidents peaked at 4 in week 3 and dropped to 0 by week 4.",
+      "data": { "dimensions": ["week", "count"], "source": [["W1", 2], ["W2", 1], ["W3", 4], ["W4", 0]] }
+    }
+  }
+]

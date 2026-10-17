@@ -1,0 +1,20 @@
+{
+  "_readme": "Gate G9 render-evidence record, written by writeEvidence() (adapters/echarts/render.mjs). Documentation/audit trail only — no code in this engine reads this file back; shape is schemas/render-result.schema.json (also unvalidated, see its own _status). This particular file predates writeEvidence() taking an explicit `dir` argument (P8-066) and is not reproduced by `npm run simulate` — it is a one-off ad-hoc record, kept as-is.",
+  "visual_id": "VIS-REG-2026-08-10",
+  "selected_visual": "bar_horizontal",
+  "preset": null,
+  "theme": "project-theme",
+  "classification": "internal",
+  "engine": "echarts@6.1.0",
+  "adapter": "visual-engine@1.0.0",
+  "width": 760,
+  "height": 480,
+  "svg_sha256": "24d6313cd2c2e5c7bb962dddf292415fb1b275d7274994122a8a2b7585f45117",
+  "option_sha256": "6d9a8a80d63394b59983e3179dd5b2485f54d98ff586d822dc13541a650bb85e",
+  "job_sha256": "dfefcef762dcc661c463be7484f4d41f023ea506cc06d178671321a3bda49fbc",
+  "render_ms": 31,
+  "warnings": [],
+  "png_sha256": "39c633765149912082ab372264d34cfa49383c5f1fcb339500abc4305ea5e186",
+  "png_bytes": 68130,
+  "html_sha256": "33d3e572b6acdedf63165df92405433dd5e8ef7655ccc678b33666097e406f7b"
+}

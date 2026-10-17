@@ -1,0 +1,30 @@
+{
+  "visual_id": "SIM-03-stage-reconciliation",
+  "classification": "internal",
+  "theme": "project-theme",
+  "reader_question": "Where do detector executions attrit between stages?",
+  "text_summary": "Simulation text summary for accessibility gate.",
+  "selected_visual": "funnel",
+  "preset": "detector-stage-reconciliation",
+  "title": "Detector executions by stage",
+  "data": {
+    "items": [
+      {
+        "name": "scheduled",
+        "value": 514
+      },
+      {
+        "name": "executed",
+        "value": 502
+      },
+      {
+        "name": "findings-normalized",
+        "value": 380
+      },
+      {
+        "name": "verified",
+        "value": 122
+      }
+    ]
+  }
+}

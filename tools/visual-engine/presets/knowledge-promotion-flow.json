@@ -1,0 +1,16 @@
+{
+  "id": "knowledge-promotion-flow",
+  "visual": "sankey",
+  "family": "flow",
+  "summary": "Knowledge promotion volume between stores",
+  "canonical_reader_question": "How much knowledge moves between stores?",
+  "required_fields": [
+    "data.nodes",
+    "data.links"
+  ],
+  "defaults": {},
+  "semantics": {},
+  "job_extras": {},
+  "notes": "sankey requires real conservation — counts must reconcile or use a bar",
+  "provenance": "visual-engine preset v1.0.0 — derived from spec §24 + project data shapes (detector registry, gates, docs estate)."
+}

@@ -1,0 +1,52 @@
+{
+  "id": "sample-flow",
+  "title": "Sample Intake Flow",
+  "caption": "Fig. 1 - A contract is submitted, parsed, and routed to the static-analysis engine.",
+  "width": 720,
+  "height": 460,
+  "motion": true,
+  "nodes": [
+    {
+      "id": "intake",
+      "type": "source",
+      "label": "Submit",
+      "x": 40,
+      "y": 96,
+      "w": 120,
+      "h": 56,
+      "note": "User submits contract source or address."
+    },
+    {
+      "id": "parse",
+      "type": "process",
+      "label": "Parse",
+      "x": 260,
+      "y": 96,
+      "w": 120,
+      "h": 56,
+      "note": "AST built for the source language."
+    },
+    {
+      "id": "engine",
+      "type": "gate",
+      "label": "Engine",
+      "x": 480,
+      "y": 96,
+      "w": 120,
+      "h": 56,
+      "note": "Runs the detector registry.",
+      "highlight": true,
+      "alive": true
+    }
+  ],
+  "edges": [
+    { "src": "intake", "dst": "parse", "label": "source", "style": "solid", "main": true },
+    { "src": "parse", "dst": "engine", "label": "ast", "style": "solid", "main": true }
+  ],
+  "legend": [
+    { "kind": "node", "key": "source", "label": "Entry point" },
+    { "kind": "node", "key": "gate", "label": "Decision gate" },
+    { "kind": "line", "key": "solid", "label": "Primary flow" }
+  ],
+  "data_sources": []
+}

@@ -1,0 +1,43 @@
+<svg data-engine="echarts" role="img" aria-label="Export test" data-fig="ve-SIM-17-svg" data-fig-kind="bar_horizontal" data-fig-focus="item" data-fig-legend="series" class="ve-fig" width="800" height="480" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" baseProfile="full" viewBox="0 0 800 480"><style data-ve="ve-SIM-17-svg"><![CDATA[/* ve-fig v1 · scoped to ve-SIM-17-svg · never recolours, never fills an open path, never steals the pointer */
+svg[data-fig="ve-SIM-17-svg"] text,svg[data-fig="ve-SIM-17-svg"] tspan{pointer-events:none;stroke:none}
+svg[data-fig="ve-SIM-17-svg"] [data-s],svg[data-fig="ve-SIM-17-svg"] [data-t="legend"][fill="none"]{cursor:pointer}
+svg[data-fig="ve-SIM-17-svg"] [data-s]{transition:opacity .14s ease,filter .14s ease,stroke-width .14s ease}
+@media (prefers-reduced-motion:reduce){svg[data-fig="ve-SIM-17-svg"] [data-s]{transition:none}}
+svg[data-fig="ve-SIM-17-svg"] [data-s]:not([data-k="series"]):not([data-k="edge"]):not([fill="none"]):not([data-sk="own"]):hover,svg[data-fig="ve-SIM-17-svg"] [data-s]:not([data-k="series"]):not([data-k="edge"]):not([fill="none"]):not([data-sk="own"]):focus-visible{stroke:#EAEEF5;stroke-width:1.6px;vector-effect:non-scaling-stroke;stroke-opacity:.95;filter:brightness(1.16) saturate(1.1);outline:none}
+svg[data-fig="ve-SIM-17-svg"] [data-s]:not([data-k="series"]):not([data-k="edge"]):not([fill="none"])[data-sk="own"]:hover,svg[data-fig="ve-SIM-17-svg"] [data-s]:not([data-k="series"]):not([data-k="edge"]):not([fill="none"])[data-sk="own"]:focus-visible{stroke-width:2.6px;vector-effect:non-scaling-stroke;stroke-opacity:1;filter:brightness(1.12) saturate(1.15);outline:none}
+svg[data-fig="ve-SIM-17-svg"] [data-s][fill="none"]:hover,svg[data-fig="ve-SIM-17-svg"] [data-s][fill="none"]:focus-visible{fill:none;stroke-width:3.4px;vector-effect:non-scaling-stroke;stroke-opacity:1;filter:none;outline:none}
+svg[data-fig="ve-SIM-17-svg"] [data-s][fill="none"]{pointer-events:visibleStroke}
+svg[data-fig="ve-SIM-17-svg"] [data-t="legend"][fill="none"]:hover{fill:rgba(234,238,245,0.18);fill-opacity:.55}
+svg[data-fig="ve-SIM-17-svg"]:not([data-ve-js]):has([data-s]:not([data-k="series"]):not([data-k="edge"]):hover) [data-s]:not([data-k="series"]):not([data-k="edge"]):not(:hover){opacity:0.42}
+svg[data-fig="ve-SIM-17-svg"]:not([data-ve-js]):has([data-t="legend"][fill="none"][data-i="0"]:hover) [data-s]:not([data-s="0"]){opacity:0.18}
+svg[data-fig="ve-SIM-17-svg"][data-ve-js][data-ve-on] [data-s]:not(.ve-on):not([data-t="legend"]){opacity:.2}
+svg[data-fig="ve-SIM-17-svg"][data-ve-js] [data-s].ve-on[data-k="edge"]{stroke-opacity:1;stroke-width:3px;vector-effect:non-scaling-stroke}
+svg[data-fig="ve-SIM-17-svg"][data-ve-js] [data-s].ve-on[data-k="edge"]:not([fill="none"]){fill-opacity:1}
+svg[data-fig="ve-SIM-17-svg"] .ve-pin:not([fill="none"]):not([data-sk="own"]){stroke:#EAEEF5;stroke-width:2.2px;vector-effect:non-scaling-stroke;stroke-opacity:1}
+svg[data-fig="ve-SIM-17-svg"] .ve-pin[data-sk="own"]{stroke-width:3.2px;vector-effect:non-scaling-stroke;stroke-opacity:1;filter:brightness(1.12) saturate(1.15)}
+svg[data-fig="ve-SIM-17-svg"] .ve-pin[fill="none"]{stroke-width:3.8px;vector-effect:non-scaling-stroke;stroke-opacity:1}]]></style>
+<rect width="800" height="480" x="0" y="0" fill="none"></rect>
+<path d="M70.5 48L70.5 422" fill="none" pointer-events="visible" stroke="rgb(234,238,245)" stroke-opacity="0.1"></path>
+<path d="M211.5 48L211.5 422" fill="none" pointer-events="visible" stroke="rgb(234,238,245)" stroke-opacity="0.1"></path>
+<path d="M352.5 48L352.5 422" fill="none" pointer-events="visible" stroke="rgb(234,238,245)" stroke-opacity="0.1"></path>
+<path d="M493.5 48L493.5 422" fill="none" pointer-events="visible" stroke="rgb(234,238,245)" stroke-opacity="0.1"></path>
+<path d="M635.5 48L635.5 422" fill="none" pointer-events="visible" stroke="rgb(234,238,245)" stroke-opacity="0.1"></path>
+<path d="M776.5 48L776.5 422" fill="none" pointer-events="visible" stroke="rgb(234,238,245)" stroke-opacity="0.1"></path>
+<path d="M70.5 48L70.5 422" fill="none" pointer-events="visible" stroke="rgb(234,238,245)" stroke-opacity="0.18" stroke-linecap="round"></path>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:Inter, system-ui, sans-serif;" transform="translate(62.16 141.5)" fill="#8A96AE">a</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:Inter, system-ui, sans-serif;" transform="translate(62.16 328.5)" fill="#8A96AE">b</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:10px;font-family:JetBrains Mono, ui-monospace, monospace;" y="5" transform="translate(70.16 430)" fill="#8A96AE">0</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:10px;font-family:JetBrains Mono, ui-monospace, monospace;" y="5" transform="translate(211.328 430)" fill="#8A96AE">1</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:10px;font-family:JetBrains Mono, ui-monospace, monospace;" y="5" transform="translate(352.496 430)" fill="#8A96AE">2</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:10px;font-family:JetBrains Mono, ui-monospace, monospace;" y="5" transform="translate(493.664 430)" fill="#8A96AE">3</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:10px;font-family:JetBrains Mono, ui-monospace, monospace;" y="5" transform="translate(634.832 430)" fill="#8A96AE">4</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:10px;font-family:JetBrains Mono, ui-monospace, monospace;" y="5" transform="translate(776 430)" fill="#8A96AE">5</text>
+<path d="M72.2 77L491.7 77A2 2 0 0 1 493.7 79L493.7 206L70.2 206L70.2 79A2 2 0 0 1 72.2 77Z" fill="#4A7FC1" data-s="0" data-i="0" data-t="chart" data-id="s0.0"><title>a
+v: 3</title></path>
+<path d="M72.2 264L774 264A2 2 0 0 1 776 266L776 393L70.2 393L70.2 266A2 2 0 0 1 72.2 264Z" fill="#4A7FC1" data-s="0" data-i="1" data-t="chart" data-id="s0.1"><title>b
+v: 5</title></path>
+<path d="M-5 -5l86.8 0l0 26l-86.8 0Z" transform="translate(13 11)" fill="rgb(0,0,0)" fill-opacity="0" stroke="#3c3c41" stroke-width="0"></path>
+<text dominant-baseline="central" text-anchor="start" style="font-size:16px;font-family:Space Grotesk, system-ui, sans-serif;font-weight:600;" xml:space="preserve" y="8" transform="translate(13 11)" fill="#EAEEF5">Export test</text>
+
+</svg>
+<!-- generated-by visual-engine v1.0.0 · echarts@6.1.0 · theme:project-theme · content-sha256:802c82a7f775fce3cfc5139e78388d81cb2c10baddb1b4e23456cba5c1c2a5b0 -->

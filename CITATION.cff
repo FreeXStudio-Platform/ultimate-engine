@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+message: "If you use Ultimate Engine, please cite it as below."
+title: "Ultimate Engine"
+abstract: "A standalone, offline document, figure and blueprint engine with a governance layer."
+authors:
+  - name: "FreeXStudio"
+    website: "https://freexstudio.com"
+    email: "admin@freexstudio.com"
+repository-code: "https://github.com/FreeXStudio-Platform/ultimate-engine"
+url: "https://freexstudio.com"
+license: Apache-2.0

@@ -1,0 +1,210 @@
+{
+ "edges": [
+  {
+   "source": "tools",
+   "target": "tools.corpus_check"
+  },
+  {
+   "source": "tools",
+   "target": "tools.health"
+  },
+  {
+   "source": "tools.blueprint",
+   "target": "tools"
+  },
+  {
+   "source": "tools.blueprint",
+   "target": "tools.corpus_check"
+  },
+  {
+   "source": "tools.blueprint",
+   "target": "tools.docgen"
+  },
+  {
+   "source": "tools.blueprint",
+   "target": "tools.health"
+  },
+  {
+   "source": "tools.corpus_check",
+   "target": "tools"
+  },
+  {
+   "source": "tools.corpus_check",
+   "target": "tools.lib"
+  },
+  {
+   "source": "tools.corpus_check.guards",
+   "target": "tools"
+  },
+  {
+   "source": "tools.corpus_check.guards",
+   "target": "tools.corpus_check"
+  },
+  {
+   "source": "tools.corpus_check.guards",
+   "target": "tools.docgen"
+  },
+  {
+   "source": "tools.docgen",
+   "target": "tools"
+  },
+  {
+   "source": "tools.docgen",
+   "target": "tools.docgen.assets"
+  },
+  {
+   "source": "tools.docgen",
+   "target": "tools.docgen.hooks"
+  },
+  {
+   "source": "tools.docgen",
+   "target": "tools.lib"
+  },
+  {
+   "source": "tools.docgen.assets",
+   "target": "tools.docgen"
+  },
+  {
+   "source": "tools.docgen.hooks",
+   "target": "tools"
+  },
+  {
+   "source": "tools.docgen.hooks",
+   "target": "tools.docgen"
+  },
+  {
+   "source": "tools.draft",
+   "target": "tools"
+  },
+  {
+   "source": "tools.draft",
+   "target": "tools.corpus_check"
+  },
+  {
+   "source": "tools.health",
+   "target": "tools"
+  },
+  {
+   "source": "tools.health",
+   "target": "tools.blueprint"
+  },
+  {
+   "source": "tools.health",
+   "target": "tools.corpus_check"
+  },
+  {
+   "source": "tools.health",
+   "target": "tools.corpus_check.guards"
+  },
+  {
+   "source": "tools.health",
+   "target": "tools.docgen"
+  },
+  {
+   "source": "tools.health",
+   "target": "tools.lib"
+  },
+  {
+   "source": "tools.project_index",
+   "target": "tools"
+  },
+  {
+   "source": "tools.project_index",
+   "target": "tools.docgen"
+  },
+  {
+   "source": "tools.tests",
+   "target": "tools"
+  },
+  {
+   "source": "tools.tests",
+   "target": "tools.blueprint"
+  },
+  {
+   "source": "tools.tests",
+   "target": "tools.corpus_check"
+  },
+  {
+   "source": "tools.tests",
+   "target": "tools.corpus_check.guards"
+  },
+  {
+   "source": "tools.tests",
+   "target": "tools.docgen"
+  },
+  {
+   "source": "tools.tests",
+   "target": "tools.docgen.hooks"
+  },
+  {
+   "source": "tools.tests",
+   "target": "tools.health"
+  },
+  {
+   "source": "tools.tests",
+   "target": "tools.lib"
+  }
+ ],
+ "nodes": [
+  {
+   "height": 48,
+   "id": "tools",
+   "width": 140
+  },
+  {
+   "height": 48,
+   "id": "tools.blueprint",
+   "width": 175
+  },
+  {
+   "height": 48,
+   "id": "tools.corpus_check",
+   "width": 202
+  },
+  {
+   "height": 48,
+   "id": "tools.corpus_check.guards",
+   "width": 265
+  },
+  {
+   "height": 48,
+   "id": "tools.docgen",
+   "width": 148
+  },
+  {
+   "height": 48,
+   "id": "tools.docgen.assets",
+   "width": 211
+  },
+  {
+   "height": 48,
+   "id": "tools.docgen.hooks",
+   "width": 202
+  },
+  {
+   "height": 48,
+   "id": "tools.draft",
+   "width": 140
+  },
+  {
+   "height": 48,
+   "id": "tools.health",
+   "width": 148
+  },
+  {
+   "height": 48,
+   "id": "tools.lib",
+   "width": 140
+  },
+  {
+   "height": 48,
+   "id": "tools.project_index",
+   "width": 211
+  },
+  {
+   "height": 48,
+   "id": "tools.tests",
+   "width": 140
+  }
+ ]
+}

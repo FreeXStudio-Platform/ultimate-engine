@@ -1,0 +1,55 @@
+{
+  "visual_id": "SIM-04-workflow-pipeline",
+  "classification": "internal",
+  "theme": "project-theme",
+  "reader_question": "How do audit stages depend on each other?",
+  "text_summary": "Simulation text summary for accessibility gate.",
+  "selected_visual": "graph",
+  "preset": "workflow-pipeline",
+  "layout": "circular",
+  "title": "Audit pipeline",
+  "data": {
+    "nodes": [
+      {
+        "name": "intake"
+      },
+      {
+        "name": "normalize"
+      },
+      {
+        "name": "compile"
+      },
+      {
+        "name": "detect"
+      },
+      {
+        "name": "verify"
+      },
+      {
+        "name": "report"
+      }
+    ],
+    "links": [
+      {
+        "source": "intake",
+        "target": "normalize"
+      },
+      {
+        "source": "normalize",
+        "target": "compile"
+      },
+      {
+        "source": "compile",
+        "target": "detect"
+      },
+      {
+        "source": "detect",
+        "target": "verify"
+      },
+      {
+        "source": "verify",
+        "target": "report"
+      }
+    ]
+  }
+}

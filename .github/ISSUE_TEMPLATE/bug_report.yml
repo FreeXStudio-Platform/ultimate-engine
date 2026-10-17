@@ -1,0 +1,35 @@
+name: Bug report
+description: Something the engine does wrong (a wrong figure, a crash, a gate that fires or fails to fire)
+labels: ["bug"]
+body:
+  - type: input
+    id: version
+    attributes:
+      label: Engine version
+      description: Contents of the `PROJECT_VERSION` file, or the release tag you use.
+      placeholder: "1.1.1"
+    validations: {required: true}
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened, and what did you expect?
+    validations: {required: true}
+  - type: textarea
+    id: repro
+    attributes:
+      label: Minimal reproduction
+      description: The command you ran and the smallest input (document, sidecar JSON, profile) that shows it.
+      render: shell
+    validations: {required: true}
+  - type: input
+    id: env
+    attributes:
+      label: Environment
+      placeholder: "macOS 15 / Ubuntu 24.04, Python 3.12, Node 22"
+  - type: checkboxes
+    id: hygiene
+    attributes:
+      label: Before you submit
+      options:
+        - label: I removed secrets, personal data and absolute home-directory paths from anything I pasted.
+          required: true

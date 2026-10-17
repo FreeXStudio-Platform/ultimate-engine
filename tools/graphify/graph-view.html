@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title> · interactive system graph</title>
+<style>
+  :root{ --rose:#e11d48; --rose-500:#f43f5e; --rose-300:#fda4af; --rose-50:#fff1f3; --green:#10b981;
+    --ink:#241b1f; --muted:#9b8b91; --line:#f7dce2; }
+  *{box-sizing:border-box} html,body{margin:0;height:100%;background:#fff;color:var(--ink);
+    font:14px/1.5 ui-sans-serif,-apple-system,"Segoe UI",Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  #graph{position:fixed;inset:0}
+  .bar{position:fixed;top:14px;left:14px;right:14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;
+    background:rgba(255,255,255,.86);backdrop-filter:blur(8px);border:1px solid var(--line);border-radius:14px;
+    padding:10px 14px;box-shadow:0 8px 24px rgba(225,29,72,.07);z-index:10}
+  .brand{display:flex;align-items:center;gap:9px;font-weight:680}
+  .glyph{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;color:#fff;font-size:15px;
+    background:linear-gradient(140deg,var(--rose),var(--rose-500))}
+  .stat{color:var(--muted);font-size:12.5px} .spacer{flex:1}
+  input.search{border:1px solid var(--line);border-radius:10px;padding:8px 12px;font:inherit;width:240px;outline:none}
+  input.search:focus{border-color:var(--rose-300)}
+  button.b{border:1px solid var(--line);background:#fff;color:var(--rose);border-radius:10px;padding:8px 12px;font:inherit;font-weight:600;cursor:pointer}
+  button.b:hover{background:var(--rose-50);border-color:var(--rose-300)}
+  button.b.on{background:var(--rose);color:#fff;border-color:var(--rose)}
+  .legend{position:fixed;bottom:16px;left:16px;background:rgba(255,255,255,.9);border:1px solid var(--line);border-radius:12px;padding:10px 14px;font-size:12px;color:var(--muted);z-index:10}
+  .legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:-1px} .legend div{margin:3px 0}
+  .hint{position:fixed;bottom:16px;right:16px;color:#c9b8be;font-size:11.5px;z-index:10}
+</style>
+</head>
+<body>
+<div id="graph"></div>
+<div class="bar">
+  <div class="brand"><div class="glyph">🛡</div><span id="title"> system</span></div>
+  <span class="stat" id="stat">…</span>
+  <div class="spacer"></div>
+  <input class="search" id="search" placeholder="search a module/file → enter" />
+  <button class="b" id="fit">Fit</button>
+  <button class="b" id="layout" title="Cycle layout: force → top-down tree → radial">Layout</button>
+  <button class="b" id="d3">3D</button>
+</div>
+<div class="legend" id="legend"></div>
+<div class="hint">drag to pan · scroll to zoom · drag a node · click to focus</div>
+
+<script src="vendor/force-graph.min.js"></script>
+<script>
+/* one viewer, every graph: ?g=graph (structure, default) · ?g=deps (dependency) · ?g=pipeline */
+(function(){
+  const g = (new URLSearchParams(location.search).get('g') || 'graph').replace(/[^a-z0-9_-]/gi,'');
+  const s = document.createElement('script');
+  s.src = '../../graphify-out/' + g + '-data.js';
+  s.onload = () => window.__initGraph();
+  s.onerror = () => { document.getElementById('graph').innerHTML =
+    '<p style="padding:48px;color:#9b8b91">No <code>'+g+'-data.js</code> — run the builder: '
+    +'<code>node tools/graphify/build'+(g==='graph'?'':'-'+g)+'.mjs</code></p>'; };
+  document.head.appendChild(s);
+})();
+</script>
+<script>
+window.__initGraph = function(){
+const G = (window.GRAPH && window.GRAPH.nodes) ? window.GRAPH : { nodes: [], links: [], meta: {} };
+const COLORS = { root:'#10b981', dir:'#e11d48', file:'#fb7185', class:'#e11d48', finding:'#fb7185', project:'#64748b', platform:'#fda4af', package:'#10b981', module:'#fb7185', step:'#e11d48', detector:'#fb7185', swc:'#10b981', tag:'#8b5cf6', other:'#fb7185' };
+const LABELS = { root:'root', dir:'directory', file:'file', class:'class', finding:'finding', project:'project', platform:'platform', package:'package', module:'module', step:'pipeline step', detector:'detector', swc:'SWC class', tag:'tag' };
+
+document.getElementById('title').textContent = (G.meta && G.meta.name) || 'system graph';
+document.getElementById('stat').textContent = `${G.nodes.length} nodes · ${G.links.length} links`;
+const types = [...new Set(G.nodes.map(n=>n.type))];
+document.getElementById('legend').innerHTML = types.map(t=>`<div><i style="background:${COLORS[t]||'#fb7185'}"></i>${LABELS[t]||t}</div>`).join('');
+
+const deg = {}; G.links.forEach(l=>{ const s=l.source.id||l.source, t=l.target.id||l.target; deg[s]=(deg[s]||0)+1; deg[t]=(deg[t]||0)+1; });
+const data = { nodes: G.nodes.map(n=>({ ...n, _d: deg[n.id]||1 })), links: G.links.map(l=>({ ...l })) };
+
+let is3D=false, fg, lib3dLoaded=false;
+// Layout cycle: 'force' (physics, default) -> 'td' (top-down tree) -> 'radialout' (radial hierarchy).
+// dagMode is a built-in feature of the already-vendored force-graph library (vasturiano/force-graph) —
+// this wires up an EXISTING capability, no new dependency. Falls back silently to plain force layout
+// for graphs with cycles (dagMode requires a DAG; force-graph itself warns to console, doesn't throw).
+const LAYOUTS = [null, 'td', 'radialout'];
+const LAYOUT_LABELS = { 'null': 'Layout', 'td': 'Tree ↓', 'radialout': 'Radial ⊙' };
+let layoutIdx = 0;
+function draw(){
+  const el=document.getElementById('graph'); el.innerHTML='';
+  const Maker = is3D ? window.ForceGraph3D : window.ForceGraph;
+  fg = Maker()(el).graphData(data).nodeId('id')
+    // Explicit width/height: #graph is `position:fixed;inset:0`, which some browsers/embedding
+    // contexts (confirmed via headless-browser testing) fail to report a non-zero size for at the
+    // instant force-graph's Kapsule constructor measures its container — without this the canvas
+    // silently gets created at 0x0 and nothing ever renders, with no console error. Re-applied on
+    // every draw() (including the 3D/layout-toggle re-inits) and once more on window resize.
+    .width(el.clientWidth || window.innerWidth).height(el.clientHeight || window.innerHeight)
+    .nodeColor(n=>COLORS[n.type]||'#fb7185').nodeVal(n=>1+Math.sqrt(n._d))
+    .nodeLabel(n=>`${n.label} — ${LABELS[n.type]||n.type}${n.files?(' · '+n.files+' files'):''}`)
+    .nodeRelSize(is3D?3:4).linkColor(()=> is3D?'rgba(244,63,94,.18)':'#f4c6d1').linkWidth(0.5).backgroundColor('#ffffff')
+    .dagMode(LAYOUTS[layoutIdx]).dagLevelDistance(60)
+    .onNodeClick(n=>{ if(is3D) fg.cameraPosition({x:n.x,y:n.y,z:(n.z||0)+120}, n, 700); else { fg.centerAt(n.x,n.y,600); fg.zoom(5,600);} });
+  if(!is3D){
+    fg.nodeCanvasObjectMode(()=>'after').nodeCanvasObject((n,ctx,scale)=>{
+      if(scale<3 || n.type==='file') return;
+      const r=(1+Math.sqrt(n._d)); ctx.font=`${Math.max(3,11/scale)}px ui-sans-serif`; ctx.fillStyle='#5b4a50'; ctx.textAlign='center';
+      ctx.fillText(String(n.label).slice(0,22), n.x, n.y - r - 2/scale);
+    });
+    setTimeout(()=>fg.zoomToFit(600,80), 1200);
+  }
+}
+draw();
+window.addEventListener('resize', ()=>{ if(fg){ const el=document.getElementById('graph'); fg.width(el.clientWidth).height(el.clientHeight); } });
+document.getElementById('fit').onclick=()=>{ if(!is3D) fg.zoomToFit(500,80); else fg.zoomToFit(500); };
+document.getElementById('layout').onclick=(e)=>{
+  layoutIdx = (layoutIdx+1) % LAYOUTS.length;
+  e.target.textContent = LAYOUT_LABELS[String(LAYOUTS[layoutIdx])];
+  e.target.classList.toggle('on', layoutIdx!==0);
+  draw();
+};
+document.getElementById('search').addEventListener('keydown', e=>{
+  if(e.key!=='Enter') return; const q=e.target.value.trim().toLowerCase(); if(!q) return;
+  const hit=data.nodes.find(n=>String(n.label).toLowerCase().includes(q)||String(n.id).toLowerCase().includes(q));
+  if(!hit){ e.target.style.borderColor='#f43f5e'; return; } e.target.style.borderColor='';
+  if(is3D) fg.cameraPosition({x:hit.x,y:hit.y,z:(hit.z||0)+120}, hit, 700); else { fg.centerAt(hit.x,hit.y,700); fg.zoom(7,700); }
+});
+document.getElementById('d3').onclick=(e)=>{
+  const go=()=>{ is3D=!is3D; e.target.classList.toggle('on',is3D); e.target.textContent=is3D?'2D':'3D'; draw(); };
+  // Vendored locally (vendor/3d-force-graph.min.js) — NOT fetched from a CDN. Previously this loaded
+  // https://unpkg.com/3d-force-graph@1 live at click-time, silently failing offline and contradicting
+  // this dashboard's own "no runtime CDN" design rule (see vendor/PROVENANCE.md). Lazy-loaded from the
+  // local vendored file on first use so the initial page load stays light.
+  if(!is3D && !lib3dLoaded){
+    const s=document.createElement('script'); s.src='vendor/3d-force-graph.min.js';
+    s.onload=()=>{ lib3dLoaded=true; go(); };
+    s.onerror=()=>{ e.target.textContent='3D unavailable'; e.target.disabled=true; };
+    document.head.appendChild(s);
+  } else go();
+};
+} // end __initGraph
+</script>
+</body>
+</html>

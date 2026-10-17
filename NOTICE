@@ -1,0 +1,16 @@
+Ultimate Engine
+Copyright 2026 FreeXStudio (https://freexstudio.com)
+
+This product is a FreeXStudio product, licensed under the Apache License, Version 2.0
+(see LICENSE). Contact: admin@freexstudio.com
+
+Third-party material that is bundled in this repository (installed dependencies such as echarts,
+@resvg/resvg-js, elkjs, zod and the MCP SDK are NOT bundled: npm fetches them under their own
+licences when you run `npm ci`):
+
+- Inter, JetBrains Mono and Space Grotesk typefaces (tools/docgen/assets/fonts/) —
+  SIL Open Font License 1.1; the licence text is tools/docgen/assets/fonts/LICENSE-OFL.txt.
+- force-graph and 3d-force-graph by Vasco Asturiano (tools/graphify/vendor/ and
+  vault-graph-engine/) — MIT License.
+- world-countries-110m.geojson (tools/docgen/assets/) — country boundaries derived from
+  Natural Earth (public domain) as redistributed by the D3 Graph Gallery (MIT); see PROVENANCE.md.

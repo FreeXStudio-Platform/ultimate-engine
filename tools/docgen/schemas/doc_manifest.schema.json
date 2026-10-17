@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "_status": "DOCUMENTATION OF A SHAPE \u2014 no validator reads this file. Nothing in this engine imports jsonschema; the invariants are enforced in code by classification.validate_header, doc_manifest and export_sanitizer. Labelled here 2026-08-22 because OG-39 closed NOT_A_DEFECT on the reasoning that these files were 'labelled as such at their point of use', and they were not (OG-91).",
+  "$id": "https://.internal/schemas/doc_manifest.schema.json",
+  "title": "DocManifestRows",
+  "description": "A serialized list of DOC_MANIFEST.md rows (tools/docgen/models.py ManifestRow), as read_manifest() would emit if dumped to JSON. Used to validate manifest-derived data passed between tools.",
+  "type": "array",
+  "items": {
+    "$ref": "#/$defs/manifestRow"
+  },
+  "$defs": {
+    "manifestRow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "type",
+        "variants",
+        "content_role",
+        "surface",
+        "status"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Doc-type prefix, e.g. 'DET', 'SOC-S' \u2014 matches TAXONOMY.md."
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "variants": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "enum": [
+              "public",
+              "confidential",
+              "secret"
+            ]
+          }
+        },
+        "content_role": {
+          "type": "string",
+          "enum": [
+            "project-doc",
+            "article",
+            "article-capable",
+            "asset"
+          ]
+        },
+        "surface": {
+          "type": "string",
+          "enum": [
+            "web",
+            "repo",
+            "both",
+            "none"
+          ]
+        },
+        "status": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

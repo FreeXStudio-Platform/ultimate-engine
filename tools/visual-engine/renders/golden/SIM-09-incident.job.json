@@ -1,0 +1,26 @@
+{
+  "visual_id": "SIM-09-incident",
+  "classification": "internal",
+  "theme": "project-theme",
+  "reader_question": "What happened, in what order?",
+  "text_summary": "Simulation text summary for accessibility gate.",
+  "selected_visual": "timeline",
+  "preset": "incident-timeline",
+  "title": "S183 ingest-gate incident",
+  "data": {
+    "events": [
+      {
+        "name": "gate bypass detected",
+        "date": "2026-08-03T10:00:00Z"
+      },
+      {
+        "name": "type allowlist patched",
+        "date": "2026-08-03T14:30:00Z"
+      },
+      {
+        "name": "re-scan clean",
+        "date": "2026-08-04T09:00:00Z"
+      }
+    ]
+  }
+}

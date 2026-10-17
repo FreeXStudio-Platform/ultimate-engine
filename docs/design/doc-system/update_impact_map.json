@@ -1,0 +1,59 @@
+{
+  "description": "RULEBOOK L10 blast-radius map: change type -> the doc-type prefixes that must be reviewed, plus the public-sanitisation rule that applies. Consumed by tools/docgen/adjudication.py (load_impact_map / compute_change_impact). Advisory and fail-open: an unknown change type yields a non-blocking finding naming the gap, never a block. Prefixes must exist in TAXONOMY.md. This file is locked -- it is listed in VERSION.json's rulebook_files.",
+  "change_types": {
+    "DETECTOR_CHANGE": {
+      "description": "A rule, threshold, or classifier that decides an outcome changed. Any document stating what the system detects, or quoting a result it produced, may now be wrong.",
+      "dependent_doc_ids": [
+        "SPEC",
+        "WF",
+        "REF",
+        "GUIDE"
+      ],
+      "public_sanitization_rule": "Restate the observable behaviour and its direction; never publish the threshold, weight, or cutoff that produced it (L6). Re-verify every quoted result before republishing -- a stale number under a new rule is a false claim, not an outdated one."
+    },
+    "VISUAL_STYLE_CHANGE": {
+      "description": "Design tokens, typography, component styling, or theme derivation changed. Rendered output and any figure described in prose may no longer match.",
+      "dependent_doc_ids": [
+        "GUIDE",
+        "REF",
+        "SPEC"
+      ],
+      "public_sanitization_rule": "Re-render every affected figure and re-read the prose that describes it -- a caption describing the old visual is a defect the build cannot see. Contrast must stay above the legibility floor (L21); expressiveness never buys an exception."
+    },
+    "USER_POLICY_CHANGE": {
+      "description": "What a consumer is permitted to do, see, or receive changed -- entitlements, limits, retention, or the terms of access.",
+      "dependent_doc_ids": [
+        "GUIDE",
+        "REF",
+        "API",
+        "WF"
+      ],
+      "public_sanitization_rule": "Publish the rule as it now stands, with its effective date. Never describe internal enforcement mechanics or per-account overrides. A policy document that lags the enforced policy is worse than none, because it is trusted."
+    },
+    "ARCHITECTURE_CHANGE": {
+      "description": "A component, boundary, or connection between parts changed -- something moved, split, merged, or was removed.",
+      "dependent_doc_ids": [
+        "SYS",
+        "SPEC",
+        "API",
+        "ADR",
+        "WF"
+      ],
+      "public_sanitization_rule": "Publish roles and their connections, never internal hostnames, paths, or topology that maps to real infrastructure (L4). Record the decision as an ADR: an architecture change with no recorded reason becomes folklore within a quarter."
+    },
+    "RULE_CHANGE": {
+      "description": "A locked rule in the rulebook itself changed. This is the highest-blast-radius change type: every document reasoning from the rule is downstream of it.",
+      "dependent_doc_ids": [
+        "ADR",
+        "CHG",
+        "SPEC",
+        "SYS",
+        "GUIDE",
+        "REF",
+        "WF",
+        "API"
+      ],
+      "public_sanitization_rule": "Follow L9 in full: bump VERSION.json, append the CHG entry, record the ADR, then re-baseline the rulebook hash. Re-read every document that cites the changed law by number -- an L-number reference that now points at different semantics is invisible to every mechanical check."
+    }
+  }
+}

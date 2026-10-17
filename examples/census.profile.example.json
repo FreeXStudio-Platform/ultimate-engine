@@ -1,0 +1,24 @@
+{
+  "schema": "census-profile/1",
+  "project": "Example Project",
+  "doc_globs": ["docs/**", "*.md"],
+  "doc_exts": [".md"],
+  "archive_globs": ["docs/history/**", "docs/**/_archive/**"],
+  "header_lines": 30,
+  "stamp_patterns": ["^<!--\\s*artifact-hardened:\\s*(?P<status>[^@]+?)\\s*@\\s*(?P<sha>[0-9a-f]{7,40})(?:\\s+on\\s+(?P<date>\\d{4}-\\d{2}-\\d{2}))?"],
+  "truth_label_patterns": ["source[ _-]of[ _-]truth"],
+  "invalidated_patterns": ["invalidat", "revoked", "needs[ _-]re-?hard"],
+  "authority_docs": ["docs/INSTRUCTION_MAP.md"],
+  "fresh_days": 7,
+  "outdated_days": 35,
+  "index_doc": "docs/INDEX.md",
+  "code_roots": ["src"],
+  "area_depth": 2,
+  "explorer_depth": 3,
+  "layers": [
+    {"label": "Rules", "areas": ["docs/process", "docs/design"]},
+    {"label": "Plans", "areas": ["docs/plan"]}
+  ],
+  "report": {"id": "WF-902", "classification": "public", "surface": "web", "audience": "technical", "owner": "doc-system", "status": "draft", "export_allowed": true},
+  "notes": "Every key is optional. Unknown keys are refused. See docs/design/PROJECT_CENSUS.md."
+}

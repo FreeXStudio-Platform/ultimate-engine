@@ -1,0 +1,8 @@
+# Python dependencies for docgen (document generation engine).
+# Extracted from the source project's root pyproject.toml -- docgen itself carries no
+# local manifest, since it originally lived inside a larger project's dependency set.
+weasyprint>=70.0   # optional -- PDF export only; docgen degrades gracefully to HTML/JSON without it
+PyYAML>=6.0.3
+
+# Dev/test tooling used by the source project (optional, not required to run docgen):
+#   ruff, mypy --strict, pytest

@@ -1,0 +1,166 @@
+{
+  "$schema": "self-describing — no external schema file exists; read the _readme fields",
+  "_readme": "Every field here has a working default that reproduces this package's original, tested behavior. You do not need to edit this file to use the engine. Edit it only when you drop this engine into a host project that has its own doc-governance layout, its own src/ tree, or a non-default browser/tool install location. Every field can ALSO be overridden per-run with an environment variable — see CONFIGURATION.md for the full list and precedence order (env var > this file > built-in default). Paths below are relative to this file's own directory unless they start with '/' or '~'.",
+  "tools": {
+    "_readme": "External binaries this engine shells out to. Each is discovered in order: envVar override -> this config's 'path' field (if non-null) -> the pathFallback list (searched via `which`/PATH) -> not found. What happens on not-found is decided entirely by which function the CALLER invokes, not by anything in this file: requireTool()/require_tool() throws a clear, actionable error; toolPath()/tool_path() returns null/None and lets the caller degrade. See tools/lib/engine-config.mjs and tools/docgen/engine_config.py.",
+    "codemap": {
+      "envVar": "ENGINE_CODEMAP_BIN",
+      "path": null,
+      "pathFallback": [
+        "codemap"
+      ],
+      "usedBy": [
+        "tools/graphify/build.mjs"
+      ],
+      "installHint": "npm install -g codemap (or see https://github.com/ — install however your team already does)"
+    },
+    "python": {
+      "envVar": "ENGINE_PYTHON_BIN",
+      "path": null,
+      "pathFallback": [
+        ".venv/bin/python",
+        "python3",
+        "python"
+      ],
+      "usedBy": [
+        "tools/graphify/build.mjs (writes the discovered path for the separate graphify-query CLI to consume)"
+      ]
+    },
+    "node": {
+      "envVar": "ENGINE_NODE_BIN",
+      "path": null,
+      "pathFallback": [
+        "node"
+      ],
+      "usedBy": [
+        "tools/docgen/echarts_bridge.py",
+        "tools/docgen/mermaid_bridge.py"
+      ]
+    },
+    "git": {
+      "envVar": "ENGINE_GIT_BIN",
+      "path": null,
+      "pathFallback": [
+        "git"
+      ],
+      "usedBy": [
+        "tools/docgen/hooks/staged_content_scanner.py",
+        "tools/docgen/trash-sweep.sh"
+      ]
+    }
+  },
+  "docSystem": {
+    "_readme": "docgen's doc-governance layer (the 9-gate leak sanitizer's rulebook, the doc manifest, the confidential-docs boundary). All paths are relative to the HOST PROJECT root (see hostRoot below), not to this engine's own install location. Defaults reproduce the layout this engine shipped with (a doc-governance convention from the engine's original source project) — override every field to adopt your own host project's layout instead.",
+    "hostRoot": {
+      "envVar": "ENGINE_HOST_ROOT",
+      "value": null,
+      "note": "null = auto-detect via `git rev-parse --show-toplevel` from the current working directory, falling back to this engine's own parent-of-parent-of-tools directory if not inside a git repo. Set explicitly if docgen is invoked from a directory that isn't the host project's git root."
+    },
+    "docSystemDir": {
+      "envVar": "ENGINE_DOC_SYSTEM_DIR",
+      "value": "docs/design/doc-system"
+    },
+    "docManifestPath": {
+      "envVar": "ENGINE_DOC_MANIFEST_PATH",
+      "value": "DOC_MANIFEST.md",
+      "note": "Bare name = resolved under docSystemDir, so ENGINE_DOC_SYSTEM_DIR alone relocates the whole rule layer (OG-22). A value containing '/' is still host-root-relative, and an absolute path is used as-is."
+    },
+    "versionJsonPath": {
+      "envVar": "ENGINE_VERSION_JSON_PATH",
+      "value": "VERSION.json",
+      "note": "Bare name = resolved under docSystemDir, so ENGINE_DOC_SYSTEM_DIR alone relocates the whole rule layer (OG-22). A value containing '/' is still host-root-relative, and an absolute path is used as-is."
+    },
+    "confidentialDir": {
+      "envVar": "ENGINE_CONFIDENTIAL_DIR",
+      "value": "docs/confidential"
+    },
+    "trashDir": {
+      "envVar": "ENGINE_TRASH_DIR",
+      "value": "docs/archives/_trash"
+    },
+    "archiveDir": {
+      "envVar": "ENGINE_ARCHIVE_DIR",
+      "value": "docs/archive",
+      "note": "Where `docgen archive cut` keeps superseded document versions: <archiveDir>/<id>/vN/<file> plus a machine-written <archiveDir>/<id>/HISTORY.md. NOT the same as trashDir above ('docs/archives/_trash') — one letter apart and opposite in purpose: this is version history the project keeps and reads; that is content on its way out. Host-root-relative; a value naming the root or escaping above it is refused and falls back to the default."
+    },
+    "contentIndexPath": {
+      "envVar": "ENGINE_CONTENT_INDEX_PATH",
+      "value": "CONTENT_INDEX.json",
+      "note": "Bare name = resolved under docSystemDir, so ENGINE_DOC_SYSTEM_DIR alone relocates the whole rule layer (OG-22). A value containing '/' is still host-root-relative, and an absolute path is used as-is."
+    },
+    "authoredDocsRoot": {
+      "envVar": "ENGINE_AUTHORED_DOCS_ROOT",
+      "value": "authored",
+      "note": "Bare name = resolved under docSystemDir, so ENGINE_DOC_SYSTEM_DIR alone relocates the whole rule layer (OG-22). A value containing '/' is still host-root-relative, and an absolute path is used as-is."
+    }
+  },
+  "graphify": {
+    "_readme": "Host-shape-dependent builders (build-deps/build-coverage/build-pipeline/build-admin-catalog.mjs); build.mjs needs none of it. POINTED AT THIS REPOSITORY'S OWN LAYOUT 2026-08-23: srcRoot was the shipped example default 'src', and this engine has no src/ — its Python lives in tools/. The walker fails open on a missing directory, so build-deps.mjs scanned nothing, wrote a graph with 0 nodes and 0 links across ~77 real modules, and exited 0. Nothing read the output, so nothing noticed. A builder that succeeds vacuously is worse than one that fails: it reports coverage it does not have. When vendoring this engine into another project, point these at that project.",
+    "srcRoot": {
+      "envVar": "ENGINE_GRAPHIFY_SRC_ROOT",
+      "value": "tools"
+    },
+    "detectorsDir": {
+      "envVar": "ENGINE_GRAPHIFY_DETECTORS_DIR",
+      "value": "tools/corpus_check/guards"
+    },
+    "frontendPublicDir": {
+      "envVar": "ENGINE_GRAPHIFY_FRONTEND_PUBLIC_DIR",
+      "value": "frontend/public"
+    },
+    "pipelineStepsFile": {
+      "envVar": "ENGINE_GRAPHIFY_PIPELINE_STEPS_FILE",
+      "value": null,
+      "note": "null = use the bundled tools/graphify/pipeline.example.json (a worked example, not your real pipeline). Point this at your own pipeline.json (same shape) to describe your own scan/build/deploy flow instead of editing build-pipeline.mjs's source code."
+    }
+  },
+  "browsers": {
+    "_readme": "Candidate install paths for graphify's open.sh 'launch as an app window' feature. Every path is tried in order; if none exist, it falls back to the OS `open`/`xdg-open` command, then to just printing the URL. Purely a convenience feature — nothing else in this engine depends on a browser.",
+    "chrome": [
+      "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+      "/usr/bin/google-chrome",
+      "/usr/bin/google-chrome-stable",
+      "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+    ],
+    "edge": [
+      "/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge",
+      "/usr/bin/microsoft-edge",
+      "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+    ]
+  },
+  "security": {
+    "allowRuntimeCDN": false,
+    "_readme": "Every capability in this engine works with this at false (the default) — force-graph, 3d-force-graph, and ECharts are all vendored locally. This flag exists so a host project can assert its own no-CDN policy explicitly rather than relying on 'nobody added one yet'. If ever set to true elsewhere in this engine's future, that code path must check this flag first."
+  },
+  "projectIndex": {
+    "_readme": "See tools/project_index/README.md. path: null = PROJECT_INDEX.json at hostRoot.",
+    "path": {
+      "envVar": "ENGINE_PROJECT_INDEX_PATH",
+      "value": null
+    }
+  },
+  "mermaid": {
+    "_readme": "See tools/mermaid-engine/README.md for supported diagram types and why gantt/git-graph/mindmap are out of scope for this engine (use visual-engine's ECharts custom-series for Gantt instead — see CAPABILITIES.json).",
+    "engine": "beautiful-mermaid",
+    "supportedTypes": [
+      "flowchart",
+      "sequence",
+      "class",
+      "state",
+      "er",
+      "xychart"
+    ]
+  },
+  "branding": {
+    "_readme": "The engine ships a NEUTRAL placeholder mark so it renders out of the box. A host project points markPath at its own brand mark instead of editing engine code. Bare filename = resolved under the engine's own tools/docgen/assets/ (where a vendored host mark sits beside the placeholder); a value containing '/' is host-root-relative; an absolute path is used as-is. A configured mark that does not exist is a hard error, never a silent fall back to the placeholder.",
+    "markPath": {
+      "envVar": "ENGINE_MARK_PATH",
+      "value": "engine-mark-placeholder.svg"
+    },
+    "projectName": {
+      "envVar": "ENGINE_PROJECT_NAME",
+      "value": "",
+      "note": "Host project display name. Empty (the default) reproduces the engine's original output exactly: the trust footer reads 'Verified by ' and the content-index schema is '.doc-system.content-index/v1'. Set it to namespace both."
+    }
+  }
+}

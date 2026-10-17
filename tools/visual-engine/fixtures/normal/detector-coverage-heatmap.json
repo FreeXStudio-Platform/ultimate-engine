@@ -1,0 +1,25 @@
+{
+  "visual_id": "VIS-DET-001",
+  "reader_question": "Which detector families have the weakest verified test coverage?",
+  "audience": "internal",
+  "classification": "internal",
+  "data_source_ids": ["DET-REGISTRY", "TEST-EVIDENCE-REGISTRY"],
+  "data_shape": "matrix",
+  "selected_visual": "heatmap",
+  "preset": "detector-coverage-heatmap",
+  "theme": "project-theme",
+  "title": "Detector coverage by family",
+  "subtitle": "verified test coverage · percent",
+  "units": ["percent"],
+  "scale_min": 0,
+  "scale_max": 100,
+  "width": 720,
+  "height": 420,
+  "text_summary": "Reentrancy and oracle families exceed 80% verified coverage; access-control sits at 45%; the flashloan family has one untested class at 20%.",
+  "data": {
+    "rows": ["reentrancy", "oracle", "access-control", "flashloan", "arithmetic"],
+    "cols": ["unit", "integration", "regression", "adversarial"],
+    "matrix": [[92, 88, 81, 74], [85, 90, 78, 70], [45, 52, 40, 38], [60, 55, 20, 42], [88, 79, 85, 66]]
+  },
+  "exports": ["svg", "png"]
+}

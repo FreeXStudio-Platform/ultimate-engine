@@ -1,0 +1,120 @@
+<svg data-engine="echarts" role="img" aria-label="Audit queue latency" data-fig="ve-SIM-08-queue-latency" data-fig-kind="line" data-fig-focus="series" data-fig-legend="series" class="ve-fig" width="800" height="480" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" baseProfile="full" viewBox="0 0 800 480"><style data-ve="ve-SIM-08-queue-latency"><![CDATA[/* ve-fig v1 · scoped to ve-SIM-08-queue-latency · never recolours, never fills an open path, never steals the pointer */
+svg[data-fig="ve-SIM-08-queue-latency"] text,svg[data-fig="ve-SIM-08-queue-latency"] tspan{pointer-events:none;stroke:none}
+svg[data-fig="ve-SIM-08-queue-latency"] [data-s],svg[data-fig="ve-SIM-08-queue-latency"] [data-t="legend"][fill="none"]{cursor:pointer}
+svg[data-fig="ve-SIM-08-queue-latency"] [data-s]{transition:opacity .14s ease,filter .14s ease,stroke-width .14s ease}
+@media (prefers-reduced-motion:reduce){svg[data-fig="ve-SIM-08-queue-latency"] [data-s]{transition:none}}
+svg[data-fig="ve-SIM-08-queue-latency"] [data-s]:not([data-k="series"]):not([data-k="edge"]):not([fill="none"]):not([data-sk="own"]):hover,svg[data-fig="ve-SIM-08-queue-latency"] [data-s]:not([data-k="series"]):not([data-k="edge"]):not([fill="none"]):not([data-sk="own"]):focus-visible{stroke:#EAEEF5;stroke-width:1.6px;vector-effect:non-scaling-stroke;stroke-opacity:.95;filter:brightness(1.16) saturate(1.1);outline:none}
+svg[data-fig="ve-SIM-08-queue-latency"] [data-s]:not([data-k="series"]):not([data-k="edge"]):not([fill="none"])[data-sk="own"]:hover,svg[data-fig="ve-SIM-08-queue-latency"] [data-s]:not([data-k="series"]):not([data-k="edge"]):not([fill="none"])[data-sk="own"]:focus-visible{stroke-width:2.6px;vector-effect:non-scaling-stroke;stroke-opacity:1;filter:brightness(1.12) saturate(1.15);outline:none}
+svg[data-fig="ve-SIM-08-queue-latency"] [data-s][fill="none"]:hover,svg[data-fig="ve-SIM-08-queue-latency"] [data-s][fill="none"]:focus-visible{fill:none;stroke-width:3.4px;vector-effect:non-scaling-stroke;stroke-opacity:1;filter:none;outline:none}
+svg[data-fig="ve-SIM-08-queue-latency"] [data-s][fill="none"]{pointer-events:visibleStroke}
+svg[data-fig="ve-SIM-08-queue-latency"] [data-t="legend"][fill="none"]:hover{fill:rgba(234,238,245,0.18);fill-opacity:.55}
+svg[data-fig="ve-SIM-08-queue-latency"]:not([data-ve-js]):has([data-s="0"]:hover) [data-s]:not([data-s="0"]){opacity:0.22}
+svg[data-fig="ve-SIM-08-queue-latency"]:not([data-ve-js]):has([data-s="1"]:hover) [data-s]:not([data-s="1"]){opacity:0.22}
+svg[data-fig="ve-SIM-08-queue-latency"]:not([data-ve-js]):has([data-s="2"]:hover) [data-s]:not([data-s="2"]){opacity:0.22}
+svg[data-fig="ve-SIM-08-queue-latency"]:not([data-ve-js]):has([data-t="legend"][fill="none"][data-i="0"]:hover) [data-s]:not([data-s="0"]){opacity:0.18}
+svg[data-fig="ve-SIM-08-queue-latency"]:not([data-ve-js]):has([data-t="legend"][fill="none"][data-i="1"]:hover) [data-s]:not([data-s="1"]){opacity:0.18}
+svg[data-fig="ve-SIM-08-queue-latency"]:not([data-ve-js]):has([data-t="legend"][fill="none"][data-i="2"]:hover) [data-s]:not([data-s="2"]){opacity:0.18}
+svg[data-fig="ve-SIM-08-queue-latency"][data-ve-js][data-ve-on] [data-s]:not(.ve-on):not([data-t="legend"]){opacity:.2}
+svg[data-fig="ve-SIM-08-queue-latency"][data-ve-js] [data-s].ve-on[data-k="edge"]{stroke-opacity:1;stroke-width:3px;vector-effect:non-scaling-stroke}
+svg[data-fig="ve-SIM-08-queue-latency"][data-ve-js] [data-s].ve-on[data-k="edge"]:not([fill="none"]){fill-opacity:1}
+svg[data-fig="ve-SIM-08-queue-latency"] .ve-pin:not([fill="none"]):not([data-sk="own"]){stroke:#EAEEF5;stroke-width:2.2px;vector-effect:non-scaling-stroke;stroke-opacity:1}
+svg[data-fig="ve-SIM-08-queue-latency"] .ve-pin[data-sk="own"]{stroke-width:3.2px;vector-effect:non-scaling-stroke;stroke-opacity:1;filter:brightness(1.12) saturate(1.15)}
+svg[data-fig="ve-SIM-08-queue-latency"] .ve-pin[fill="none"]{stroke-width:3.8px;vector-effect:non-scaling-stroke;stroke-opacity:1}]]></style>
+<rect width="800" height="480" x="0" y="0" fill="none"></rect>
+<path d="M114 420.5L776 420.5" fill="none" pointer-events="visible" stroke="rgb(234,238,245)" stroke-opacity="0.1"></path>
+<path d="M114 363.5L776 363.5" fill="none" pointer-events="visible" stroke="rgb(234,238,245)" stroke-opacity="0.1"></path>
+<path d="M114 307.5L776 307.5" fill="none" pointer-events="visible" stroke="rgb(234,238,245)" stroke-opacity="0.1"></path>
+<path d="M114 251.5L776 251.5" fill="none" pointer-events="visible" stroke="rgb(234,238,245)" stroke-opacity="0.1"></path>
+<path d="M114 194.5L776 194.5" fill="none" pointer-events="visible" stroke="rgb(234,238,245)" stroke-opacity="0.1"></path>
+<path d="M114 138.5L776 138.5" fill="none" pointer-events="visible" stroke="rgb(234,238,245)" stroke-opacity="0.1"></path>
+<path d="M114 82.5L776 82.5" fill="none" pointer-events="visible" stroke="rgb(234,238,245)" stroke-opacity="0.1"></path>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:Inter, system-ui, sans-serif;" y="-6" transform="matrix(0,-1,1,0,68,251)" fill="#EAEEF5">ms</text>
+<path d="M114 420.5L776 420.5" fill="none" pointer-events="visible" stroke="rgb(234,238,245)" stroke-opacity="0.18" stroke-linecap="round"></path>
+<path d="M114.5 420L114.5 425" fill="none" pointer-events="visible" stroke="rgb(234,238,245)" stroke-opacity="0.18"></path>
+<path d="M197.5 420L197.5 425" fill="none" pointer-events="visible" stroke="rgb(234,238,245)" stroke-opacity="0.18"></path>
+<path d="M279.5 420L279.5 425" fill="none" pointer-events="visible" stroke="rgb(234,238,245)" stroke-opacity="0.18"></path>
+<path d="M362.5 420L362.5 425" fill="none" pointer-events="visible" stroke="rgb(234,238,245)" stroke-opacity="0.18"></path>
+<path d="M445.5 420L445.5 425" fill="none" pointer-events="visible" stroke="rgb(234,238,245)" stroke-opacity="0.18"></path>
+<path d="M528.5 420L528.5 425" fill="none" pointer-events="visible" stroke="rgb(234,238,245)" stroke-opacity="0.18"></path>
+<path d="M610.5 420L610.5 425" fill="none" pointer-events="visible" stroke="rgb(234,238,245)" stroke-opacity="0.18"></path>
+<path d="M693.5 420L693.5 425" fill="none" pointer-events="visible" stroke="rgb(234,238,245)" stroke-opacity="0.18"></path>
+<path d="M776.5 420L776.5 425" fill="none" pointer-events="visible" stroke="rgb(234,238,245)" stroke-opacity="0.18"></path>
+<text dominant-baseline="central" text-anchor="end" style="font-size:10px;font-family:JetBrains Mono, ui-monospace, monospace;" transform="translate(106 420)" fill="#8A96AE">0</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:10px;font-family:JetBrains Mono, ui-monospace, monospace;" transform="translate(106 363.6667)" fill="#8A96AE">200</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:10px;font-family:JetBrains Mono, ui-monospace, monospace;" transform="translate(106 307.3333)" fill="#8A96AE">400</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:10px;font-family:JetBrains Mono, ui-monospace, monospace;" transform="translate(106 251)" fill="#8A96AE">600</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:10px;font-family:JetBrains Mono, ui-monospace, monospace;" transform="translate(106 194.6667)" fill="#8A96AE">800</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:10px;font-family:JetBrains Mono, ui-monospace, monospace;" transform="translate(106 138.3333)" fill="#8A96AE">1,000</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:10px;font-family:JetBrains Mono, ui-monospace, monospace;" transform="translate(106 82)" fill="#8A96AE">1,200</text>
+<text dominant-baseline="central" text-anchor="middle" style="font: normal normal 10px JetBrains Mono, ui-monospace, monospace" y="5" transform="translate(196.75 428)" fill="#8A96AE">06:00</text>
+<text dominant-baseline="central" text-anchor="middle" style="font: normal normal 10px JetBrains Mono, ui-monospace, monospace" y="5" transform="translate(279.5 428)" fill="#8A96AE">12:00</text>
+<text dominant-baseline="central" text-anchor="middle" style="font: normal normal 10px JetBrains Mono, ui-monospace, monospace" y="5" transform="translate(362.25 428)" fill="#8A96AE">18:00</text>
+<text dominant-baseline="central" text-anchor="middle" style="font: normal normal 10px JetBrains Mono, ui-monospace, monospace" y="5" transform="translate(527.75 428)" fill="#8A96AE">06:00</text>
+<text dominant-baseline="central" text-anchor="middle" style="font: normal normal 10px JetBrains Mono, ui-monospace, monospace" y="5" transform="translate(610.5 428)" fill="#8A96AE">12:00</text>
+<text dominant-baseline="central" text-anchor="middle" style="font: normal normal 10px JetBrains Mono, ui-monospace, monospace" y="5" transform="translate(693.25 428)" fill="#8A96AE">18:00</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:10px;font-family:JetBrains Mono, ui-monospace, monospace;font-weight:bold;" y="5" transform="translate(114 428)" fill="#EAEEF5">Aug</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:10px;font-family:JetBrains Mono, ui-monospace, monospace;font-weight:bold;" y="5" transform="translate(445 428)" fill="#EAEEF5">2</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:10px;font-family:JetBrains Mono, ui-monospace, monospace;font-weight:bold;" y="5" transform="translate(776 428)" fill="#EAEEF5">3</text>
+<g clip-path="url(#ve-SIM-08-queue-latency-c0)">
+<path d="M114 386.2L445 389L776 380.6" fill="none" pointer-events="visible" stroke="#4A7FC1" stroke-width="2.5" stroke-linejoin="bevel" data-s="0" data-t="chart" data-k="series"><title>p50</title></path>
+</g>
+<g clip-path="url(#ve-SIM-08-queue-latency-c1)">
+<path d="M114 324.2L445 335.5L776 301.7" fill="none" pointer-events="visible" stroke="#E89640" stroke-width="2.5" stroke-linejoin="bevel" data-s="1" data-t="chart" data-k="series"><title>p95</title></path>
+</g>
+<g clip-path="url(#ve-SIM-08-queue-latency-c2)">
+<path d="M114 166.5L445 217.2L776 110.2" fill="none" pointer-events="visible" stroke="#EDB84A" stroke-width="2.5" stroke-linejoin="bevel" data-s="2" data-t="chart" data-k="series"><title>p99</title></path>
+</g>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,114,386.2)" fill="#fff" stroke="#4A7FC1" stroke-width="0.5714285714285714" data-s="0" data-i="0" data-t="chart" data-id="s0.0" data-sk="own"><title>2026-08-01
+p50: 120 ms</title></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,445,389.0167)" fill="#fff" stroke="#4A7FC1" stroke-width="0.5714285714285714" data-s="0" data-i="1" data-t="chart" data-id="s0.1" data-sk="own"><title>2026-08-02
+p50: 110 ms
+change: -10 ms vs previous</title></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,776,380.5667)" fill="#fff" stroke="#4A7FC1" stroke-width="0.5714285714285714" data-s="0" data-i="2" data-t="chart" data-id="s0.2" data-sk="own"><title>2026-08-03
+p50: 140 ms
+change: +30 ms vs previous</title></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,114,324.2333)" fill="#fff" stroke="#E89640" stroke-width="0.5714285714285714" data-s="1" data-i="0" data-t="chart" data-id="s1.0" data-sk="own"><title>2026-08-01
+p95: 340 ms</title></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,445,335.5)" fill="#fff" stroke="#E89640" stroke-width="0.5714285714285714" data-s="1" data-i="1" data-t="chart" data-id="s1.1" data-sk="own"><title>2026-08-02
+p95: 300 ms
+change: -40 ms vs previous</title></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,776,301.7)" fill="#fff" stroke="#E89640" stroke-width="0.5714285714285714" data-s="1" data-i="2" data-t="chart" data-id="s1.2" data-sk="own"><title>2026-08-03
+p95: 420 ms
+change: +120 ms vs previous</title></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,114,166.5)" fill="#fff" stroke="#EDB84A" stroke-width="0.5714285714285714" data-s="2" data-i="0" data-t="chart" data-id="s2.0" data-sk="own"><title>2026-08-01
+p99: 900 ms</title></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,445,217.2)" fill="#fff" stroke="#EDB84A" stroke-width="0.5714285714285714" data-s="2" data-i="1" data-t="chart" data-id="s2.1" data-sk="own"><title>2026-08-02
+p99: 720 ms
+change: -180 ms vs previous</title></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,776,110.1667)" fill="#fff" stroke="#EDB84A" stroke-width="0.5714285714285714" data-s="2" data-i="2" data-t="chart" data-id="s2.2" data-sk="own"><title>2026-08-03
+p99: 1,100 ms
+change: +380 ms vs previous</title></path>
+<path d="M-5 -5l162.5 0l0 22l-162.5 0Z" transform="translate(634.52 55)" fill="rgb(0,0,0)" fill-opacity="0" stroke="#b7b9be" stroke-width="0"></path>
+<path d="M0 5L14 5" transform="translate(635.52 56)" fill="#000" stroke="#4A7FC1" stroke-width="2" stroke-linecap="butt" stroke-miterlimit="10"></path>
+<path d="M11 5A4 4 0 1 1 11 4.6A4 4 0 0 1 11 5" transform="translate(635.52 56)" fill="#fff" stroke="#4A7FC1" stroke-width="2" stroke-linecap="butt" stroke-miterlimit="10"></path>
+<text dominant-baseline="central" text-anchor="start" style="font-size:12px;font-family:Inter, system-ui, sans-serif;" x="19" y="5" transform="translate(635.52 56)" fill="#8A96AE">p50</text>
+<path d="M-1 -1l40.2 0l0 12l-40.2 0Z" transform="translate(635.52 56)" fill="none" pointer-events="visible" data-s="0" data-i="0" data-t="legend"><title>p50</title></path>
+<path d="M0 5L14 5" transform="translate(691.68 56)" fill="#000" stroke="#E89640" stroke-width="2" stroke-linecap="butt" stroke-miterlimit="10"></path>
+<path d="M11 5A4 4 0 1 1 11 4.6A4 4 0 0 1 11 5" transform="translate(691.68 56)" fill="#fff" stroke="#E89640" stroke-width="2" stroke-linecap="butt" stroke-miterlimit="10"></path>
+<text dominant-baseline="central" text-anchor="start" style="font-size:12px;font-family:Inter, system-ui, sans-serif;" x="19" y="5" transform="translate(691.68 56)" fill="#8A96AE">p95</text>
+<path d="M-1 -1l40.2 0l0 12l-40.2 0Z" transform="translate(691.68 56)" fill="none" pointer-events="visible" data-s="1" data-i="1" data-t="legend"><title>p95</title></path>
+<path d="M0 5L14 5" transform="translate(747.84 56)" fill="#000" stroke="#EDB84A" stroke-width="2" stroke-linecap="butt" stroke-miterlimit="10"></path>
+<path d="M11 5A4 4 0 1 1 11 4.6A4 4 0 0 1 11 5" transform="translate(747.84 56)" fill="#fff" stroke="#EDB84A" stroke-width="2" stroke-linecap="butt" stroke-miterlimit="10"></path>
+<text dominant-baseline="central" text-anchor="start" style="font-size:12px;font-family:Inter, system-ui, sans-serif;" x="19" y="5" transform="translate(747.84 56)" fill="#8A96AE">p99</text>
+<path d="M-1 -1l40.2 0l0 12l-40.2 0Z" transform="translate(747.84 56)" fill="none" pointer-events="visible" data-s="2" data-i="2" data-t="legend"><title>p99</title></path>
+<path d="M-5 -5l212.9 0l0 48l-212.9 0Z" transform="translate(13 11)" fill="rgb(0,0,0)" fill-opacity="0" stroke="#3c3c41" stroke-width="0"></path>
+<text dominant-baseline="central" text-anchor="start" style="font-size:16px;font-family:Space Grotesk, system-ui, sans-serif;font-weight:600;" xml:space="preserve" y="8" transform="translate(13 11)" fill="#EAEEF5">Audit queue latency</text>
+<text dominant-baseline="central" text-anchor="start" style="font-size:12px;font-family:Inter, system-ui, sans-serif;" xml:space="preserve" y="32" transform="translate(13 11)" fill="#8A96AE">5-min aggregation · 2026-08-01→03</text>
+<defs >
+<clipPath id="ve-SIM-08-queue-latency-c0">
+<path d="M112 80.8l666 0l0 340.5l-666 0Z" fill="#000"></path>
+</clipPath>
+<clipPath id="ve-SIM-08-queue-latency-c1">
+<path d="M112 80.8l666 0l0 340.5l-666 0Z" fill="#000"></path>
+</clipPath>
+<clipPath id="ve-SIM-08-queue-latency-c2">
+<path d="M112 80.8l666 0l0 340.5l-666 0Z" fill="#000"></path>
+</clipPath>
+</defs>
+
+</svg>
+<!-- generated-by visual-engine v1.0.0 · echarts@6.1.0 · theme:project-theme · content-sha256:24a5e6ee000c8a7687f5e6761645f348fe5ef4fcab825fe8222f58aada475449 -->

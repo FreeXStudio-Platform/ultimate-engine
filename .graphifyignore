@@ -1,0 +1,24 @@
+# graphify scope — Graph Mind Data knowledge graph for this project.
+# Output is written to Projects/Graph Mind Data/ultimate-engine/ via GRAPHIFY_OUT.
+# Never graph scratch, secrets, or generated artifacts.
+
+# Vendored minified renderers — graphify AST-parses them into thousands of
+# one-letter hubs (cn, rc, rn) that drown the real engine. Keep the spec
+# (VAULT_GRAPH_SPEC.md) and graph-view.html; drop the bundled libraries.
+**/*.min.js
+tools/graphify/vendor/
+vault-graph-engine/*.js
+
+docs/confidential/
+.docgen/
+.health/
+.blueprint/
+.remember/
+**/.remember/
+.claude/projects/
+.codemap/
+.hypothesis/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+tools/visual-engine/renders/current/

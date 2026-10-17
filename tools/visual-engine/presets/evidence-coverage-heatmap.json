@@ -1,0 +1,17 @@
+{
+  "id": "evidence-coverage-heatmap",
+  "visual": "heatmap",
+  "family": "matrix",
+  "summary": "Claim × evidence class coverage",
+  "canonical_reader_question": "Which claims lack runtime evidence?",
+  "required_fields": [
+    "data.rows",
+    "data.cols",
+    "data.matrix"
+  ],
+  "defaults": {},
+  "semantics": {},
+  "job_extras": {},
+  "notes": "evidence classes: capability-proof, journey, test, none (T-R2 ordering)",
+  "provenance": "visual-engine preset v1.0.0 — derived from spec §24 + project data shapes (detector registry, gates, docs estate)."
+}

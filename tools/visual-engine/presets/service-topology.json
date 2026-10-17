@@ -1,0 +1,18 @@
+{
+  "id": "service-topology",
+  "visual": "graph",
+  "family": "architecture",
+  "summary": "Service dependency topology (data-annotated)",
+  "canonical_reader_question": "Which services depend on which?",
+  "required_fields": [
+    "data.nodes",
+    "data.links"
+  ],
+  "defaults": {},
+  "semantics": {},
+  "job_extras": {
+    "layout": "circular"
+  },
+  "notes": "document-grade architecture stays on docgen render_system_map; this is for metric-annotated topology",
+  "provenance": "visual-engine preset v1.0.0 — derived from spec §24 + project data shapes (detector registry, gates, docs estate)."
+}

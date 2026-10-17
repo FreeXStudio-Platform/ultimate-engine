@@ -1,0 +1,30 @@
+{
+  "_readme": "DOCUMENTATION — a human/agent-facing index of canonical paths. No code in this engine reads this file back; it is not kept in sync automatically, so treat path claims here as a starting point, not ground truth. Labelled 2026-08-23 (P8-084).",
+  "id": "visual-engine",
+  "version": "1.0.0",
+  "created": "2026-08-08",
+  "role": "AI-operated visualization infrastructure layer for data charts. docgen remains the authority for documents/diagrams; Recharts remains the app-UI layer.",
+  "canonical_paths": {
+    "skill": "AI_AGENT_SKILL.md",
+    "capabilities": "CAPABILITY_MATRIX.json",
+    "routing": "ENGINE_ROUTING_POLICY.json",
+    "chart_knowledge": "knowledge/CHART_USE_CASE_CATALOG.json",
+    "themes": "themes/",
+    "presets": "presets/",
+    "schemas": "schemas/",
+    "direct_adapter": "adapters/echarts/render.mjs",
+    "cli": "adapters/echarts/cli.mjs",
+    "mcp": "mcp/server.mjs",
+    "mcp_decision": "mcp/approved-server.json",
+    "fallback": "mcp/fallback-plan.md",
+    "security": "SECURITY_POLICY.md",
+    "tests": "tests/",
+    "golden": "renders/golden/",
+    "evidence": "evidence/"
+  },
+  "registered_in": {
+    "note": "Standalone package — not wired into any specific host project yet. The fields below name what a consuming project's own repo-root '.mcp.json' and docs need to reference once this engine is dropped in; none of these paths exist inside this package itself.",
+    "expected_mcp_registration": ".mcp.json (consuming repo's root) -> mcp/server.mjs",
+    "expected_doc_pointer": "the consuming project's own top-level agent/AI-instructions file, if it has one"
+  }
+}

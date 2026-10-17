@@ -1,0 +1,257 @@
+#!/usr/bin/env bash
+# ULTIMATE-ENGINE-PRECOMMIT-V1 — the index-level moat, at the moment the index is written.
+#
+# Why this exists: the pre-push hook guards what is PUBLISHED, and it is the right place for the
+# engine-wide health gate. But two things must be caught earlier, at commit time, because by push
+# time the damage is already in history:
+#
+#   1. a CONFIDENTIAL/SECRET document staged outside docs/confidential/ (RULEBOOK L14). The engine
+#      ships `staged_content_scanner.py` precisely for this — and until 2026-08-20 NOTHING invoked
+#      it. A guard with no caller is not a guard (LESSONS.md L-01).
+#   2. a secret in the staged bytes. Portfolio hard rule S2: scan before the content is recorded.
+#
+# Both read the STAGED bytes from the git index, so they enforce exactly what is being committed —
+# a clean working-tree copy cannot mask a classified or secret staged blob. Gate 2 only became true
+# on 2026-08-20: it used to call the scanner with no arguments, whose staged mode takes path NAMES
+# from `git diff --cached` and then greps those paths ON DISK. Staging a two-line AWS key pair and
+# then redacting the working-tree copy committed the key while this hook printed
+# `1 lines actually read — no definite secret pattern`. Names from git, bytes from disk is the
+# same wrong-artifact defect as LESSONS.md L-15, and it was live one hook over.
+#
+# Install (idempotent):  bash tools/hooks/install.sh
+# Verify:                python3 -m tools.health   # STRUCT-04 checks this hook is live
+# Bypass (announces):    ENGINE_SKIP_PRECOMMIT=1 git commit …
+#
+# KNOWN TOTAL BYPASS: `git commit --no-verify` / `git push --no-verify` skip every hook silently,
+# exit 0, no output, no artifact for an audit to find. No client-side hook can defend against it;
+# only a server-side required check can (OPEN_GATES OG-31, Phase 7). Documented here because an
+# UNdocumented bypass is strictly worse than a documented one — it was named nowhere in the tree
+# until 2026-08-20, while the engine went to real trouble to make its own escape hatches loud.
+#
+# NOTE (LESSONS.md L-12): never pipe a gate into tail/head and then test $?. Redirect, check $?,
+# then read the file.
+
+set -uo pipefail
+
+if [ "${ENGINE_SKIP_PRECOMMIT:-0}" = "1" ]; then
+  echo "⚠️  pre-commit: BYPASSED via ENGINE_SKIP_PRECOMMIT=1 — no gate ran for this commit." >&2
+  exit 0
+fi
+
+REPO_ROOT="$(git rev-parse --show-toplevel)" || exit 1
+cd "$REPO_ROOT" || exit 1
+
+# The interpreter is part of the moat. An UNTRACKED `.venv/bin/python` containing nothing but
+# `exit 0` used to neuter every python-run gate here — no tracked file modified, no hash
+# re-baseline needed, and health still reported the hooks as gating. A non-default interpreter must
+# ANNOUNCE itself and PROVE it is a real Python 3 before any gate trusts it.
+PY="python3"
+if [ -x ".venv/bin/python" ]; then
+  if [ "$(.venv/bin/python -c 'import sys; print("PYOK%d" % sys.version_info[0])' 2>/dev/null)" = "PYOK3" ]; then
+    PY=".venv/bin/python"
+    echo "pre-commit: using project interpreter .venv/bin/python" >&2
+  else
+    echo "⚠️  pre-commit: .venv/bin/python is executable but is NOT a working Python 3 — ignoring it." >&2
+  fi
+fi
+# Validate the interpreter we END UP USING. A `python3` on $PATH that merely exits 0 made the
+# placement gate inert while it printed "classification placement clean".
+# Demand EVIDENCE, not an exit code: a stub that does nothing but `exit 0` satisfies an
+# exit-code probe perfectly (LESSONS.md L-18).
+if [ "$("$PY" -c 'import sys; print("PYOK%d" % sys.version_info[0])' 2>/dev/null)" != "PYOK3" ]; then
+  echo "⛔ pre-commit: '$PY' is not a working Python 3 — refusing to certify this commit." >&2
+  exit 1
+fi
+LOG_DIR="$(mktemp -d)"
+trap 'rm -rf "$LOG_DIR"' EXIT
+STATUS=0
+GATES_RUN=0
+GATES_EXPECTED=2
+
+# ── Gate 1 — classification placement over the STAGED index ───────────────────────────────────
+GATES_RUN=$((GATES_RUN + 1))
+"$PY" -m tools.docgen.hooks.staged_content_scanner > "$LOG_DIR/placement.log" 2>&1
+rc=$?
+if [ "$rc" -ne 0 ]; then
+  echo "⛔ pre-commit: classification placement gate FAILED (exit $rc). Commit refused." >&2
+  cat "$LOG_DIR/placement.log" >&2
+  STATUS=1
+else
+  # ⚠ **A CONFIGURATION REFUSAL MUST REACH THE OPERATOR ON A *CLEAN* RUN TOO** (`OG-119`).
+  #
+  # `engine_config` refuses a `confidentialDir` that would disable the L14 gate and logs the
+  # refusal with `_LOG.error`, and `OG-92`/`OG-102` both record that it is refused "loudly".
+  # It was not loud: this hook sends the scanner's stderr to a log it only prints when the gate
+  # FAILS, and the log directory is deleted by the EXIT trap. Measured:
+  # `ENGINE_CONFIDENTIAL_DIR=. git commit` printed "classification placement clean." and exited 0,
+  # with zero occurrences of `OG-92` anywhere in the output. A security control that announces its
+  # own degradation into a discarded file has not announced it.
+  #
+  # The commit is still allowed — a refused override falls back to the default vault, so the gate
+  # is working correctly. What was missing is the operator learning their configuration is being
+  # ignored, which is exactly when they can still fix it.
+  if grep -q 'REFUSED' "$LOG_DIR/placement.log" 2>/dev/null; then
+    echo "⚠ pre-commit: engine configuration was REFUSED and defaults were used —" >&2
+    grep 'REFUSED' "$LOG_DIR/placement.log" >&2
+  fi
+  echo "pre-commit: classification placement clean."
+fi
+
+# ── Gate 2 — secret scan over the STAGED BLOB OBJECTS ────────────────────────────────────────
+# Read the OBJECTS, never a rendering of them. Two earlier versions each scanned the wrong bytes:
+#
+#   v1 called the scanner with no arguments, whose staged mode takes path NAMES from
+#      `git diff --cached` and then greps those paths ON DISK — so redacting the working-tree copy
+#      after `git add` committed the secret under an affirmative clean line.
+#   v2 materialised the index with `git checkout-index --prefix`, which is git's WORKING-TREE
+#      RENDERING of the index: it applies `working-tree-encoding`, clean/smudge filters and EOL
+#      conversion, so the scanned bytes were provably not the recorded bytes (an untracked
+#      `.gitattributes` was enough). It also collapsed two index entries differing only in case on
+#      a case-insensitive filesystem, silently overwriting one blob with the other.
+#
+# v3 — this one — takes the destination blob sha of every staged change from `git diff --cached
+# --raw` and reads it with `git cat-file blob`. Blobs are written named by their SHA, never by
+# their path: that also defeats the portfolio scanner's basename self-exclusion (any staged file
+# called `secret-scan.sh` was silently dropped from the scan) and makes case collision impossible.
+GATES_RUN=$((GATES_RUN + 1))
+SCANNER="${ENGINE_SECRET_SCAN:-$HOME/.claude/scripts/secret-scan.sh}"
+if [ -n "${ENGINE_SECRET_SCAN:-}" ]; then
+  echo "⚠️  secret scanner OVERRIDDEN via ENGINE_SECRET_SCAN=$ENGINE_SECRET_SCAN" >&2
+fi
+BLOBS="$LOG_DIR/blobs"; mkdir -p "$BLOBS"
+MANIFEST="$LOG_DIR/manifest.tsv"; : > "$MANIFEST"
+ZEROOID="0000000000000000000000000000000000000000"
+
+# `--raw -z` emits: :<srcmode> <dstmode> <srcsha> <dstsha> <status>\0<path>\0  (and a second path
+# for renames). Read it as a NUL-delimited stream so paths git would otherwise quote survive.
+build_manifest() {   # $1 = destination file
+  local out="$1"
+  : > "$out"
+  # --no-abbrev is load-bearing: `--raw` emits ABBREVIATED shas by default, while the materialiser
+  # names each blob file by the FULL sha from `git cat-file --batch`. The reverse lookup that turns
+  # a scanner hit back into a path therefore never matched, and every refusal printed
+  # `at: <no path recorded>` — a gate that refuses your commit without telling you which file is the
+  # gate you disable.
+  git diff --cached --raw -z --no-abbrev --diff-filter=d > "$LOG_DIR/raw" 2>/dev/null || : > "$LOG_DIR/raw"
+  {
+    while IFS= read -r -d '' meta; do
+      case "$meta" in :*) ;; *) continue ;; esac
+      IFS= read -r -d '' path || break
+      dstsha="$(printf '%s' "$meta" | awk '{print $4}')"
+      dstmode="$(printf '%s' "$meta" | awk '{print $2}')"
+      case "$meta" in *[RC][0-9]*) IFS= read -r -d '' path || true ;; esac
+      [ -z "$dstsha" ] && continue
+      [ "$dstsha" = "$ZEROOID" ] && continue
+      # Mode 160000 is a GITLINK — a submodule pointer. Its "sha" is a commit in the SUBMODULE's
+      # object store, which this repository does not have, so `cat-file` reports it missing and the
+      # whole commit was refused with no diagnosis and no exit but a total bypass. The mode is the
+      # correct source for this, not the object type: the object is not here to be typed.
+      # A submodule carries no bytes of its own; its content is its own repository's moat's problem.
+      if [ "$dstmode" = "160000" ]; then
+        echo "pre-commit: skipping submodule pointer '$path' (a gitlink carries no bytes to scan)."
+        continue
+      fi
+      printf '%s\t%s\n' "$dstsha" "$path" >> "$out"
+    done
+  } < "$LOG_DIR/raw"
+}
+build_manifest "$MANIFEST"
+
+# ONE process for every blob, via tools/docgen/hooks/materialise.py. It also transcodes UTF-16/32
+# blobs — which a grep-based scanner cannot read at all — and skips submodule gitlinks, whose
+# "blob sha" is a commit sha that `cat-file blob` cannot read, and which used to refuse the whole
+# commit with no diagnosis and no exit but a total bypass.
+materialise_failed=0
+if [ -s "$MANIFEST" ]; then
+  "$PY" -m tools.docgen.hooks.materialise "$BLOBS" "$REPO_ROOT" < "$MANIFEST" \
+    > "$LOG_DIR/materialise.out" 2> "$LOG_DIR/materialise.err" || materialise_failed=1
+  [ -s "$LOG_DIR/materialise.err" ] && cat "$LOG_DIR/materialise.err" >&2
+fi
+
+if [ ! -x "$SCANNER" ]; then
+  # FAIL CLOSED. "No scanner" is not "no secrets" (~/.claude/CLAUDE.md hard rule S2).
+  echo "⛔ pre-commit: secret scanner not found at $SCANNER — refusing to certify this commit." >&2
+  echo "   Install it, or bypass deliberately with ENGINE_SKIP_PRECOMMIT=1 (announces itself)." >&2
+  STATUS=1
+elif [ "$materialise_failed" -ne 0 ]; then
+  echo "⛔ pre-commit: could not read a staged object — refusing to certify this commit." >&2
+  STATUS=1
+else
+  STAGED_COUNT=$( ( cd "$BLOBS" && find . -type f ) 2>/dev/null | wc -l | tr -d ' ' )
+  if [ "$STAGED_COUNT" -eq 0 ]; then
+    if [ -s "$MANIFEST" ]; then
+      # A gitlink carries no bytes, so there is no blob to scan — but it still carries a PATH,
+      # and the path is exactly what `P8-102` showed was never scanned. Taking the branch above
+      # would have skipped the path scan entirely, so a submodule whose path is secret-shaped
+      # would pass clean: the same hole one door over (`L-26` — after narrowing, attack the NEW
+      # edge). Scan the path list here too, with the same scanner and the same fail-closed rc.
+      awk -F'\t' '{print $2}' "$MANIFEST" > "$BLOBS/__paths__"
+      if ! ( cd "$BLOBS" && "$SCANNER" ./__paths__ ) > "$LOG_DIR/secrets.log" 2>&1; then
+        echo "⛔ pre-commit: a staged PATH matched a secret pattern — refusing to certify." >&2
+        cat "$LOG_DIR/secrets.log" >&2
+        STATUS=1
+      else
+        echo "pre-commit: nothing scannable staged (submodule pointers only); paths scanned clean."
+      fi
+    else
+      echo "⛔ pre-commit: nothing staged to scan — refusing to certify this commit." >&2
+      STATUS=1
+    fi
+  else
+    # **A secret-shaped FILENAME is invisible here without this** (`P8-102`). Everything above
+    # scans blob CONTENT, materialised by SHA — the staged PATH strings themselves were never
+    # scanned by anything. Measured before this line existed: staging a file named after an
+    # AWS-access-key-shaped string (the "AKIA" prefix + sixteen more characters, split here so
+    # this comment is not itself a scannable secret) and committing it went through clean, because
+    # the secret-shaped text lived only in the filename, never in the sha-named blob's bytes. Writing
+    # the manifest's own path column into one extra file inside `$BLOBS` puts it in front of the
+    # SAME `find | xargs "$SCANNER"` call two lines down — no second scanner invocation, no new
+    # gate, just one more file for the existing one to see. A hit inside it prints the scanner's
+    # raw matched line, which — because the file's own content IS the list of staged paths — already
+    # names the offending path; it does not need the sha-lookup translation the blob branch below
+    # does.
+    awk -F'\t' '{print $2}' "$MANIFEST" > "$BLOBS/__paths__"
+    ( cd "$BLOBS" && find . -type f -print0 | xargs -0 "$SCANNER" ) > "$LOG_DIR/secrets.log" 2>&1
+    rc=$?
+    if [ "$rc" -ne 0 ]; then
+      echo "⛔ pre-commit: secret scan exit $rc (0 clean · 1 secret · 2 nothing scanned · 3 review)." >&2
+      while IFS= read -r line; do
+        hit_sha="$(printf '%s' "$line" | sed -n 's|^\(Binary file \)\{0,1\}\./\([0-9a-f]\{7,40\}\).*|\2|p')"
+        if [ -n "$hit_sha" ]; then
+          paths="$(awk -F'\t' -v s="$hit_sha" '$1 == s { print $2 }' "$MANIFEST" | sort -u | tr '\n' ' ')"
+          echo "$line   <- blob $hit_sha at: ${paths:-<no path recorded>}" >&2
+        else
+          echo "$line" >&2
+        fi
+      done < "$LOG_DIR/secrets.log"
+      STATUS=1
+    else
+      echo "pre-commit: secret scan clean ($STAGED_COUNT staged blob(s))."
+    fi
+  fi
+fi
+
+# ── The index must not have moved under us ───────────────────────────────────────────────────
+# git writes the tree AFTER this hook returns, so anything staged during the scan would be
+# committed unscanned — and the count assertion could not see it, because both sides came from the
+# same snapshot. Re-derive the manifest and compare: this is the assertion the hook always believed
+# it was making. `git cat-file --batch` shrank the window from minutes to milliseconds; this closes
+# what is left of it.
+build_manifest "$LOG_DIR/manifest.after"
+if ! cmp -s "$MANIFEST" "$LOG_DIR/manifest.after"; then
+  echo "⛔ pre-commit: the index CHANGED while it was being scanned — refusing to certify it." >&2
+  echo "   Something staged files during the hook (an IDE, lint-staged, another terminal)." >&2
+  echo "   Re-run the commit; nothing is lost." >&2
+  STATUS=1
+fi
+
+# ── Assert every gate ran ────────────────────────────────────────────────────────────────────
+if [ "$GATES_RUN" -ne "$GATES_EXPECTED" ]; then
+  echo "⛔ pre-commit: only $GATES_RUN of $GATES_EXPECTED gates ran — this hook has been modified." >&2
+  STATUS=1
+fi
+
+if [ "$STATUS" -ne 0 ]; then
+  echo "⛔ pre-commit: COMMIT REFUSED — fix the above, or ENGINE_SKIP_PRECOMMIT=1 to bypass." >&2
+fi
+exit "$STATUS"

@@ -1,0 +1,194 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "_status": "PARTIAL DOCUMENTATION OF A SHAPE — no validator (jsonschema/ajv) reads this file directly; most fields here are presence/type-checked only, loosely not exactly matching this schema. Two exceptions, added 2026-08-23 (P8-081) as the single enforcement point for what this file declares: `visual_id`'s `pattern` and `reader_question`'s `minLength` ARE independently enforced in code by validateVisualJob() (adapters/echarts/validate.mjs, gate G-STRUCT, VISUAL_ID_PATTERN / READER_QUESTION_MIN_LENGTH) — kept in sync by hand, not by a shared reader, so a change to either side needs the other updated too.",
+  "$id": ".visual-job/v1",
+  "title": "Normalized visual job packet",
+  "type": "object",
+  "required": [
+    "visual_id",
+    "reader_question",
+    "selected_visual",
+    "classification"
+  ],
+  "properties": {
+    "visual_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9._-]+$"
+    },
+    "parent_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "reader_question": {
+      "type": "string",
+      "minLength": 8
+    },
+    "audience": {
+      "type": "string"
+    },
+    "classification": {
+      "enum": [
+        "public",
+        "internal",
+        "confidential",
+        "restricted"
+      ]
+    },
+    "truth_state": {
+      "type": "string",
+      "description": "e.g. verified-current | draft | CANNOT_VERIFY"
+    },
+    "data_source_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "data_snapshot_hash": {
+      "type": "string"
+    },
+    "data_shape": {
+      "enum": [
+        "table",
+        "items",
+        "matrix",
+        "flow",
+        "graph",
+        "tree",
+        "events",
+        "boxplot",
+        "radar"
+      ]
+    },
+    "selected_visual": {
+      "type": "string",
+      "description": "see validate.mjs SUPPORTED_VISUALS; \"none\" = NO_CHART"
+    },
+    "no_chart_reason": {
+      "type": "string"
+    },
+    "selection_reason": {
+      "type": "string"
+    },
+    "preset": {
+      "type": "string"
+    },
+    "theme": {
+      "enum": [
+        "project-theme",
+        "project-theme-dark",
+        "project-theme-light",
+        "print-theme",
+        "document-theme"
+      ],
+      "default": "project-theme"
+    },
+    "title": {
+      "type": "string"
+    },
+    "subtitle": {
+      "type": "string"
+    },
+    "units": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "width": {
+      "type": "integer",
+      "minimum": 100,
+      "maximum": 4000
+    },
+    "height": {
+      "type": "integer",
+      "minimum": 100,
+      "maximum": 4000
+    },
+    "scale_min": {
+      "type": "number"
+    },
+    "scale_max": {
+      "type": "number"
+    },
+    "log_scale": {
+      "type": "boolean"
+    },
+    "time_axis": {
+      "type": "boolean"
+    },
+    "stack": {
+      "type": "boolean"
+    },
+    "legend": {
+      "type": "boolean"
+    },
+    "show_values": {
+      "type": "boolean"
+    },
+    "allow_negative": {
+      "type": "boolean"
+    },
+    "layout": {
+      "enum": [
+        "circular",
+        "none",
+        "preset"
+      ]
+    },
+    "interactive": {
+      "type": "boolean"
+    },
+    "static_fallback": {
+      "type": "boolean",
+      "default": true
+    },
+    "exports": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "svg",
+          "png",
+          "html"
+        ]
+      }
+    },
+    "text_summary": {
+      "type": "string",
+      "description": "required before entering a source-of-truth document (Gate G7)"
+    },
+    "accessibility": {
+      "type": "object",
+      "properties": {
+        "text_summary_required": {
+          "type": "boolean"
+        },
+        "color_not_only_signal": {
+          "type": "boolean"
+        },
+        "aria_label": {
+          "type": "string"
+        },
+        "decal": {
+          "type": "boolean"
+        }
+      }
+    },
+    "validation": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "data": {
+      "type": "object",
+      "description": "shape-specific: {dimensions,source} | {items} | {rows,cols,matrix} | {nodes,links} | {root} | {events} | {categories,values} | {axes,series}. Table-shaped data (scatter, bubble, timeline) may add `names` (one label per row — WITHOUT it a dot is an anonymous circle), `notes` (one plain sentence per row) and, for bubble, `size_label` (what the third measure is); `names` and `notes` must correspond one to one with `source` (gate G-STRUCT)."
+    },
+    "semantic_colors": {
+      "type": "boolean",
+      "description": "Default true. When at least two labels of a chart are severity or status words and they are at least half of its labels, those labels take the reserved severity / status colours from the theme (Critical red … Low blue … Info green); set false to keep the categorical palette."
+    }
+  }
+}

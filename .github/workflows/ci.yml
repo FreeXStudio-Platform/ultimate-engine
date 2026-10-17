@@ -1,0 +1,44 @@
+# The correctness gate for pull requests: the engine's own single health command.
+# GitHub-hosted, PR-triggered only (never on push), least-privilege token, concurrency + timeout, actions pinned by SHA.
+# A new gate is ADDITIVE first: it is not a required status check until it has run green on real pull requests.
+name: ci
+on:
+  pull_request:
+    branches: [master]
+    types: [opened, synchronize, reopened, ready_for_review]
+  workflow_dispatch: {}
+permissions:
+  contents: read
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  health:
+    name: health
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    if: github.event_name != 'pull_request' || (github.event.pull_request.draft == false && github.event.pull_request.head.repo.full_name == github.repository)
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: "22"
+      - name: Install
+        run: |
+          python3 -m pip install --quiet PyYAML
+          npm ci --no-audit --no-fund
+          (cd tools/visual-engine && npm ci --no-audit --no-fund)
+          (cd tools/mermaid-engine && npm ci --no-audit --no-fund)
+          git config user.email "ci@example.invalid" && git config user.name "ci"
+          bash tools/hooks/install.sh
+      - name: Engine health
+        run: python3 -m tools.health
+      - name: Name the failing tests
+        # `tools.health` reports the suite as one line; when it fails, run the suite once more to print WHICH tests failed.
+        if: failure()
+        run: python3 -m unittest discover -s tools/tests -t . 2>&1 | grep -E '^(FAIL|ERROR):|^Ran |^FAILED' || true

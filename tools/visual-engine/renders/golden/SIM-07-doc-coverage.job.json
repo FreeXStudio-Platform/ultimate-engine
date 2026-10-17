@@ -1,0 +1,47 @@
+{
+  "visual_id": "SIM-07-doc-coverage",
+  "classification": "internal",
+  "theme": "project-theme",
+  "reader_question": "Which subsystems lack current documentation?",
+  "text_summary": "Simulation text summary for accessibility gate.",
+  "selected_visual": "heatmap",
+  "preset": "document-coverage-matrix",
+  "title": "Docs coverage by subsystem",
+  "data": {
+    "rows": [
+      "detectors",
+      "bank",
+      "payments",
+      "frontend"
+    ],
+    "cols": [
+      "design",
+      "ops",
+      "api"
+    ],
+    "matrix": [
+      [
+        80,
+        60,
+        90
+      ],
+      [
+        95,
+        85,
+        40
+      ],
+      [
+        70,
+        90,
+        88
+      ],
+      [
+        65,
+        30,
+        75
+      ]
+    ]
+  },
+  "scale_min": 0,
+  "scale_max": 100
+}

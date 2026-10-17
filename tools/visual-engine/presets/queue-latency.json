@@ -1,0 +1,18 @@
+{
+  "id": "queue-latency",
+  "visual": "line",
+  "family": "time",
+  "summary": "Queue latency percentiles over time",
+  "canonical_reader_question": "How is queue latency trending?",
+  "required_fields": [
+    "data.dimensions",
+    "data.source"
+  ],
+  "defaults": {},
+  "semantics": {},
+  "job_extras": {
+    "time_axis": true
+  },
+  "notes": "p50/p95/p99 as separate series; include time window + aggregation basis in subtitle",
+  "provenance": "visual-engine preset v1.0.0 — derived from spec §24 + project data shapes (detector registry, gates, docs estate)."
+}

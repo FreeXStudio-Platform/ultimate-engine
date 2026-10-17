@@ -1,0 +1,381 @@
+{
+  "$schema": "self-describing \u2014 no external schema; read the _readme fields",
+  "_readme": "Machine-readable index of every capability this engine ships, verified by actually running each one during this package's consolidation (not just read from source) unless a caveat says otherwise. Use this to answer 'can this engine make X' without reading source code. See USAGE_GUIDE.md for narrative walkthroughs, CONFIGURATION.md for path setup, and each engine's own README.md for full detail. See INTERPRETATION.md for what each figure type's collision/precision guarantees actually are (verified against code, not asserted) and which color/layout conventions are real standards vs. this engine's own house style vs. left to whoever authors the figure. REVERIFIED 2026-08-19 end-to-end: every figure kind below was rendered in ONE real document (examples/capability-gallery.html, 21 figures) built through the ordinary CLI, then measured in a browser \u2014 262 text elements, zero overlaps, zero out-of-box text, in BOTH themes. Four fail-closed gates were deliberately triggered and each refused the build. See PROVENANCE.md 'Session 4' for the five defects that pass found and fixed.",
+  "generated": "2026-08-20",
+  "engines": {
+    "document-engine": {
+      "path": "tools/docgen/",
+      "language": "Python 3.11",
+      "entryPoint": "python3 -m tools.docgen.cli build <file.md>",
+      "purpose": "Markdown -> self-contained HTML/JSON(/PDF) documents, with 15 embeddable diagram/chart/map renderers (all reachable via the same sidecar-kind pipeline \u2014 verified this session), each carrying an optional reader_question/insight interpretive layer (see INTERPRETATION.md), and a 9-gate leak sanitizer.",
+      "verifiedWorking": "Reverified 2026-08-19: all 15 native kinds + both bridges rendered in one real document via `python3 -m tools.docgen.cli build` (examples/capability-gallery.md -> 21 figures, every one carrying a reader_question/insight pair), plus the bundled sample.md and sample-multi-figure.md. Browser-measured: 0 text overlaps and 0 out-of-box labels across 262 text elements, in dark AND light. Gates proven by deliberate failure, not by reading code. Figure system added 2026-10-10 (OG-250..OG-261): verify with `python3 -m unittest discover -s tools/tests -t .` and, for behaviour in a browser, `PLAYWRIGHT_MODULE_DIR=<dir resolving playwright> python3 -m unittest tools.tests.test_figure_runtime_browser`.",
+      "capabilities": {
+        "documents": {
+          "what": "A Markdown file with a YAML front-matter header (id/classification/title/...) becomes a self-contained HTML document \u2014 inline CSS, dark+light theme toggle, masthead, classification badge, embedded figures, no external asset requests.",
+          "entry": "generator.build(md_path, formats=('html','json','pdf'))",
+          "formats": [
+            "html",
+            "json",
+            "blueprint (the AI-only <stem>.blueprint.json twin \u2014 see figureSystem)",
+            "pdf (if weasyprint installed, else recorded as skipped)"
+          ],
+          "requires": "A DOC_MANIFEST.md registry row matching the document's id-prefix (docs/design/doc-system/DOC_MANIFEST.md \u2014 bundled with one example row; see CONFIGURATION.md)."
+        },
+        "flowchart": {
+          "what": "Animated process-flow diagram, 9 node-glyph shapes, edge routing around nodes, a constant-velocity flow-dot, reduced-motion static fallback.",
+          "entry": "visual.render(VisualSpec)",
+          "kind": "flowchart (default)"
+        },
+        "stateDiagram": {
+          "what": "State machine diagram (states + labeled transitions), static.",
+          "entry": "diagram_graphs.render_state_diagram(VisualSpec)",
+          "kind": "state",
+          "note": "Reachable via the standard sidecar kind:\"state\" (falls through to the same VisualSpec parser as flowchart) \u2014 verified this session."
+        },
+        "systemMap": {
+          "what": "Undirected component/system map.",
+          "entry": "diagram_graphs.render_system_map(VisualSpec)",
+          "kind": "system_map",
+          "note": "Reachable via sidecar kind:\"system_map\" \u2014 verified this session."
+        },
+        "dependencyGraph": {
+          "what": "Directed call/dependency graph, static.",
+          "entry": "diagram_graphs.render_dependency_graph(VisualSpec)",
+          "kind": "dependency_graph",
+          "note": "Reachable via sidecar kind:\"dependency_graph\" \u2014 verified this session."
+        },
+        "sequenceDiagram": {
+          "what": "UML-style sequence diagram \u2014 vertical actor lifelines, ordered numbered message arrows. No self-messages (stated limitation).",
+          "entry": "sequence_diagram.render(SequenceSpec)",
+          "kind": "sequence"
+        },
+        "isometric3d": {
+          "what": "TRUE isometric/axonometric 3D \u2014 real (x,y,z) cuboids, fixed deterministic projection, painter's-algorithm depth sort, up to 24 boxes.",
+          "entry": "isometric3d.render(IsometricSpec)",
+          "kind": "isometric3d"
+        },
+        "layeredWorkflow": {
+          "what": "2.5D layered cross-plane workflow diagram (isometric-shear view + flat reduced-motion/print fallback in one SVG).",
+          "entry": "layered_workflow.render(...)",
+          "kind": "layered_workflow",
+          "verifiedWorking": "Wired into the standard sidecar-kind dispatch this session (was previously NOT reachable via the documented <!-- figure:ID --> pipeline despite being claimed as one of docgen's \"11 native figure renderers\" \u2014 a real gap found by an independent audit and fixed same-session). Built a real test document embedding it with reader_question/insight, screenshotted the correct layered/labeled output."
+        },
+        "geoMap": {
+          "what": "Schematic point/route map \u2014 real projected (lon,lat) coordinates, 5-continent coarse outline, no network. For orientation, not cartographic accuracy.",
+          "entry": "geo_map.render_geo_map(GeoMapSpec)",
+          "kind": "geo_map"
+        },
+        "choropleth": {
+          "what": "REAL country-boundary world map, value-to-color per country, 5-bucket color-mix() scale (theme-reactive). 177 countries, bundled GeoJSON. NEW this session \u2014 verified by rendering a standalone sample AND by a full document build embedding it alongside mermaid+echarts figures (tools/docgen/sample-multi-figure.md).",
+          "entry": "geo_map.render_choropleth(ChoroplethSpec)",
+          "kind": "choropleth (sidecar spec, same declarative pattern as every other figure kind)",
+          "namesReference": "geo_map.list_choropleth_country_names() \u2014 country names are short/common form (e.g. 'USA' not 'United States of America')",
+          "dataset": "tools/docgen/assets/world-countries-110m.geojson \u2014 see PROVENANCE.md for source/license"
+        },
+        "moduleExplorer": {
+          "what": "Zoomable, clickable hierarchy: a squarified treemap per level, an animated camera into a part, a panel (what it is, size, colour state, what it calls, who calls it, the documents about it), a reader that opens a dossier in place, hover arrows, keyboard and reduced-motion support, and a plain nested outline without script or in print. A block, not a picture (no design size).",
+          "entry": "explorer.render(ExplorerSpec)",
+          "kind": "explorer",
+          "note": "At most 700 parts, depth 5, 3000 edges. Spec, layout and markup pinned by tools/tests/test_explorer.py; behaviour by tools/tests/browser/explorer_check.mjs in Chromium (not Firefox, Safari or a screen reader). docs/design/FIGURE_SYSTEM.md section 13."
+        },
+        "sankey": {
+          "what": "Value-proportional bezier ribbon flow diagram, column-acyclic, single-accent emphasis.",
+          "entry": "sankey.render_sankey(SankeySpec)",
+          "kind": "sankey"
+        },
+        "bar/radar/pie/timeline/heatmap": {
+          "what": "5 data-series chart types with hard selection rules (zero-baseline bars, >=3-axis radar, <=6-slice pie, point-event timeline (not Gantt), mandatory heatmap legend).",
+          "entry": "charts.render_bar/render_radar/render_pie/render_timeline/render_heatmap",
+          "note": "For the other ~19 chart types (scatter, bubble, funnel, treemap, sunburst, boxplot, etc.) use chart-engine (below) via the echarts bridge \u2014 kind: 'echarts' in a figure spec.",
+          "kind": "bar | radar | pie | timeline | heatmap (five separate sidecar kind values, one per type)",
+          "verifiedWorking": "Wired into the standard sidecar-kind dispatch this session (same gap/fix as layeredWorkflow above \u2014 these 5 were real, working, tested renderer functions that generator.py never actually called). Built and verified all 5 in one test document with reader_question/insight on each."
+        },
+        "echartsCharts": {
+          "what": "Bridges to chart-engine's full ECharts catalog (bar/line/area/scatter/bubble/funnel/tree/treemap/sunburst/boxplot/graph/and more) for figures docgen's own 5 native types don't cover.",
+          "entry": "echarts_bridge.render(EChartsFigureSpec)",
+          "kind": "echarts",
+          "requires": "chart-engine's node_modules installed (npm install in tools/visual-engine/)"
+        },
+        "mermaidDiagrams": {
+          "what": "Bridges to mermaid-engine for flowchart/sequence/class/state/ER/xychart diagrams authored in Mermaid text syntax instead of this engine's own spec JSON shapes.",
+          "entry": "mermaid_bridge.render(MermaidFigureSpec)",
+          "kind": "mermaid",
+          "requires": "mermaid-engine's node_modules installed (npm install in tools/mermaid-engine/)",
+          "verifiedWorking": "Built a real document embedding a Mermaid flowchart this session, confirmed theme-reactive (dark AND light both verified via computed CSS) and zero CDN requests."
+        },
+        "videoScript": {
+          "what": "Markdown storyboard exporter pairing narration with animation_ref pointers \u2014 NOT a visual renderer itself, a script/outline format.",
+          "entry": "video_script.generate_for_manifest_row(row, doc_id=\u2026, title=\u2026, scenes=\u2026, out_dir=\u2026)",
+          "kind": "library",
+          "note": "A LIBRARY function, not a command. `entry` read `video_script.py`, which is the shape of a runnable file, and there is none: nothing in this repository calls the module, no CLI subcommand exposes it, and a host project imports it. An AST import graph over all tracked .py files found it and `fetch_public_fact.py` as the only non-test, non-entry-point modules with no importer; that was recorded as P6-37 in Pass 6 and never actioned. Now proven rather than assumed \u2014 tools/tests/test_video_script.py retains 7 counter-examples, including the content_role == 'article' eligibility gate refusing every other role. See OG-120."
+        },
+        "figureSystem": {
+          "what": "Every figure is numbered (Fig. N), anchored (fig-<slug>), scoped (its ids and its CSS cannot touch another figure), explained (a reading guide per kind, a key to every numbered circle, a mark table for engine charts) and linked to the text: sections are sec-<slug> targets with a chip per figure, each figure links back to its section, and [[fig:ID]] in prose links to the figure. Figures take the full content width, centred, outer border only.",
+          "entry": "generator._render_markdown_body (single dispatch through _FIGURE_KINDS); components.figure / components.section; figure_support.scope_svg_ids",
+          "design": "docs/design/FIGURE_SYSTEM.md",
+          "authoringFields": {
+            "node": "tone",
+            "edge": "role, phase, note",
+            "message": "kind, note",
+            "prose": "[[fig:ID]]"
+          },
+          "refuses": [
+            "a [[fig:ID]] to a figure the document does not place",
+            "a figure placed twice",
+            "a figure whose caption/sidecar disagree (existing sidecar gates)"
+          ]
+        },
+        "figureRuntime": {
+          "what": "One inline script per document (only when a figure is present): styled tooltip, click-to-pin (Esc releases), nearest-mark assist, keyboard focus, adjacency/series/legend highlighting for any size of figure. Reads the figures' own attributes; writes two classes and a tooltip's textContent; no dependencies, no network, no eval.",
+          "entry": "tools/docgen/assets/figure_runtime.js (injected by generator._render_html)",
+          "verifiedBy": "tools/tests/browser/figure_runtime_check.mjs via tools/tests/test_figure_runtime_browser.py (headless Chromium; skips with the cause when Playwright is absent)"
+        },
+        "blueprintJson": {
+          "what": "The machine-readable twin of a rendered document: sections with Markdown source, numbered figures with reading keys and (engine charts) the whole per-mark record, every [[fig:]] reference, and the contains/described-by/references link graph. Generated from the same render pass as the HTML and gated by the same leak-gate.",
+          "entry": "python3 -m tools.docgen.cli build <file.md> --formats html,blueprint",
+          "schema": "ultimate-engine/blueprint/1",
+          "output": "<stem>.blueprint.json"
+        }
+      },
+      "notImplemented": {
+        "gantt": "docgen's own 'timeline' is single-axis point events, NOT task bars with duration/dependencies. Use chart-engine's ECharts custom-series Gantt recipe instead (see chart-engine.capabilities.ganttViaCustomSeries below) \u2014 this is ECharts' own official documented pattern, not a workaround.",
+        "orgChart/genericTreeLayout": "diagram_graphs.py's node/edge diagrams require every node's (x,y) supplied by the caller \u2014 no auto-layout algorithm exists in docgen for a plain edge-list. graphify's graph-view.html DOES have auto-layout (dagMode: top-down tree / radial) \u2014 see graph-engine below \u2014 but that's for graphify's own node-link JSON, not docgen figures.",
+        "erDiagram/classDiagram(native)": "Not in docgen's own 11 renderers. Available via mermaid-engine (kind: 'mermaid', erDiagram/classDiagram syntax).",
+        "swimlane/BPMN-lanes": "Identified as a gap during this session's research (no lane/pool primitive in docgen, ECharts, or Mermaid) but NOT built \u2014 deferred as a smaller nice-to-have, not one of the explicitly requested categories. A future addition would be a small stdlib-only docgen module in the geo_map.py/isometric3d.py style \u2014 no new dependency needed.",
+        "vennDiagram": "Same status as swimlane \u2014 identified, not built. 2-3 circle Venn is closed-form geometry (no dependency needed); >3 sets or true area-proportional layout would need a DOM-shimmed third-party library (venn.js) and wasn't judged worth the complexity for this pass."
+      }
+    },
+    "chart-engine": {
+      "path": "tools/visual-engine/",
+      "language": "Node.js (ESM), Apache ECharts 6.1.0",
+      "entryPoint": "node adapters/echarts/cli.mjs render <job.json>  OR  MCP server (mcp/server.mjs, 7 tools)",
+      "purpose": "Deterministic SSR data-chart rendering \u2014 the canonical chart engine docgen's echarts_bridge delegates to.",
+      "verifiedWorking": "npm test: 30/30 unit tests pass. npm run simulate: 22/22 acceptance simulations pass. Re-run 2026-08-19 after that session's two option-builder fixes (treemap/sunburst items-only fallback; axis-name placement) \u2014 still 30/30 + 22/22, with one golden re-baselined and classified in renders/diffs/2026-08-19-axis-name-placement.md. Figure layer added 2026-10-10: goldens re-baselined and classified in renders/diffs/2026-10-10-figure-layer.md; verify with `npm test` and `npm run simulate` in tools/visual-engine.",
+      "capabilities": {
+        "chartFamilies": [
+          "bar",
+          "bar_grouped",
+          "bar_stacked",
+          "bar_horizontal",
+          "line",
+          "line_step",
+          "area",
+          "area_stacked",
+          "scatter",
+          "bubble",
+          "pie",
+          "donut",
+          "heatmap",
+          "matrix",
+          "sankey",
+          "funnel",
+          "graph (node-link, layout locked to circular/preset \u2014 never force, for determinism)",
+          "tree",
+          "treemap",
+          "sunburst",
+          "boxplot",
+          "radar",
+          "timeline (scatter-on-time-axis)",
+          "scorecard"
+        ],
+        "exportFormats": {
+          "svg": "Canonical, deterministic, content-sha256-stamped. Build-twice byte-identical (locked by golden-render regression tests).",
+          "png": "Rasterization of the canonical SVG via @resvg/resvg-js \u2014 explicitly a convenience format, never archival.",
+          "html": "Self-contained interactive HTML, echarts.min.js inlined (no CDN), static SVG fallback for reduced-motion/print.",
+          "pdf": "Indirect only \u2014 embed the canonical SVG into a docgen/weasyprint document. No native PDF export path in chart-engine itself.",
+          "json": "The AI-only per-figure record <visual_id>.figure.json (schema ultimate-engine/figure/1): id, kind, reader question, summary, how to read, series, legend, EVERY MARK with its value, neighbours and a plain-language description, and provenance. Generated from the live ECharts model, so it cannot disagree with the SVG."
+        },
+        "ganttViaCustomSeries": {
+          "what": "ECharts' officially-documented custom series (type:'custom' + renderItem: time axis + category axis + one rect per task) is the standard Gantt recipe. Verified as a real, current, officially-published ECharts pattern during this session's research (not hypothetical) \u2014 not yet wired as a docgen preset/kind, but usable directly via a job packet with a custom series.",
+          "status": "Capability exists in the underlying ECharts engine; no docgen-side preset built yet for it."
+        },
+        "mcpTools": [
+          "visual_list_capabilities",
+          "visual_list_presets",
+          "visual_get_theme",
+          "visual_validate_job",
+          "visual_render",
+          "visual_render_batch",
+          "visual_explain_selection"
+        ],
+        "figureLayer": {
+          "what": "A pass over the finished SVG that makes a chart safe to inline beside others and makes every mark answer: ECharts' own CSS and class names are removed; ids/url(#)/href are scoped to the figure; ecmeta_* become data-*; every mark gets a <title>, data-id and (graphs/trees/sankey) its neighbours; ONE scoped <style> carries a hover law that never recolours, never fills an open path, never moves a mark and never takes the pointer, plus a no-script adjacency/series/legend fallback for up to 160 marks.",
+          "entry": "adapters/echarts/figure-layer.mjs (decorateSvg, figureCss), figure-model.mjs (collectFigureModel, buildFigureJson)",
+          "design": "docs/design/FIGURE_SYSTEM.md"
+        },
+        "readableInk": {
+          "what": "Label ink chosen from the fill by WCAG contrast (brand near-black or white; pure black/white in the mid-tone band); no label halos; per-cell heat-map ink from the visualMap ramp. Severity and status words keep their reserved colours (Critical red \u2026 Low blue \u2026 Info green); job.semantic_colors:false opts out.",
+          "entry": "adapters/echarts/contrast.mjs, semantic-colors.mjs; Python twin tools/docgen/figure_support.ink_for (parity-tested)"
+        }
+      },
+      "notImplemented": {
+        "3dCharts": "No echarts-gl dependency. Verified this session via npm registry: echarts-gl@2.1.0's peerDependency pins echarts@^5.1.2, INCOMPATIBLE with the vendored echarts@6.1.0 \u2014 upgraded from a prior 'unverified' hedge to a confirmed no. Use docgen's isometric3d.py for genuine 3D architecture/spatial diagrams instead \u2014 real 3D projection math, no dependency conflict.",
+        "geographicMaps(inChartEngine)": "No GeoJSON/registerMap plumbing in chart-engine itself. Use docgen's geo_map.py (point/route maps) or the new render_choropleth (real country boundaries) instead \u2014 both live in document-engine, not here.",
+        "dualAxes": "Explicitly refused by ENGINE_ROUTING_POLICY.json policy, not a code limitation."
+      }
+    },
+    "graph-engine": {
+      "path": "tools/graphify/",
+      "language": "Node.js (ESM)",
+      "entryPoint": "node build.mjs (or build-deps/build-pipeline/build-coverage/build-admin-catalog.mjs) then open tools/graphify/graph-view.html?g=<name>",
+      "purpose": "Codebase cartography \u2014 directory-structure, dependency, pipeline-flow, and coverage graphs, rendered as an interactive force-directed / hierarchical / 3D dashboard.",
+      "verifiedWorking": "Reverified 2026-08-19: build.mjs run against this engine's own tree (130 nodes) AND against a separate external tree via ENGINE_HOST_ROOT (96 nodes, 29 directories) \u2014 read-only, output written only into this engine's own graphify-out/. All 4 layout modes and the fully-local 3D vendor load verified in a previous session; the viewer's only unpkg reference is a comment recording the removed CDN fetch, confirmed 2026-08-19.",
+      "capabilities": {
+        "structureGraph": {
+          "what": "Directory-level containment tree from `codemap`. Host-agnostic \u2014 the tree it maps comes from the standard host-root resolution (ENGINE_HOST_ROOT env var > engine.config.json docSystem.hostRoot > `git rev-parse --show-toplevel` > this engine's own directory), so it can be pointed at any codebase without copying the engine into it. Output always lands in this engine's own graphify-out/ regardless of what was scanned, so the scanned tree is never written to.",
+          "entry": "build.mjs  (ENGINE_HOST_ROOT=/path/to/repo node tools/graphify/build.mjs to target another tree)"
+        },
+        "dependencyGraph": {
+          "what": "REAL parsed Python import graph with risky-core (highest in-degree) ranking. Worked example tuned to a src/-rooted Python project \u2014 configurable via engine.config.json's graphify.srcRoot.",
+          "entry": "build-deps.mjs"
+        },
+        "pipelineGraph": {
+          "what": "Curated stage-flow diagram from external DATA (tools/graphify/pipeline.example.json), not hardcoded \u2014 author your own pipeline.json in the same shape and point graphify.pipelineStepsFile at it.",
+          "entry": "build-pipeline.mjs"
+        },
+        "coverageGraph": {
+          "what": "detector<->SWC-class<->tag graph with blind-spot detection. Worked example tuned to one project's detector-plugin shape.",
+          "entry": "build-coverage.mjs"
+        },
+        "viewerLayouts": {
+          "force": "Default physics-based force-directed layout.",
+          "hierarchicalTree": "Top-down tree layout via dagMode \u2014 a feature ALREADY in the vendored 2D library, wired up this session (previously unused). Zero new dependency.",
+          "radial": "Radial/depth-ring hierarchy layout via dagMode.",
+          "3d": "Real WebGL 3D via vendor/3d-force-graph.min.js \u2014 vendored THIS session (was previously a live, unpinned CDN fetch to unpkg.com that failed silently offline; now fully local, MIT license, ~1.3MB, bundles three.js)."
+        }
+      },
+      "notImplemented": {
+        "clustering/communityDetection": "node 'type' only drives a flat color legend, not a computed grouping/hull/cluster-force layout. No dependency currently provides this.",
+        "subgraphFiltering": "graph-view.html's search centers/zooms to the first match; no isolate/filter-by-type UI."
+      }
+    },
+    "vault-graph-engine": {
+      "path": "vault-graph-engine/",
+      "status": "SPEC + VENDORED LIBRARY ONLY \u2014 ZERO CONSUMING IMPLEMENTATION. Do not report this as a working component; it is design material.",
+      "purpose": "A sibling project's own future in-app credential-vault node-graph UI spec (radial hierarchy layout, per-kind node radius table, lock/2FA/grant overlay glyphs, mandatory accessible tree-view mirror) \u2014 this is that product's specific UI chrome, not a generic engine capability.",
+      "whatExists": [
+        "VAULT_GRAPH_SPEC.md (design contract, prose)",
+        "force-graph.min.js (vendored, MIT, same file as graph-engine's copy, byte-identical sha256-verified)"
+      ],
+      "whatDoesNotExist": "No .js/.mjs/.ts/.py consuming code anywhere in this directory \u2014 no VaultGraph JSON producer, no renderer implementing the spec's rules, no build script, no HTML entry point.",
+      "genericBuildingBlockAvailable": "graph-engine's hierarchical/radial dagMode layout (wired up this session) is the closest generic, ALREADY-WORKING equivalent of what this spec calls for structurally \u2014 a real implementation of that product's specific vault UI (lock overlays, grant edges, tree-view keyboard toggle) remains a downstream, product-specific integration task, deliberately not built here since it's not generic engine capability."
+    },
+    "mermaid-engine": {
+      "path": "tools/mermaid-engine/",
+      "language": "Node.js (ESM), beautiful-mermaid 1.1.3",
+      "entryPoint": "node render.mjs <file.mmd> -o out.svg",
+      "purpose": "Offline Mermaid diagram rendering \u2014 NEW this session (identified as a real gap, researched, built, and verified).",
+      "verifiedWorking": "npm test: 6/6 diagram types render clean (real SVG + ASCII output, non-trivial byte counts checked). Also verified end-to-end through docgen (a real document embedding a Mermaid flowchart, theme-reactive in both dark and light, zero network requests confirmed via browser devtools).",
+      "capabilities": {
+        "supportedTypes": [
+          "flowchart (graph/flowchart)",
+          "sequenceDiagram",
+          "classDiagram",
+          "stateDiagram-v2",
+          "erDiagram",
+          "xychart-beta"
+        ],
+        "outputFormats": [
+          "svg (default, CDN font import auto-stripped and replaced with a system-font stack \u2014 see README.md)",
+          "ascii (terminal/plain-text)"
+        ],
+        "theming": "bg/fg accept any CSS color including var(--name) references (with one caveat \u2014 see README.md's 'note on the rendered SVG's fonts' and mermaid_bridge.py's docstring: do NOT self-reference the same variable name the library sets locally, use a distinctly-named alias, e.g. docgen's --mermaid-bg/--mermaid-fg pattern in tokens.py)."
+      },
+      "notImplemented": {
+        "gantt/gitGraph/mindmap/journey/kanban/pie/quadrantChart/timeline": "Not implemented by the underlying beautiful-mermaid library \u2014 a verified, real limit (checked against its own source, not assumed). See tools/mermaid-engine/README.md for what to use instead per type (chart-engine for Gantt/pie, no equivalent yet for mindmap/kanban/etc)."
+      },
+      "whyNotOfficialMermaidOrMermaidCli": "Researched and rejected deliberately \u2014 see PROVENANCE.md. The official mermaid npm package cannot render to SVG in bare Node (needs real DOM text-measurement); mermaid-cli needs a vendored Chromium (~150-280MB, platform-specific), which would have directly undermined this engine's portability goal far more than a 6-vs-20+ diagram-type scope limit does."
+    }
+  },
+  "sharedInfrastructure": {
+    "configuration": "engine.config.json + tools/docgen/engine_config.py + tools/lib/engine-config.mjs \u2014 see CONFIGURATION.md. Zero required setup; every field has a working default.",
+    "projectIndex": {
+      "path": "tools/project_index/",
+      "implementation": "tools/docgen/artifact_index.py (moved here 2026-09-24 \u2014 see that module's docstring). tools/project_index/index.py is now a thin re-export shim, kept for this CLI/entryPoint and for any caller already importing tools.project_index.index directly; the move means a host that vendors tools/docgen without also vendoring tools/project_index (because it owns an unrelated package of that name \u2014 one downstream host's tools/project_index is its own docs-index gate) no longer breaks tools.docgen.views' audience-view registration.",
+      "purpose": "A flat JSON registry (PROJECT_INDEX.json) of every document/chart/graph/diagram built for a project, so large-scale work stays navigable \u2014 'what have I already built' instead of losing track. NOT automatic; register artifacts explicitly after creating them worth remembering. `verify` checks the index against the filesystem (missing files, duplicate paths, and \u2014 with --scan \u2014 built files nothing has claimed), because a hand-maintained map that cannot be falsified stops being worth reading once a project gets large.",
+      "entryPoint": "python3 -m tools.project_index.cli register|list|search|stats|remove|dashboard|verify",
+      "verifiedWorking": "Registered real artifacts, tested list/search/stats/remove and the HTML dashboard. `verify` added 2026-08-19 and proven by planting a deliberately-stale entry: it reported MISSING and exited 1, where list/stats/dashboard had all displayed the dead entry as a live artifact.",
+      "output": "PROJECT_INDEX.json (data) + PROJECT_INDEX.html (self-contained dashboard, dark-themed, grouped by section, stat cards by type)."
+    },
+    "projectCensus": {
+      "path": "tools/census/",
+      "purpose": "Measure a project's documentation system from its own git tree (how many documents, updated or outdated, crossed out, stamped as a source of truth and whether the stamps still hold, what is complete per dimension) and its Python code hierarchy; compose them into a report of varied figures (Sankey, stacked bar, heat map, bar, donut, radar, timeline, XY chart, ER diagram, layered diagram) and two explorers (documents, code).",
+      "entryPoint": "python3 -m tools.census measure|report|inventory PROFILE.json --root <repo> --out <path>",
+      "profile": "examples/census.profile.example.json (every key optional; unknown keys refused)",
+      "design": "docs/design/PROJECT_CENSUS.md",
+      "verifiedWorking": "Measured the engine's own repository and a 1,290-document project in about 7 s; 22 tests against a hand-derived fixture (counts, stamp judgement on the body, rename following, determinism, hostile GIT_DIR, profile refusals, explorer specs, a real docgen build). Building the first report found four defects in other figure kinds (stacked-bar labels, radar labels, layered diagram, Mermaid ER), fixed with red-first tests (OG-292).",
+      "limits": "Documents are what doc_globs and doc_exts select (Markdown by default); outdated means age, not falsehood; cited means named; no composite completeness number by design."
+    },
+    "vendoredLibraries": [
+      {
+        "name": "force-graph",
+        "version": "1.51.4",
+        "license": "MIT",
+        "location": "tools/graphify/vendor/force-graph.min.js (also byte-identical copy in vault-graph-engine/)"
+      },
+      {
+        "name": "3d-force-graph",
+        "version": "1.80.0",
+        "license": "MIT",
+        "location": "tools/graphify/vendor/3d-force-graph.min.js",
+        "note": "Vendored this session \u2014 previously a live CDN fetch."
+      },
+      {
+        "name": "echarts",
+        "version": "6.1.0",
+        "license": "Apache-2.0",
+        "location": "tools/visual-engine (via npm, not committed \u2014 run npm install)"
+      },
+      {
+        "name": "beautiful-mermaid",
+        "version": "1.1.3",
+        "license": "MIT",
+        "location": "tools/mermaid-engine (via npm, not committed \u2014 run npm install)"
+      },
+      {
+        "name": "world-countries-110m.geojson",
+        "version": "n/a (static data)",
+        "license": "see PROVENANCE.md",
+        "location": "tools/docgen/assets/world-countries-110m.geojson"
+      }
+    ]
+  },
+  "governance": {
+    "_note": "Capabilities that are not figure kinds. Added 2026-08-20 (OG-30): this file claimed to index 'every capability this engine ships' while describing only the rendering surface, so the health system, the build cache and the git moat \u2014 three of the engine's four load-bearing subsystems \u2014 were invisible to any agent reading it to answer 'what can this engine do'.",
+    "health": {
+      "entry_point": "python3 -m tools.health [--full] [--strict] [--json] [--run-log PATH] [--no-run-log]",
+      "what": "Single fail-closed entry point over five stages: structure, rule layer, cross-file consistency, build, and both npm suites. Exit 0 only when every check that ran PASSED.",
+      "checks": 23,
+      "skip_semantics": "A SKIP is unknown, never green. --full and --strict both make a skip fail the run; fast mode tolerates the two mode-gated npm suites and says so explicitly.",
+      "run_log": ".health/runs.jsonl \u2014 append-only JSONL, one line per run, on by default"
+    },
+    "build_cache": {
+      "entry_point": "python3 -m tools.docgen.cli build <doc>... --cached [-o DIR]",
+      "what": "Content-keyed incremental build over a corpus. Fail-open: any cache problem means a rebuild, never a wrong skip.",
+      "key_covers": [
+        "the source markdown",
+        "its sibling spec",
+        "the requested formats",
+        "the output directory",
+        "every file under tools/docgen/",
+        "the out-of-tree renderers (tools/mermaid-engine/, tools/visual-engine/adapters|themes|schemas, and both package-lock.json)",
+        "the doc-governance rule layer"
+      ],
+      "measured": "3-document corpus, second run: 3.693s -> 0.009s, 3 reused / 0 rebuilt (2026-08-20)"
+    },
+    "git_moat": {
+      "install": "bash tools/hooks/install.sh  (idempotent; .git/hooks is not version-controlled, so this runs once per checkout)",
+      "pre_commit": [
+        "classification placement over the STAGED index",
+        "secret scan over the MATERIALISED staged bytes"
+      ],
+      "pre_push": [
+        "engine health (fail-closed)",
+        "secret scan over EVERY COMMIT in the pushed range, each materialised into its own directory",
+        "classification placement over the same materialised trees"
+      ],
+      "known_bypass": "git commit --no-verify / git push --no-verify skip every hook silently. No client-side hook can defend against this; see OPEN_GATES OG-31 (Phase 7).",
+      "hash_locked": true
+    }
+  }
+}

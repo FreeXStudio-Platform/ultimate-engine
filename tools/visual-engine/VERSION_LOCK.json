@@ -1,0 +1,13 @@
+{
+  "locked": "2026-10-11",
+  "node_tested": "v26.5.0",
+  "npm_lockfile_sha256": "d86e0e08680beffcd69a350b685b80d4c7c5a8a393db2add07f5b4e04e5b80ff",
+  "pinned": {
+    "echarts": "6.1.0",
+    "@resvg/resvg-js": "2.6.2",
+    "@modelcontextprotocol/sdk": "1.32.1",
+    "zod": "3.25.76"
+  },
+  "policy": "Exact pins, no floating ranges (spec \u00a76). Upgrades run tests/ + visual regression (renders/golden) and record diffs under renders/diffs/ before re-pinning.",
+  "_npm_lockfile_sha256_note": "Re-derived 2026-10-16 (engine 1.1.2): the only lockfile change is the root entry's `license` field, UNLICENSED/MIT -> Apache-2.0, when the repository adopted the Apache-2.0 licence; no package added, removed or re-versioned. Previous value f89f80b18abf735d... Re-derived 2026-10-11 (engine 1.1.0, the merge of the downstream copy's lock with this repository's). Both sides had patched overlapping packages, so the rule was: take the HIGHER version of each. Copy side: proxy-addr 2.0.8, ip-address 10.7.3, fast-uri 3.1.8 and the direct pin @modelcontextprotocol/sdk 1.32.1. This side (Dependabot #1-#9, 2026-09-18): qs 6.16.0, hono 4.13.8, fast-uri 3.1.8. Net difference from the copy's lock: exactly one package, hono 4.13.7 -> 4.13.13 (`npm update hono`, version + resolved + integrity, within the parent's declared range; 4.13.13 is above both sides' 4.13.7 and 4.13.8). The lockfile diff was READ before attesting: no package added or removed, every `resolved` URL on registry.npmjs.org. Previous value c92a759a8a15f2bb... Earlier history follows. Re-derived 2026-10-10 (engine 1.0.8, proxy-addr CVE). The lockfile diff was READ first: exactly 4 packages changed (version+resolved+integrity), no package added or removed, every `resolved` URL on registry.npmjs.org, none carries an install script, `npm audit` reports 0 vulnerabilities. Changes: proxy-addr 2.0.7->2.0.8 (CRITICAL GHSA-jqcg-44mw-7w3h, IPv4-mapped IPv6 trust-subnet IP spoofing, reached via @modelcontextprotocol/sdk > express), fast-uri 3.1.7->3.1.8 (GHSA-hrr3-gc8f-f4qj), ip-address 10.4.0->10.7.3 (4 advisories incl. GHSA-rpw4-54j3-4h4q), and the one DIRECT pin @modelcontextprotocol/sdk 1.30.0->1.32.1 (HIGH GHSA-6qxp-vccf-f47h, OAuth client credential redirect; fixed in 1.30.2+; the engine only runs the stdio SERVER side, but the audit gate counts any high). The `pinned` block records the new direct pin. Earlier history: the 2026-09-13 note re-derived after three transitive bumps (fast-uri 3.1.5->3.1.7, hono, qs). Re-derive with: python3 -c \"import hashlib,pathlib;print(hashlib.sha256(pathlib.Path('tools/visual-engine/package-lock.json').read_bytes()).hexdigest())\""
+}

@@ -1,0 +1,98 @@
+<svg data-engine="echarts" role="img" aria-label="App-tier topology (data-annotated)" data-fig="ve-SIM-11-topology" data-fig-kind="graph" data-fig-focus="adjacency" data-fig-legend="none" class="ve-fig" width="800" height="480" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" baseProfile="full" viewBox="0 0 800 480"><style data-ve="ve-SIM-11-topology"><![CDATA[/* ve-fig v1 · scoped to ve-SIM-11-topology · never recolours, never fills an open path, never steals the pointer */
+svg[data-fig="ve-SIM-11-topology"] text,svg[data-fig="ve-SIM-11-topology"] tspan{pointer-events:none;stroke:none}
+svg[data-fig="ve-SIM-11-topology"] [data-s],svg[data-fig="ve-SIM-11-topology"] [data-t="legend"][fill="none"]{cursor:pointer}
+svg[data-fig="ve-SIM-11-topology"] [data-s]{transition:opacity .14s ease,filter .14s ease,stroke-width .14s ease}
+@media (prefers-reduced-motion:reduce){svg[data-fig="ve-SIM-11-topology"] [data-s]{transition:none}}
+svg[data-fig="ve-SIM-11-topology"] [data-s]:not([data-k="series"]):not([data-k="edge"]):not([fill="none"]):not([data-sk="own"]):hover,svg[data-fig="ve-SIM-11-topology"] [data-s]:not([data-k="series"]):not([data-k="edge"]):not([fill="none"]):not([data-sk="own"]):focus-visible{stroke:#EAEEF5;stroke-width:1.6px;vector-effect:non-scaling-stroke;stroke-opacity:.95;filter:brightness(1.16) saturate(1.1);outline:none}
+svg[data-fig="ve-SIM-11-topology"] [data-s]:not([data-k="series"]):not([data-k="edge"]):not([fill="none"])[data-sk="own"]:hover,svg[data-fig="ve-SIM-11-topology"] [data-s]:not([data-k="series"]):not([data-k="edge"]):not([fill="none"])[data-sk="own"]:focus-visible{stroke-width:2.6px;vector-effect:non-scaling-stroke;stroke-opacity:1;filter:brightness(1.12) saturate(1.15);outline:none}
+svg[data-fig="ve-SIM-11-topology"] [data-s][fill="none"]:hover,svg[data-fig="ve-SIM-11-topology"] [data-s][fill="none"]:focus-visible{fill:none;stroke-width:3.4px;vector-effect:non-scaling-stroke;stroke-opacity:1;filter:none;outline:none}
+svg[data-fig="ve-SIM-11-topology"] [data-s][fill="none"]{pointer-events:visibleStroke}
+svg[data-fig="ve-SIM-11-topology"] [data-t="legend"][fill="none"]:hover{fill:rgba(234,238,245,0.18);fill-opacity:.55}
+svg[data-fig="ve-SIM-11-topology"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n0"]:hover),:has([data-k="main"][data-id="n0"]:hover)) :is([data-k="node"],[data-k="main"]):not(:is([data-id="n0"],[data-id="n1"],[data-id="n2"],[data-id="e0"],[data-id="e1"])){opacity:0.3}
+svg[data-fig="ve-SIM-11-topology"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n0"]:hover),:has([data-k="main"][data-id="n0"]:hover)) [data-k="edge"]:not(:is([data-id="n0"],[data-id="n1"],[data-id="n2"],[data-id="e0"],[data-id="e1"])){opacity:0.1}
+svg[data-fig="ve-SIM-11-topology"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n0"]:hover),:has([data-k="main"][data-id="n0"]:hover)) :is([data-id="e0"],[data-id="e1"])[data-k="edge"]{stroke-opacity:1;stroke-width:3px;vector-effect:non-scaling-stroke;opacity:1}
+svg[data-fig="ve-SIM-11-topology"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n0"]:hover),:has([data-k="main"][data-id="n0"]:hover)) :is([data-id="e0"],[data-id="e1"])[fill="none"]{stroke:var(--ve-out);stroke-opacity:1}
+svg[data-fig="ve-SIM-11-topology"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n0"]:hover),:has([data-k="main"][data-id="n0"]:hover)) :is([data-id="e0"],[data-id="e1"]):not([fill="none"]){fill:var(--ve-out);fill-opacity:1}
+svg[data-fig="ve-SIM-11-topology"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n1"]:hover),:has([data-k="main"][data-id="n1"]:hover)) :is([data-k="node"],[data-k="main"]):not(:is([data-id="n1"],[data-id="n0"],[data-id="n3"],[data-id="n4"],[data-id="e0"],[data-id="e2"],[data-id="e3"])){opacity:0.3}
+svg[data-fig="ve-SIM-11-topology"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n1"]:hover),:has([data-k="main"][data-id="n1"]:hover)) [data-k="edge"]:not(:is([data-id="n1"],[data-id="n0"],[data-id="n3"],[data-id="n4"],[data-id="e0"],[data-id="e2"],[data-id="e3"])){opacity:0.1}
+svg[data-fig="ve-SIM-11-topology"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n1"]:hover),:has([data-k="main"][data-id="n1"]:hover)) :is([data-id="e0"],[data-id="e2"],[data-id="e3"])[data-k="edge"]{stroke-opacity:1;stroke-width:3px;vector-effect:non-scaling-stroke;opacity:1}
+svg[data-fig="ve-SIM-11-topology"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n1"]:hover),:has([data-k="main"][data-id="n1"]:hover)) :is([data-id="e2"],[data-id="e3"])[fill="none"]{stroke:var(--ve-out);stroke-opacity:1}
+svg[data-fig="ve-SIM-11-topology"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n1"]:hover),:has([data-k="main"][data-id="n1"]:hover)) :is([data-id="e2"],[data-id="e3"]):not([fill="none"]){fill:var(--ve-out);fill-opacity:1}
+svg[data-fig="ve-SIM-11-topology"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n1"]:hover),:has([data-k="main"][data-id="n1"]:hover)) :is([data-id="e0"])[fill="none"]{stroke:var(--ve-in);stroke-opacity:1}
+svg[data-fig="ve-SIM-11-topology"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n1"]:hover),:has([data-k="main"][data-id="n1"]:hover)) :is([data-id="e0"]):not([fill="none"]){fill:var(--ve-in);fill-opacity:1}
+svg[data-fig="ve-SIM-11-topology"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n2"]:hover),:has([data-k="main"][data-id="n2"]:hover)) :is([data-k="node"],[data-k="main"]):not(:is([data-id="n2"],[data-id="n0"],[data-id="e1"])){opacity:0.3}
+svg[data-fig="ve-SIM-11-topology"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n2"]:hover),:has([data-k="main"][data-id="n2"]:hover)) [data-k="edge"]:not(:is([data-id="n2"],[data-id="n0"],[data-id="e1"])){opacity:0.1}
+svg[data-fig="ve-SIM-11-topology"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n2"]:hover),:has([data-k="main"][data-id="n2"]:hover)) :is([data-id="e1"])[data-k="edge"]{stroke-opacity:1;stroke-width:3px;vector-effect:non-scaling-stroke;opacity:1}
+svg[data-fig="ve-SIM-11-topology"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n2"]:hover),:has([data-k="main"][data-id="n2"]:hover)) :is([data-id="e1"])[fill="none"]{stroke:var(--ve-in);stroke-opacity:1}
+svg[data-fig="ve-SIM-11-topology"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n2"]:hover),:has([data-k="main"][data-id="n2"]:hover)) :is([data-id="e1"]):not([fill="none"]){fill:var(--ve-in);fill-opacity:1}
+svg[data-fig="ve-SIM-11-topology"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n3"]:hover),:has([data-k="main"][data-id="n3"]:hover)) :is([data-k="node"],[data-k="main"]):not(:is([data-id="n3"],[data-id="n1"],[data-id="e2"])){opacity:0.3}
+svg[data-fig="ve-SIM-11-topology"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n3"]:hover),:has([data-k="main"][data-id="n3"]:hover)) [data-k="edge"]:not(:is([data-id="n3"],[data-id="n1"],[data-id="e2"])){opacity:0.1}
+svg[data-fig="ve-SIM-11-topology"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n3"]:hover),:has([data-k="main"][data-id="n3"]:hover)) :is([data-id="e2"])[data-k="edge"]{stroke-opacity:1;stroke-width:3px;vector-effect:non-scaling-stroke;opacity:1}
+svg[data-fig="ve-SIM-11-topology"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n3"]:hover),:has([data-k="main"][data-id="n3"]:hover)) :is([data-id="e2"])[fill="none"]{stroke:var(--ve-in);stroke-opacity:1}
+svg[data-fig="ve-SIM-11-topology"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n3"]:hover),:has([data-k="main"][data-id="n3"]:hover)) :is([data-id="e2"]):not([fill="none"]){fill:var(--ve-in);fill-opacity:1}
+svg[data-fig="ve-SIM-11-topology"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n4"]:hover),:has([data-k="main"][data-id="n4"]:hover)) :is([data-k="node"],[data-k="main"]):not(:is([data-id="n4"],[data-id="n1"],[data-id="e3"])){opacity:0.3}
+svg[data-fig="ve-SIM-11-topology"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n4"]:hover),:has([data-k="main"][data-id="n4"]:hover)) [data-k="edge"]:not(:is([data-id="n4"],[data-id="n1"],[data-id="e3"])){opacity:0.1}
+svg[data-fig="ve-SIM-11-topology"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n4"]:hover),:has([data-k="main"][data-id="n4"]:hover)) :is([data-id="e3"])[data-k="edge"]{stroke-opacity:1;stroke-width:3px;vector-effect:non-scaling-stroke;opacity:1}
+svg[data-fig="ve-SIM-11-topology"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n4"]:hover),:has([data-k="main"][data-id="n4"]:hover)) :is([data-id="e3"])[fill="none"]{stroke:var(--ve-in);stroke-opacity:1}
+svg[data-fig="ve-SIM-11-topology"]:not([data-ve-js]):is(:has([data-k="node"][data-id="n4"]:hover),:has([data-k="main"][data-id="n4"]:hover)) :is([data-id="e3"]):not([fill="none"]){fill:var(--ve-in);fill-opacity:1}
+svg[data-fig="ve-SIM-11-topology"]:not([data-ve-js]):has([data-k="edge"][data-id="e0"]:hover) :is([data-k="node"],[data-k="main"]):not(:is([data-id="e0"],[data-id="n0"],[data-id="n1"])){opacity:0.3}
+svg[data-fig="ve-SIM-11-topology"]:not([data-ve-js]):has([data-k="edge"][data-id="e0"]:hover) [data-k="edge"]:not(:is([data-id="e0"],[data-id="n0"],[data-id="n1"])){opacity:0.1}
+svg[data-fig="ve-SIM-11-topology"]:not([data-ve-js]):has([data-k="edge"][data-id="e0"]:hover) :is([data-id="e0"])[data-k="edge"]{stroke-opacity:1;stroke-width:3px;vector-effect:non-scaling-stroke;opacity:1}
+svg[data-fig="ve-SIM-11-topology"]:not([data-ve-js]):has([data-k="edge"][data-id="e1"]:hover) :is([data-k="node"],[data-k="main"]):not(:is([data-id="e1"],[data-id="n0"],[data-id="n2"])){opacity:0.3}
+svg[data-fig="ve-SIM-11-topology"]:not([data-ve-js]):has([data-k="edge"][data-id="e1"]:hover) [data-k="edge"]:not(:is([data-id="e1"],[data-id="n0"],[data-id="n2"])){opacity:0.1}
+svg[data-fig="ve-SIM-11-topology"]:not([data-ve-js]):has([data-k="edge"][data-id="e1"]:hover) :is([data-id="e1"])[data-k="edge"]{stroke-opacity:1;stroke-width:3px;vector-effect:non-scaling-stroke;opacity:1}
+svg[data-fig="ve-SIM-11-topology"]:not([data-ve-js]):has([data-k="edge"][data-id="e2"]:hover) :is([data-k="node"],[data-k="main"]):not(:is([data-id="e2"],[data-id="n1"],[data-id="n3"])){opacity:0.3}
+svg[data-fig="ve-SIM-11-topology"]:not([data-ve-js]):has([data-k="edge"][data-id="e2"]:hover) [data-k="edge"]:not(:is([data-id="e2"],[data-id="n1"],[data-id="n3"])){opacity:0.1}
+svg[data-fig="ve-SIM-11-topology"]:not([data-ve-js]):has([data-k="edge"][data-id="e2"]:hover) :is([data-id="e2"])[data-k="edge"]{stroke-opacity:1;stroke-width:3px;vector-effect:non-scaling-stroke;opacity:1}
+svg[data-fig="ve-SIM-11-topology"]:not([data-ve-js]):has([data-k="edge"][data-id="e3"]:hover) :is([data-k="node"],[data-k="main"]):not(:is([data-id="e3"],[data-id="n1"],[data-id="n4"])){opacity:0.3}
+svg[data-fig="ve-SIM-11-topology"]:not([data-ve-js]):has([data-k="edge"][data-id="e3"]:hover) [data-k="edge"]:not(:is([data-id="e3"],[data-id="n1"],[data-id="n4"])){opacity:0.1}
+svg[data-fig="ve-SIM-11-topology"]:not([data-ve-js]):has([data-k="edge"][data-id="e3"]:hover) :is([data-id="e3"])[data-k="edge"]{stroke-opacity:1;stroke-width:3px;vector-effect:non-scaling-stroke;opacity:1}
+svg[data-fig="ve-SIM-11-topology"][data-ve-js][data-ve-on] [data-s]:not(.ve-on):not([data-t="legend"]){opacity:.2}
+svg[data-fig="ve-SIM-11-topology"][data-ve-js] [data-s].ve-on[data-k="edge"]{stroke-opacity:1;stroke-width:3px;vector-effect:non-scaling-stroke}
+svg[data-fig="ve-SIM-11-topology"][data-ve-js] [data-s].ve-on[data-k="edge"]:not([fill="none"]){fill-opacity:1}
+svg[data-fig="ve-SIM-11-topology"]{--ve-out:#4CC9F0;--ve-in:#F58AC0;--ve-both:#FFFFFF}
+svg[data-fig="ve-SIM-11-topology"]:is([data-theme="light"] *){--ve-out:#0A7AA1;--ve-in:#B8337D;--ve-both:#0B0E14}
+svg[data-fig="ve-SIM-11-topology"][data-ve-js] [data-s].ve-out[data-k="edge"][fill="none"]{stroke:var(--ve-out);stroke-opacity:1}
+svg[data-fig="ve-SIM-11-topology"][data-ve-js] [data-s].ve-out[data-k="edge"]:not([fill="none"]){fill:var(--ve-out);fill-opacity:1}
+svg[data-fig="ve-SIM-11-topology"][data-ve-js] [data-s].ve-in[data-k="edge"][fill="none"]{stroke:var(--ve-in);stroke-opacity:1}
+svg[data-fig="ve-SIM-11-topology"][data-ve-js] [data-s].ve-in[data-k="edge"]:not([fill="none"]){fill:var(--ve-in);fill-opacity:1}
+svg[data-fig="ve-SIM-11-topology"][data-ve-js] [data-s].ve-both[data-k="edge"][fill="none"]{stroke:var(--ve-both);stroke-opacity:1}
+svg[data-fig="ve-SIM-11-topology"][data-ve-js] [data-s].ve-both[data-k="edge"]:not([fill="none"]){fill:var(--ve-both);fill-opacity:1}
+svg[data-fig="ve-SIM-11-topology"] .ve-pin:not([fill="none"]):not([data-sk="own"]){stroke:#EAEEF5;stroke-width:2.2px;vector-effect:non-scaling-stroke;stroke-opacity:1}
+svg[data-fig="ve-SIM-11-topology"] .ve-pin[data-sk="own"]{stroke-width:3.2px;vector-effect:non-scaling-stroke;stroke-opacity:1;filter:brightness(1.12) saturate(1.15)}
+svg[data-fig="ve-SIM-11-topology"] .ve-pin[fill="none"]{stroke-width:3.8px;vector-effect:non-scaling-stroke;stroke-opacity:1}]]></style>
+<rect width="800" height="480" x="0" y="0" fill="none"></rect>
+<path d="M264.1 114.6Q99.1 213 -90.2 187" transform="matrix(1.106,0,0,1.051,450.9695,255)" fill="none" pointer-events="visible" stroke="#4A7FC1" stroke-width="1.4839848627104921" stroke-opacity="0.55" data-s="0" data-i="0" data-t="chart" data-k="edge" data-id="e0" data-sk="own" data-en="n0 n1"><title>nginx → api-public</title></path>
+<path d="M0 0L5.3 8L0 6L-5.3 8L0 0Z" transform="matrix(0.136,-0.942,0.991,0.129,351.2982,451.6499)" fill="#4A7FC1" fill-opacity="0.55" data-s="0" data-i="0" data-t="chart" data-k="edge" data-id="e0" data-en="n0 n1"><title>nginx → api-public</title></path>
+<path d="M264.1 114.6Q-46.4 162.8 -317.1 5.5" transform="matrix(1.106,0,0,1.051,450.9695,255)" fill="none" pointer-events="visible" stroke="#4A7FC1" stroke-width="1.4839848627104921" stroke-opacity="0.55" data-s="0" data-i="1" data-t="chart" data-k="edge" data-id="e1" data-sk="own" data-en="n0 n2"><title>nginx → web</title></path>
+<path d="M0 0L5.3 8L0 6L-5.3 8L0 0Z" transform="matrix(0.502,-0.822,0.865,0.478,100.3427,260.7872)" fill="#4A7FC1" fill-opacity="0.55" data-s="0" data-i="1" data-t="chart" data-k="edge" data-id="e1" data-en="n0 n2"><title>nginx → web</title></path>
+<path d="M-100.9 185.5Q-165.8 5.1 -104.5 -175.2" transform="matrix(1.106,0,0,1.051,450.9695,255)" fill="none" pointer-events="visible" stroke="#4A7FC1" stroke-width="1.4839848627104921" stroke-opacity="0.55" data-s="0" data-i="2" data-t="chart" data-k="edge" data-id="e2" data-sk="own" data-en="n1 n3"><title>api-public → postgres</title></path>
+<path d="M0 0L5.3 8L0 6L-5.3 8L0 0Z" transform="matrix(0.947,0.306,-0.322,0.9,335.459,70.7718)" fill="#4A7FC1" fill-opacity="0.55" data-s="0" data-i="2" data-t="chart" data-k="edge" data-id="e2" data-en="n1 n3"><title>api-public → postgres</title></path>
+<path d="M-100.9 185.5Q24.8 -25.6 253.9 -110.9" transform="matrix(1.106,0,0,1.051,450.9695,255)" fill="none" pointer-events="visible" stroke="#4A7FC1" stroke-width="1.4839848627104921" stroke-opacity="0.55" data-s="0" data-i="3" data-t="chart" data-k="edge" data-id="e3" data-sk="own" data-en="n1 n4"><title>api-public → redis</title></path>
+<path d="M0 0L5.3 8L0 6L-5.3 8L0 0Z" transform="matrix(0.349,0.891,-0.937,0.332,731.7254,138.3902)" fill="#4A7FC1" fill-opacity="0.55" data-s="0" data-i="3" data-t="chart" data-k="edge" data-id="e3" data-en="n1 n4"><title>api-public → redis</title></path>
+<path d="M1 0A1 1 0 1 1 1 -0.01" transform="matrix(12,0,0,11.413,743,375.5166)" fill="#4A7FC1" data-s="0" data-i="0" data-t="chart" data-k="node" data-id="n0" data-nb="n1 n2" data-eg="e0 e1"><title>nginx
+2 connections
+→ api-public, web</title></path>
+<path d="M1 0A1 1 0 1 1 1 -0.01" transform="matrix(12,0,0,11.413,339.4238,450)" fill="#4A7FC1" data-s="0" data-i="1" data-t="chart" data-k="node" data-id="n1" data-nb="n0 n3 n4" data-eg="e0 e2 e3"><title>api-public
+3 connections
+→ postgres, redis
+← nginx</title></path>
+<path d="M1 0A1 1 0 1 1 1 -0.01" transform="matrix(12,0,0,11.413,90,255)" fill="#4A7FC1" data-s="0" data-i="2" data-t="chart" data-k="node" data-id="n2" data-nb="n0" data-eg="e1"><title>web
+1 connection
+← nginx</title></path>
+<path d="M1 0A1 1 0 1 1 1 -0.01" transform="matrix(12,0,0,11.413,339.4238,60)" fill="#4A7FC1" data-s="0" data-i="3" data-t="chart" data-k="node" data-id="n3" data-nb="n1" data-eg="e2"><title>postgres
+1 connection
+← api-public</title></path>
+<path d="M1 0A1 1 0 1 1 1 -0.01" transform="matrix(12,0,0,11.413,743,134.4834)" fill="#4A7FC1" data-s="0" data-i="4" data-t="chart" data-k="node" data-id="n4" data-nb="n1" data-eg="e3"><title>redis
+1 connection
+← api-public</title></path>
+<text dominant-baseline="central" text-anchor="start" style="font-size:11px;font-family:Inter, system-ui, sans-serif;" transform="translate(761 375.5166)" fill="#EAEEF5">nginx</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:Inter, system-ui, sans-serif;" transform="translate(321.4238 450)" fill="#EAEEF5">api-public</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:Inter, system-ui, sans-serif;" transform="translate(72 255)" fill="#EAEEF5">web</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:Inter, system-ui, sans-serif;" transform="translate(321.4238 60)" fill="#EAEEF5">postgres</text>
+<text dominant-baseline="central" text-anchor="start" style="font-size:11px;font-family:Inter, system-ui, sans-serif;" transform="translate(761 134.4834)" fill="#EAEEF5">redis</text>
+<path d="M-5 -5l254.8 0l0 26l-254.8 0Z" transform="translate(13 11)" fill="rgb(0,0,0)" fill-opacity="0" stroke="#3c3c41" stroke-width="0"></path>
+<text dominant-baseline="central" text-anchor="start" style="font-size:16px;font-family:Space Grotesk, system-ui, sans-serif;font-weight:600;" xml:space="preserve" y="8" transform="translate(13 11)" fill="#EAEEF5">App-tier topology (data-annotated)</text>
+
+</svg>
+<!-- generated-by visual-engine v1.0.0 · echarts@6.1.0 · theme:project-theme · content-sha256:d6b91dce61683f39b7e95861cebea3639d946aee0a04674ea600becd37ae9091 -->

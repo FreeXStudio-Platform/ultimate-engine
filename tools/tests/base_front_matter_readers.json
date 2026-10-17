@@ -1,0 +1,12 @@
+{
+ "_what": "The five front-matter reader patterns of the engine release this differential compares against (the 'before'), extracted with the AST reader in test_front_matter_token.py from the release's own source. Compiled with re.DOTALL.",
+ "_why": "The release lives in git history that a fresh clone or a published snapshot does not have; the test uses git when the commit is reachable and this file otherwise, and asserts the two are equal when both exist.",
+ "_release_commit": "185725a10da929f540c3e4c0334ff2b337229727",
+ "readers": {
+  "archive": "\\A(﻿?(?:[ \\t]*<!--.*?-->[ \\t]*\\r?\\n)*[ \\t]*---[ \\t]*\\r?\\n)(.*?\\r?\\n)(---[ \\t]*\\r?\\n)",
+  "checks.BUILD-02": "\\A\\ufeff?(?:[ \\t]*<!--.*?-->[ \\t]*\\r?\\n)*[ \\t]*---[ \\t]*\\r?\\n(.*?\\r?\\n)---",
+  "checks.CONS-09": "\\A\\ufeff?(?:[ \\t]*<!--.*?-->[ \\t]*\\r?\\n)*[ \\t]*---[ \\t]*\\r?\\n(.*?\\r?\\n)---",
+  "classification": "\\A\\ufeff?(?:[ \\t]*\\r?\\n)*(?:[ \\t]*<!--.*?-->[ \\t]*\\r?\\n(?:[ \\t]*\\r?\\n)*)*[ \\t]*---[ \\t]*\\r?\\n(.*?\\r?\\n)---[ \\t]*\\r?\\n?",
+  "corpus": "\\A﻿?(?:[ \\t]*<!--.*?-->[ \\t]*\\r?\\n)*[ \\t]*---[ \\t]*\\r?\\n(.*?\\r?\\n)---"
+ }
+}

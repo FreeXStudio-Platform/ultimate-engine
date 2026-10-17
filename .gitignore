@@ -1,0 +1,72 @@
+# Regenerable dependencies — deliberately not vendored (native bindings are platform-specific;
+# `npm install` / `pip install -r tools/docgen/requirements.txt` reproduce them anywhere).
+node_modules/
+__pycache__/
+*.pyc
+
+# Scratch output. graphify-out/ is a local-only structure map; renders/current/ is the
+# simulate run's working directory. renders/golden/ IS committed — it is the regression
+# baseline, not scratch.
+graphify-out/
+tools/visual-engine/renders/current/
+# `tools/graphify/build-admin-catalog.mjs` writes its catalogue into engine.config.json's
+# `graphify.frontendPublicDir` (default `frontend/public/`) — a directory this repository does not
+# track and never did, so one run of that builder left `?? frontend/` in `git status` with nothing
+# in this file to explain it. Ignored BY NAME AT ANY DEPTH, exactly as `.docgen_cache.json` is
+# below and for the same reason: `frontendPublicDir` is configurable, so pinning `frontend/` here
+# would stop covering the file the moment anyone points that setting somewhere else.
+graph-catalog.json
+
+# Build output from the bundled demo documents. The examples/ gallery IS committed (it is a
+# deliverable and a reference); these two are demos you regenerate on demand.
+tools/docgen/sample.html
+tools/docgen/sample-multi-figure.html
+
+# Derived build state, never committed. `.docgen/` holds the default incremental build cache
+# (`build --cached`); `.health/` holds the append-only health run log. Both are rebuildable
+# records of what THIS checkout did — committing either would let a stale entry skip a build
+# that never ran here, or attribute another machine's run to this one.
+.docgen/
+.health/
+# `--cached` writes <out-dir>/.docgen_cache.json whenever -o is given, which can be any
+# directory inside the repo — so the name is ignored at any depth, not only in .docgen/.
+.docgen_cache.json
+
+# Local tooling / session state, not part of the package.
+.claude/settings.local.json
+.remember/
+.playwright-mcp/
+.codemap/
+
+# OS noise
+.DS_Store
+.ruff_cache/
+
+# THE CONFIDENTIAL VAULT. Six sites in this tree describe this directory as "the git-ignored
+# docs/confidential/ tree", RULEBOOK L14 says non-public documents may live ONLY here, and
+# `--local-preview` actively directs confidential renders into it — and until 2026-08-21 it was not
+# ignored at all. A `classification: secret` document placed in the one location the engine tells
+# you to put it committed clean and pushed clean, with every gate printing an affirmative line,
+# because both placement gates deliberately skip anything inside the vault. The sanctioned vault
+# was the one guaranteed publication route. `tools.health` STRUCT-07 now asserts this line exists.
+docs/confidential/
+
+# Environment files. The commit gate already refuses these by FILENAME (~/.claude/scripts/secret-scan.sh), so this is defence in depth rather than the control —
+# but this engine is meant to be vendored into other repositories, and the gate is only
+# installed once someone runs tools/hooks/install.sh. `.gitignore` needs nothing installed.
+.env
+.env.*
+!.env.example
+!.env.sample
+!.env.template
+
+# The DERIVED SQLite index (BUILD_PLAN.md D1). Documents are the source of truth; this is built
+# FROM them so joins and full-text search stop being full-tree greps. Committing it would create a
+# second source of truth that a stale row can silently win — which is the whole reason D1 chose a
+# derived index over a store. Rebuild it in seconds: `python3 -m tools.blueprint index`.
+.blueprint/
+
+# Scratch logs from local health/suite runs (a host committed .health-full.log by
+# an over-broad `git add -A` — a run artifact is not source).
+.health-full.log
+.suite.log

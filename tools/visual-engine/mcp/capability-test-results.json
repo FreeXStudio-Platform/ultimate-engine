@@ -1,0 +1,13 @@
+{
+  "_readme": "DOCUMENTATION — a point-in-time manual test log, not re-run or checked by any code. tests/mcp.test.mjs is the actual repeatable/CI-run equivalent; this file is not kept in sync with it automatically. Labelled 2026-08-23 (P8-084/P8-118).",
+  "tested": "2026-08-08",
+  "method": "scripted stdio JSON-RPC session against mcp/server.mjs (see tests/mcp.test.mjs for the repeatable version)",
+  "results": {
+    "initialize": "PASS — serverInfo doc-visuals@1.0.0",
+    "tools_list": "PASS — 7 tools, snapshot in tool-schema-snapshot.json",
+    "visual_render": "PASS — VIS-DET-001 heatmap, svg+png written under renders/current/, hashes returned",
+    "restricted_refusal": "PASS — classification:restricted → isError, gate G-CONF, no render",
+    "injection_rejection": "PASS — <script> in title → gate G-SEC",
+    "parity_with_direct_adapter": "PASS — same svg_sha256 as direct renderSVG for identical job (simulation 21)"
+  }
+}

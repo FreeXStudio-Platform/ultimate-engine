@@ -1,0 +1,16 @@
+{
+  "_readme": "Gate G9 render-evidence record, written by writeEvidence() (adapters/echarts/render.mjs). Documentation/audit trail only — no code in this engine reads this file back; shape is schemas/render-result.schema.json (also unvalidated, see its own _status).",
+  "visual_id": "SIM-09-incident",
+  "selected_visual": "timeline",
+  "preset": "incident-timeline",
+  "theme": "project-theme",
+  "classification": "internal",
+  "engine": "echarts@6.1.0",
+  "adapter": "visual-engine@1.0.0",
+  "width": 800,
+  "height": 480,
+  "svg_sha256": "2eea0efc297059fc35c3a4a665ab7f9b3d2640a409363dfb414c9f48f0c9942d",
+  "option_sha256": "8b83ba0edd1dd5da44d1040e5c1164e9ee668a899d3ab8a41ef79d01261696ee",
+  "job_sha256": "2c4c8f4413ec153004e07d5866ce51a75a55cd55228efad26fcb96cacdcce96c",
+  "warnings": []
+}

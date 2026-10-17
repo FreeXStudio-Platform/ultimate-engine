@@ -1,0 +1,398 @@
+#!/usr/bin/env bash
+# ULTIMATE-ENGINE-PREPUSH-V1 — the engine's git-level moat.
+#
+# Install (idempotent):    bash tools/hooks/install.sh
+# Verify:                  python3 -m tools.health   # STRUCT-03 checks this hook is live
+#
+# THREE gates, all fail-CLOSED, and the count is asserted at the end (see GATES_RUN):
+#   1. python3 -m tools.health         — structure, rule layer, cross-file consistency, build.
+#   2. the portfolio secret scan       — over the BLOB OBJECTS this push publishes.
+#   3. classification placement (L14)  — over the same blob objects.
+#
+# Escape hatch: ENGINE_SKIP_PREPUSH=1 git push …  — it announces itself loudly, because a
+# silent bypass is indistinguishable from a gate that ran.
+#
+# KNOWN TOTAL BYPASS: `git commit --no-verify` / `git push --no-verify` skip every hook silently,
+# exit 0, no output, no artifact for an audit to find. No client-side hook can defend against it;
+# only a server-side required check can (OPEN_GATES OG-31, Phase 7). Documented here because an
+# UNdocumented bypass is strictly worse than a documented one.
+#
+# ── WHY THIS GATE READS BLOB OBJECTS AND NOT FILES ───────────────────────────────────────────
+# Four generations of this hook were each defeated by scanning the wrong artifact, and the last
+# three were defeated by scanning a *rendering* of the right one:
+#
+#   v1 took path NAMES from git and the BYTES FROM DISK  — commit on a side branch, switch away,
+#      push: the hook scanned a different branch entirely and printed a confident pass (L-15).
+#   v2 compared remote..local as two ENDPOINTS           — a key added in one commit and removed in
+#      the next was published under an affirmative clean line.
+#   v3 materialised each commit with `git archive`       — and an adversarial pass proved FOUR ways
+#      through it, none needing a bypass flag: `git archive` honours `export-ignore` from a tracked
+#      OR UNTRACKED `.gitattributes`, so a path vanishes from the scan while the blob reaches the
+#      remote; it applies smudge filters and `working-tree-encoding`, so the scanned bytes are
+#      provably not the recorded bytes; two paths differing only in case collide on APFS and one
+#      blob silently overwrites the other; and `find -type f` skips symlinks, whose blob content is
+#      the target string.
+#
+#   v4 — this one — enumerates the exact BLOB OBJECTS in the pushed range and reads each with
+#      `git cat-file blob`. That is the object, not a rendering of it, so none of the above applies.
+#      Blobs are written to files named by their SHA, never by their path: that also defeats the
+#      portfolio scanner's basename self-exclusion (any file called `secret-scan.sh` was silently
+#      dropped from the scan) and makes case collision impossible.
+#
+# Commit and tag MESSAGES are scanned too. A key pasted into a message ("revoke old key AKIA…") is
+# published exactly like a file, and is one of the most common accidental leaks there is.
+#
+# NOTE (LESSONS.md L-12): never pipe a gate into tail/head and then test $?. Every gate below
+# redirects to a file, checks $?, and only then reads the file.
+
+set -uo pipefail
+
+if [ "${ENGINE_SKIP_PREPUSH:-0}" = "1" ]; then
+  echo "⚠️  pre-push: BYPASSED via ENGINE_SKIP_PREPUSH=1 — no gate ran for this push." >&2
+  exit 0
+fi
+
+REPO_ROOT="$(git rev-parse --show-toplevel)" || exit 1
+cd "$REPO_ROOT" || exit 1
+
+# The interpreter is part of the moat. An UNTRACKED `.venv/bin/python` containing nothing but
+# `exit 0` used to neuter every python-run gate in this file — no tracked file modified, no hash
+# re-baseline needed, and health still reported the hooks as gating. So a non-default interpreter
+# must both ANNOUNCE itself and PROVE it is a real Python 3 before any gate trusts it.
+PY="python3"
+if [ -x ".venv/bin/python" ]; then
+  if [ "$(.venv/bin/python -c 'import sys; print("PYOK%d" % sys.version_info[0])' 2>/dev/null)" = "PYOK3" ]; then
+    PY=".venv/bin/python"
+    echo "pre-push: using project interpreter .venv/bin/python" >&2
+  else
+    echo "⚠️  pre-push: .venv/bin/python is executable but is NOT a working Python 3 — ignoring it." >&2
+  fi
+fi
+# Validate the interpreter we END UP USING, not only the optional one. The first version probed
+# `.venv/bin/python` and then fell back to a bare `python3` from $PATH, unvalidated — so a `python3`
+# earlier on PATH that merely exits 0 made BOTH Python-backed gates inert while each printed its
+# ordinary affirmative line. Guarding the interpreter you might use and not the one you do is the
+# same asymmetry as scanning a rendering instead of the object.
+# Demand EVIDENCE, not an exit code. The first version of this guard ran a `sys.exit(0 if ...)`
+# probe and trusted rc=0 — which a stub that does nothing but `exit 0` satisfies perfectly. The
+# guard against an interpreter that fakes exit codes was itself reading an exit code. It must
+# require output only a real Python can produce (LESSONS.md L-18).
+if [ "$("$PY" -c 'import sys; print("PYOK%d" % sys.version_info[0])' 2>/dev/null)" != "PYOK3" ]; then
+  echo "⛔ pre-push: '$PY' is not a working Python 3 — refusing to certify this push." >&2
+  echo "   Every gate below runs through it; a stub interpreter would make them all no-op." >&2
+  exit 1
+fi
+
+LOG_DIR="$(mktemp -d)"
+trap 'rm -rf "$LOG_DIR"' EXIT
+STATUS=0
+GATES_RUN=0
+GATES_EXPECTED=3
+
+# ── Gate 1 — engine health ────────────────────────────────────────────────────────────────────
+GATES_RUN=$((GATES_RUN + 1))
+HEALTH_ARGS=()
+# `--full` now includes SUITE-06, which replays every retained moat attack (21 at time of writing;
+# `grep -c 'verdict ' tools/tests/hook_attacks.sh` is the live count) against real git and remotes and
+# takes minutes — run from inside a push it looks like a hang, with one line printed and no way to
+# tell progress from deadlock. So the DEFAULT stays fast and the thorough mode is opt-in.
+#
+# It used to opt in to `--strict` alone, on the reasoning above — "the same rigour without the
+# deadlock". That reasoning is self-defeating: `--strict` makes any SKIP fatal, and without
+# `--full` those very suites SKIP, so the mode refused EVERY push on a completely green tree
+# (`OG-169`). An operator who sets this variable is asking for the slow, complete run and has
+# accepted the wait; giving them a gate that always says no is how a control gets unset for good.
+# ⚠ **`--full` AND `--strict`, not `--strict` alone** (`OG-169`). `--strict` makes any SKIP fatal;
+# without `--full` the four npm/lint/harness suites SKIP by design — so this variable, documented
+# as "run everything at push time", refused EVERY push on a completely green tree. A control that
+# is unusable is a control people unset, and the one they unset is the one that runs the moat.
+if [ "${ENGINE_PREPUSH_FULL:-0}" = "1" ]; then
+  HEALTH_ARGS+=(--full --strict)
+fi
+echo "pre-push: engine health${HEALTH_ARGS[*]:+ ${HEALTH_ARGS[*]}}…"
+"$PY" -m tools.health "${HEALTH_ARGS[@]+"${HEALTH_ARGS[@]}"}" > "$LOG_DIR/health.log" 2>&1
+rc=$?
+if [ "$rc" -ne 0 ]; then
+  echo "⛔ pre-push: engine health FAILED (exit $rc). Push refused." >&2
+  cat "$LOG_DIR/health.log" >&2
+  STATUS=1
+else
+  # Print the verdict AND the not-a-full-pass banner. Filtering the banner out would let the moat
+  # certify a push while stages of health never ran — health is scrupulously honest that a SKIP is
+  # unknown, and the hook must not hide that.
+  # A verdict line MUST be present. `rc=0` alone could not distinguish "HEALTHY" from "health never
+  # produced any output" — with a stub interpreter the hook printed `pre-push: engine health…`,
+  # nothing under it, and carried on to certify the push.
+  if ! grep -qE '^(HEALTHY|UNHEALTHY) ' "$LOG_DIR/health.log"; then
+    echo "⛔ pre-push: engine health exited 0 but printed no verdict — it did not run." >&2
+    head -20 "$LOG_DIR/health.log" >&2
+    STATUS=1
+  else
+    grep -E '^(HEALTHY|UNHEALTHY) |^NOT A FULL PASS' "$LOG_DIR/health.log"
+  fi
+fi
+
+# ── Enumerate the objects this push publishes ────────────────────────────────────────────────
+SCANNER="${ENGINE_SECRET_SCAN:-$HOME/.claude/scripts/secret-scan.sh}"
+if [ -n "${ENGINE_SECRET_SCAN:-}" ]; then
+  echo "⚠️  secret scanner OVERRIDDEN via ENGINE_SECRET_SCAN=$ENGINE_SECRET_SCAN" >&2
+fi
+ZERO="0000000000000000000000000000000000000000"
+REMOTE_NAME="${1:-origin}"
+BLOBS="$LOG_DIR/blobs"; mkdir -p "$BLOBS"
+RAW="$LOG_DIR/raw-objects"; : > "$RAW"
+MSGS="$LOG_DIR/commit-messages.txt"; : > "$MSGS"
+MANIFEST="$LOG_DIR/manifest.tsv"; : > "$MANIFEST"
+
+# stdin carries: <local ref> <local sha> <remote ref> <remote sha>, one line per pushed ref.
+# Read it with a plain `while read` loop, NOT `mapfile`: mapfile is bash 4+, macOS ships bash 3.2
+# at /bin/bash, and there it fails with "command not found" — leaving the list empty, which this
+# script would then have reported as "nothing to scan". A secret gate that no-ops on a stock Mac
+# and prints a pass is worse than no gate.
+SAW_REF=0
+RANGE_FAILED=0
+# Every sha git names on stdin. The fallback below iterates this to scan each pushed ref explicitly,
+# because `--all` is every LOCAL ref plus HEAD, which need not include the sha actually being
+# pushed. It was read there but never assigned anywhere — so `for s in $LOCAL_SHAS` expanded to
+# nothing and the loop did exactly what the comment above it said must not happen: the printed
+# guarantee ("every object reachable from the pushed refs") and the behaviour disagreed, in the one
+# code path that runs when range resolution has ALREADY failed.
+LOCAL_SHAS=""
+
+collect_ref() {   # $1 = local_sha, $2 = remote_sha ("" or zeros means the remote has no such ref)
+  local local_sha="$1" remote_sha="$2" revs
+  # ANNOTATED TAGS ARE HANDLED FIRST, before any `rev-list` and before any early return.
+  #
+  # This block used to sit at the BOTTOM of this function, where it was unreachable for exactly the
+  # two cases it exists to cover. `git rev-list <sha>` fails outright when <sha> is a tag whose
+  # target is a BLOB or a TREE (`git tag -a v1 <blob>` is valid and pushes that object), so the
+  # function returned 1 several lines above; and when a tag's commits are already on the remote,
+  # `revs` is empty and the function returned 0 several lines above. Both are ordinary
+  # `git push --follow-tags` release flows, and in both the tag's message — and its target — were
+  # published without ever being enumerated. The harness's existing tag test passed throughout,
+  # because it tags a commit that carries new history, which is the one case that did reach here.
+  # ⚠ **A LIGHTWEIGHT TAG HAS NO TAG OBJECT** (`OG-161`). The block below fires on
+  # `cat-file -t == "tag"`, which is the ANNOTATED form only. `git tag light <blob>` makes a ref
+  # that points straight at the object, so `local_sha` IS the blob: the block is skipped, and
+  # `git rev-list <blob>` cannot walk it. The retained counter-example (`hook_attacks.sh` case 's')
+  # covers only the annotated spelling, so the sibling shipped unguarded — `L-26`, in the moat.
+  # Handled first, by object type, before any tag-object handling.
+  if [ -n "${local_sha:-}" ]; then
+    case "$(git cat-file -t "$local_sha" 2>/dev/null || true)" in
+      blob)
+        printf '%s\n' "$local_sha" >> "$RAW"
+        return 0
+        ;;
+      tree)
+        git ls-tree -r --full-tree "$local_sha" 2>/dev/null | awk '{print $3}' >> "$RAW"
+        return 0
+        ;;
+    esac
+  fi
+  if [ -n "${local_sha:-}" ] && [ "$(git cat-file -t "$local_sha" 2>/dev/null)" = "tag" ]; then
+    # **Peel ONE LEVEL AT A TIME** (`OG-162`). This scanned the ref tip's tag object and then used
+    # `^{}`, which jumps straight past every intermediate tag object to the commit — so a tag of a
+    # tag published the inner tag's message unscanned, while `CHANGELOG.md` states annotated tag
+    # messages are covered. Walking the chain scans each one.
+    peel="$local_sha"
+    peel_guard=0
+    while [ "$(git cat-file -t "$peel" 2>/dev/null || true)" = "tag" ] && [ "$peel_guard" -lt 32 ]; do
+      git cat-file tag "$peel" >> "$MSGS" 2>/dev/null
+      printf '\n' >> "$MSGS"
+      peel="$(git rev-parse "${peel}^{}" 2>/dev/null || git cat-file tag "$peel" 2>/dev/null | awk '/^object /{print $2; exit}')"
+      [ -n "$peel" ] || break
+      peel_guard=$((peel_guard + 1))
+    done
+    tag_target="$peel"
+    if [ -n "$tag_target" ]; then
+      case "$(git cat-file -t "$tag_target" 2>/dev/null || true)" in
+        blob)
+          printf '%s\n' "$tag_target" >> "$RAW"
+          # RETURN, rather than falling through to `git rev-list`. rev-list cannot walk a blob, so
+          # it would fail, set RANGE_FAILED, and trigger the conservative fallback that enumerates
+          # EVERY object reachable from every ref — measured at minutes on this repository, to scan
+          # one object we have already named exactly. The fallback exists for the case where we do
+          # NOT know what is being published; here we do.
+          return 0
+          ;;
+        tree)
+          git ls-tree -r --full-tree "$tag_target" 2>/dev/null | awk '{print $3}' >> "$RAW"
+          return 0
+          ;;
+      esac
+    fi
+  fi
+  if [ "$remote_sha" = "$ZERO" ] || [ -z "$remote_sha" ]; then
+    # New ref. `--not --remotes` (no argument) subtracts EVERY remote-tracking ref, including refs
+    # for a different remote and refs fetched from a peer clone — those commits really are being
+    # transferred and were never scanned. Scope the subtraction to the remote actually being
+    # pushed to.
+    revs="$(git rev-list "$local_sha" --not --remotes="$REMOTE_NAME" 2>/dev/null)" || return 1
+    if [ -z "$revs" ]; then
+      revs="$(git rev-list "$local_sha" 2>/dev/null)" || return 1   # genuinely first push
+    fi
+  else
+    revs="$(git rev-list "$remote_sha".."$local_sha" 2>/dev/null)" || return 1
+  fi
+  [ -z "$revs" ] && return 0
+  # Objects reachable from these commits and not from the remote tip. --objects prints
+  # "<sha> [<path>]"; trees and commits have no path, blobs do.
+  if [ "$remote_sha" = "$ZERO" ] || [ -z "$remote_sha" ]; then
+    # `--not --remotes=<remote>` subtracts REMOTE-TRACKING refs, which are a local cache of what the
+    # remote used to have — not what it has. When they are stale the objects they cover are treated
+    # as already-published and never scanned. The everyday trigger is a repository migration: point
+    # `origin` at a new empty remote and the ENTIRE history publishes unscanned under an affirmative
+    # clean line. So: subtract, then VERIFY the subtraction produced something; if it did not, scan
+    # everything reachable from the pushed sha instead.
+    local before after
+    before=$(wc -l < "$RAW" 2>/dev/null || echo 0)
+    git rev-list --objects "$local_sha" --not --remotes="$REMOTE_NAME" >> "$RAW" 2>/dev/null || true
+    after=$(wc -l < "$RAW" 2>/dev/null || echo 0)
+    if [ "$before" -eq "$after" ]; then
+      echo "pre-push: remote-tracking refs cover this ref entirely — they are a LOCAL CACHE, so" >&2
+      echo "          scanning every object reachable from $local_sha instead." >&2
+      git rev-list --objects "$local_sha" >> "$RAW" 2>/dev/null || return 1
+    fi
+  else
+    git rev-list --objects "$remote_sha".."$local_sha" >> "$RAW" 2>/dev/null || return 1
+  fi
+  # Commit messages are published objects too.
+  printf '%s\n' "$revs" | while IFS= read -r c; do
+    [ -n "$c" ] && git log -1 --format='%H%n%B%n%n' "$c" >> "$MSGS" 2>/dev/null
+  done
+  return 0
+}
+
+while read -r _local_ref local_sha _remote_ref remote_sha; do
+  [ -z "${local_sha:-}" ] && continue
+  SAW_REF=1
+  [ "$local_sha" = "$ZERO" ] && continue          # branch deletion — no content is being published
+  LOCAL_SHAS="$LOCAL_SHAS $local_sha"
+  collect_ref "$local_sha" "${remote_sha:-}" || RANGE_FAILED=1
+done
+
+if [ "$SAW_REF" -eq 0 ] || [ "$RANGE_FAILED" -ne 0 ]; then
+  # We must NOT quietly scan nothing, and we must NOT fall back to endpoint scanning — the previous
+  # fallback archived only each ref's TIP TREE, which is precisely the v2 defect this hook documents
+  # as fixed, surviving one code path over. The only safe superset of "the objects being published"
+  # when a range cannot be resolved is EVERY object reachable from the pushed refs.
+  if [ "$RANGE_FAILED" -ne 0 ]; then
+    echo "pre-push: could not resolve a pushed range — scanning EVERY object reachable from the pushed refs." >&2
+  else
+    echo "pre-push: no ref lines on stdin — scanning every object reachable from HEAD." >&2
+  fi
+  # `--all` is every local REF plus HEAD — which is not necessarily the sha being pushed. A
+  # reflog-only sha force-pushed against an unresolvable remote was published unscanned, while this
+  # message claimed every reachable object had been scanned. Add each pushed sha explicitly so the
+  # printed guarantee and the behaviour agree.
+  git rev-list --objects --all >> "$RAW" 2>/dev/null || true
+  for s in $LOCAL_SHAS; do
+    git rev-list --objects "$s" >> "$RAW" 2>/dev/null || true
+  done
+  if [ ! -s "$RAW" ]; then
+    echo "⛔ pre-push: could not enumerate any object to scan — refusing to certify this push." >&2
+    STATUS=1
+  fi
+fi
+
+# sha -> path map, for translating a hit back into something a human can act on, and for the
+# placement gate which is inherently path-aware.
+awk 'NF >= 2 { sha=$1; $1=""; sub(/^ /,""); print sha "\t" $0 }' "$RAW" | sort -u > "$MANIFEST"
+# Objects with no path (commits, trees) still need materialising for the secret scan — a key can
+# live in a blob git never named on this line — so feed those in with an empty path.
+awk 'NF == 1 { print $1 "\t" }' "$RAW" | sort -u >> "$MANIFEST"
+
+# ONE process for every object, via tools/docgen/hooks/materialise.py, which also transcodes
+# UTF-16/32 blobs (a grep-based scanner cannot read them at all) and skips submodule gitlinks.
+# The previous loop forked once per blob: 1000 tiny files cost 331 s, of which 9.9 s was compute.
+materialise_failed=0
+if [ -s "$MANIFEST" ]; then
+  "$PY" -m tools.docgen.hooks.materialise "$BLOBS" "$REPO_ROOT" < "$MANIFEST" \
+    > "$LOG_DIR/materialise.out" 2> "$LOG_DIR/materialise.err" || materialise_failed=1
+  [ -s "$LOG_DIR/materialise.err" ] && cat "$LOG_DIR/materialise.err" >&2
+fi
+if [ "$materialise_failed" -ne 0 ]; then
+  echo "⛔ pre-push: could not read a published object — refusing to certify this push." >&2
+  STATUS=1
+fi
+[ -s "$MSGS" ] && cp "$MSGS" "$BLOBS/__commit-messages__" 2>/dev/null
+
+# ── The staged PATHS are published too — a secret-shaped FILENAME must not slip (OG-214) ──
+# `pre-commit` scans the path column (`OG-186`), but pre-push materialised blob CONTENT and the
+# commit messages and never the PATHS — so a key-shaped filename (`AKIA…​.conf`) introduced by a
+# `git merge` / `cherry-pick` / `rebase` / peer commit — all of which create commits WITHOUT
+# pre-commit, which is the documented reason pre-push re-checks placement — reached the remote under
+# an affirmative "secret scan clean". Found by the Phase-7 moat red-team. Write the manifest's path
+# column into one more file inside $BLOBS so the SAME `find | xargs "$SCANNER"` call below sees it —
+# the symmetric fix to `OG-186`, in the gate that had the gap, with no second scanner invocation and
+# no new gate. Written only when there is a path to scan, so the "no blobs" branch is unchanged.
+paths_out="$(awk -F'\t' '$2 != "" { print $2 }' "$MANIFEST" 2>/dev/null)"
+[ -n "$paths_out" ] && printf '%s\n' "$paths_out" > "$BLOBS/__paths__"
+
+SCAN_COUNT=$( ( cd "$BLOBS" && find . -type f ) 2>/dev/null | wc -l | tr -d ' ' )
+
+# ── Gate 2 — secret scan over those blob objects ─────────────────────────────────────────────
+GATES_RUN=$((GATES_RUN + 1))
+if [ ! -x "$SCANNER" ]; then
+  # FAIL CLOSED. "No scanner" is not "no secrets" — see ~/.claude/CLAUDE.md hard rule S2.
+  echo "⛔ pre-push: secret scanner not found at $SCANNER — refusing to certify this push." >&2
+  echo "   Install it, or bypass deliberately with ENGINE_SKIP_PREPUSH=1 (announces itself)." >&2
+  STATUS=1
+elif [ "$SCAN_COUNT" -eq 0 ]; then
+  echo "pre-push: secret scan — the pushed range carries no blobs; nothing to scan."
+else
+  echo "pre-push: secret scan over $SCAN_COUNT published object(s)…"
+  ( cd "$BLOBS" && find . -type f -print0 | xargs -0 "$SCANNER" ) > "$LOG_DIR/secrets.log" 2>&1
+  rc=$?
+  if [ "$rc" -ne 0 ]; then
+    echo "⛔ pre-push: secret scan exit $rc (0 clean · 1 secret · 2 nothing scanned · 3 review)." >&2
+    # Translate blob shas back into paths, or the report names a temp file nobody can act on.
+    while IFS= read -r line; do
+      hit_sha="$(printf '%s' "$line" | sed -n 's|^\(Binary file \)\{0,1\}\./\([0-9a-f]\{7,40\}\).*|\2|p')"
+      if [ -n "$hit_sha" ]; then
+        paths="$(awk -F'\t' -v s="$hit_sha" '$1 == s { print $2 }' "$MANIFEST" | sort -u | tr '\n' ' ')"
+        echo "$line   <- blob $hit_sha at: ${paths:-<no path recorded>}" >&2
+      else
+        echo "$line" >&2
+      fi
+    done < "$LOG_DIR/secrets.log"
+    STATUS=1
+  else
+    echo "pre-push: secret scan clean ($SCAN_COUNT published object(s))."
+  fi
+fi
+
+# ── Gate 3 — classification placement over the SAME objects ──────────────────────────────────
+# The commit-time placement gate runs only for `git commit`. `git merge`, `git cherry-pick` and
+# `git rebase` all create commits without it, and nothing re-checked placement at push time.
+GATES_RUN=$((GATES_RUN + 1))
+if [ -s "$MANIFEST" ]; then
+  "$PY" -m tools.docgen.hooks.staged_content_scanner --manifest "$MANIFEST" \
+    > "$LOG_DIR/placement.log" 2>&1
+  rc=$?
+  if [ "$rc" -ne 0 ]; then
+    echo "⛔ pre-push: classification placement gate FAILED (exit $rc). Push refused." >&2
+    cat "$LOG_DIR/placement.log" >&2
+    STATUS=1
+  else
+    echo "pre-push: classification placement clean over the published objects."
+  fi
+else
+  echo "pre-push: classification placement — no path-bearing objects to check."
+fi
+
+# ── Assert every gate ran ────────────────────────────────────────────────────────────────────
+# Deleting a gate's invocation used to leave the hook printing its other gates' affirmative lines
+# and exiting 0, and health could not see it. Now the count must match, so removing a gate means
+# also editing this assertion — two coordinated edits instead of one silent deletion, and the
+# assertion itself is a marker STRUCT-03 checks for.
+if [ "$GATES_RUN" -ne "$GATES_EXPECTED" ]; then
+  echo "⛔ pre-push: only $GATES_RUN of $GATES_EXPECTED gates ran — this hook has been modified." >&2
+  echo "   Refusing to certify a push over a moat that is not intact." >&2
+  STATUS=1
+fi
+
+if [ "$STATUS" -ne 0 ]; then
+  echo "⛔ pre-push: PUSH REFUSED — fix the above, or ENGINE_SKIP_PREPUSH=1 to bypass." >&2
+fi
+exit "$STATUS"

@@ -1,0 +1,15 @@
+{
+  "name": "mermaid-engine",
+  "version": "1.0.0",
+  "description": "Offline Mermaid diagram rendering (flowchart/sequence/class/state/ER/xychart) to SVG or ASCII — no browser, no CDN.",
+  "type": "module",
+  "license": "Apache-2.0",
+  "private": true,
+  "scripts": {
+    "test": "node test.mjs",
+    "render": "node render.mjs"
+  },
+  "dependencies": {
+    "beautiful-mermaid": "1.1.3"
+  }
+}

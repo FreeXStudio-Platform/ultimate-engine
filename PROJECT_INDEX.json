@@ -1,0 +1,71 @@
+{
+  "artifacts": [
+    {
+      "id": "capability-gallery",
+      "path": "examples/capability-gallery.html",
+      "type": "document",
+      "title": "Capability Gallery",
+      "section": "Examples",
+      "summary": "Every renderable kind, one dataset",
+      "tags": [
+        "gallery",
+        "verified"
+      ],
+      "status": "final",
+      "created": "2026-08-19",
+      "updated": "2026-08-19",
+      "engine": "document-engine"
+    },
+    {
+      "id": "system-map",
+      "path": "blueprint/SYSTEM.md",
+      "type": "map",
+      "title": "System map",
+      "section": "blueprint",
+      "summary": "Derived orientation map: risky core, packages, gate spine, registries, open rows. Read first.",
+      "tags": [
+        "map",
+        "derived",
+        "orientation"
+      ],
+      "status": "generated",
+      "created": "",
+      "updated": "",
+      "engine": ""
+    },
+    {
+      "id": "system-model",
+      "path": "blueprint/SYSTEM.json",
+      "type": "graph",
+      "title": "System model (machine-readable)",
+      "section": "blueprint",
+      "summary": "The same model as SYSTEM.md, for tools: nodes, edges, registries, documents, open work.",
+      "tags": [
+        "map",
+        "derived",
+        "json"
+      ],
+      "status": "generated",
+      "created": "",
+      "updated": "",
+      "engine": ""
+    },
+    {
+      "id": "system-graph",
+      "path": "blueprint/system.mmd",
+      "type": "mermaid",
+      "title": "Package dependency graph",
+      "section": "blueprint",
+      "summary": "Package-level import graph, mermaid source. Edge labels are the module-edge counts.",
+      "tags": [
+        "graph",
+        "derived",
+        "mermaid"
+      ],
+      "status": "generated",
+      "created": "",
+      "updated": "",
+      "engine": ""
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "id": "detector-coverage-heatmap",
+  "visual": "heatmap",
+  "family": "matrix",
+  "summary": "Detector family × test class coverage intensity",
+  "canonical_reader_question": "Which detector families have the weakest verified coverage?",
+  "required_fields": [
+    "data.rows",
+    "data.cols",
+    "data.matrix"
+  ],
+  "defaults": {},
+  "semantics": {},
+  "job_extras": {
+    "scale": "0-100 percent"
+  },
+  "notes": "visualMap 0-100; missing cells must be null (rendered as -), never 0",
+  "provenance": "visual-engine preset v1.0.0 — derived from spec §24 + project data shapes (detector registry, gates, docs estate)."
+}
