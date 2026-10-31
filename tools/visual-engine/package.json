@@ -16,7 +16,7 @@
     "mcp": "node mcp/server.mjs"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "1.32.1",
+    "@modelcontextprotocol/sdk": "1.32.2",
     "@resvg/resvg-js": "2.6.2",
     "echarts": "6.1.0",
     "zod": "3.25.76"
