@@ -19,6 +19,6 @@
     "@modelcontextprotocol/sdk": "1.32.1",
     "@resvg/resvg-js": "2.6.2",
     "echarts": "6.1.0",
-    "zod": "3.25.76"
+    "zod": "4.6.7"
   }
 }
