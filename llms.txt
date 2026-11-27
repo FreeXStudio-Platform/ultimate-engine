@@ -1,0 +1,16 @@
+# Ultimate Engine (FreeXStudio)
+
+> A document, chart and blueprint engine: Markdown and figure specs in; self-contained pages for people and JSON records for software and AI agents out. Runs locally. Free of charge in this version; proprietary license; source not published.
+
+## Pages
+- README.md: what it is, install, automatic updates, price and license
+- docs/CHARTS.md: every chart and diagram kind, the question each answers, and whether it writes a per-mark record
+- docs/HOW_IT_WORKS.md: how one build produces a page and a record
+- docs/INSTALL.md: requirements, commands, menu
+- docs/VERIFY.md: how to verify a download
+- CHANGELOG.md: what changed in each version
+- LICENSE.md, PRIVACY.md, THIRD_PARTY_NOTICES.md: terms
+- SUPPORT.md, SECURITY.md: help and private security reports
+
+## For an agent using an installed copy
+Start at ~/.ultimate-engine/current/skills/choose-a-chart/SKILL.md.

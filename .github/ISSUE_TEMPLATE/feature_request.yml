@@ -1,0 +1,26 @@
+name: Feature or change request
+description: Ask for a new chart, feature or change.
+title: "[Request] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: "**This request is public.** Suggestions may be used by FreeXStudio without payment or obligation (license, section 7)."
+  - type: textarea
+    id: need
+    attributes: {label: "What are you trying to do?", description: "The question your reader or your tool needs answered."}
+    validations: {required: true}
+  - type: textarea
+    id: idea
+    attributes: {label: "What would you like?", description: "A new figure kind, an option, a change in behaviour."}
+    validations: {required: true}
+  - type: textarea
+    id: example
+    attributes: {label: Example, description: "A sketch, sample data (invented, not private) or a link."}
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Before you send
+      options:
+        - label: I removed personal data and private content, and I may share what I posted.
+          required: true

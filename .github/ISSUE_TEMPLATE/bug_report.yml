@@ -1,0 +1,39 @@
+name: Bug report
+description: Something does not work as the documents say.
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: "**This report is public.** Remove personal data, user names in paths, keys and private content first. Security problems go through the private link instead."
+  - type: input
+    id: version
+    attributes: {label: Version, description: "Output of `ultimate-engine version`", placeholder: "2.0.0"}
+    validations: {required: true}
+  - type: dropdown
+    id: os
+    attributes: {label: System, options: [macOS, Linux, Windows (WSL)]}
+    validations: {required: true}
+  - type: dropdown
+    id: area
+    attributes: {label: Area, options: [Installer or menu, Automatic update, Building a document, A document figure, A chart, Mermaid, Project census, Colour-vision check, Documentation, Other]}
+    validations: {required: true}
+  - type: textarea
+    id: steps
+    attributes: {label: Steps to reproduce, description: "The commands you ran and a small example that shows the problem."}
+    validations: {required: true}
+  - type: textarea
+    id: expected
+    attributes: {label: What you expected}
+    validations: {required: true}
+  - type: textarea
+    id: actual
+    attributes: {label: What happened, description: "The full message, with private details removed.", render: text}
+    validations: {required: true}
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Before you send
+      options:
+        - label: I removed personal data, keys and private content.
+          required: true
