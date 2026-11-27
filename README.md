@@ -3,7 +3,8 @@
 
 <p align="center">
   <a href="https://github.com/FreeXStudio-Platform/ultimate-engine/releases/latest"><img alt="Latest release" src="https://img.shields.io/github/v/release/FreeXStudio-Platform/ultimate-engine?label=latest"></a>
-  <a href="LICENSE.md"><img alt="License: Free Use" src="https://img.shields.io/badge/license-Free%20Use%201.0-blue.svg"></a>
+  <a href="LICENSE.md"><img alt="License: Free Use" src="https://img.shields.io/badge/license-Free%20Use%201.1-blue.svg"></a>
+  <img alt="Release channel: stable" src="https://img.shields.io/badge/release-stable-2ea44f.svg">
   <img alt="Platforms: macOS and Linux" src="https://img.shields.io/badge/platforms-macOS%20%7C%20Linux%20(WSL)-555.svg">
   <a href="https://freexstudio.com"><img alt="A FreeXStudio product" src="https://img.shields.io/badge/a%20product%20of-FreeXStudio-black.svg"></a>
 </p>
@@ -13,6 +14,7 @@
   <a href="docs/INSTALL.md">Install</a> ·
   <a href="docs/CHARTS.md">All 78 charts</a> ·
   <a href="docs/HOW_IT_WORKS.md">How it works</a> ·
+  <a href="docs/DOCUMENTS.md">Documents</a> ·
   <a href="CHANGELOG.md">Change log</a> ·
   <a href="SUPPORT.md">Help</a>
 </p>
@@ -22,6 +24,29 @@
 **Ultimate Engine** turns Markdown into self-contained documents whose charts, diagrams and blueprints are numbered,
 sourced, explained, linked to the text, and written to a record that software can read. It works on your computer,
 offline, and refuses to build a figure that would draw a confident wrong picture.
+
+## Stable release, kept up to date
+
+Ultimate Engine is a **stable release**: every version is checked as a whole before it is published (its full health
+suite, a signed package, a clean install and a real update from the version before). It is also an **update system**:
+the engine keeps improving, each new version reaches you through the signed weekly update, and you can return to the
+previous one at any time. Future versions, or parts of them, may become paid; see [Price and license](#price-and-license).
+
+## From one sentence to a finished project
+
+Start from an idea, even one sentence. Ultimate Engine writes the first document, the project brief, and then tells you
+which documents come next, in what order, and what each one must contain:
+
+```sh
+ultimate-engine init my-project --idea "Second-hand bikes are hard to trust online; a shop that inspects every bike would fix that."
+cd my-project
+ultimate-engine new STATE "Project state"       # then REQ, SYS, PLAN, TEST: each written with every section in place
+ultimate-engine doc-map                          # every document, its links, what is missing, the order to read them
+```
+
+18 document types, from the brief to the runbook, each with its purpose, its place in the order and its required
+sections; one rule file for how documents are written, linked and kept true; and one map an AI reads first. See
+[documents](docs/DOCUMENTS.md).
 
 ## Why one chart instead of many pages
 
@@ -82,12 +107,13 @@ cd ultimate-engine-<version> && ./install.sh
 
 ```sh
 ultimate-engine                      # the menu
-ultimate-engine init my-project
-cd my-project && ultimate-engine build first-document.md -o out --formats html,blueprint
+ultimate-engine init my-project --idea "your idea in one sentence"
+cd my-project && ultimate-engine build project-brief.md -o out --formats html,blueprint
 ```
 
 Requirements: macOS or Linux (Windows through WSL), Python 3.11+, OpenSSH 8.1+. Charts and Mermaid need Node.js 20+.
-Full instructions: [docs/INSTALL.md](docs/INSTALL.md).
+Full instructions: [docs/INSTALL.md](docs/INSTALL.md). To use one fixed version inside a project or a build server,
+without the installer and without automatic updates: [docs/PINNING.md](docs/PINNING.md).
 
 ## Updates are automatic — please know this before you install
 

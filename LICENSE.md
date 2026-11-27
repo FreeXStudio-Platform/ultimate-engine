@@ -1,9 +1,10 @@
-# Ultimate Engine Free Use License, version 1.0
+# Ultimate Engine Free Use License, version 1.1
 
 Copyright © 2026 FreeXStudio. All rights reserved. · https://freexstudio.com · admin@freexstudio.com
 
-Please read this before you install or use Ultimate Engine. By typing "I accept" in the installer, or by installing,
-copying or using the Software, you agree to this License. If you do not agree, do not install or use it.
+Please read this before you install or use Ultimate Engine. By typing "I accept" in the installer, by passing
+`--accept-license` to the installer or to the `pin` command, or by installing, copying or using the Software, you agree
+to this License. If you do not agree, do not install or use it.
 
 ## 1. Words used here
 
@@ -25,11 +26,18 @@ FreeXStudio gives you a non-exclusive, non-transferable, royalty-free, worldwide
    tokens, front-matter profiles, environment variables) and the copy of the rule layer and starter files that the
    `init` command places in your project;
 5. let software tools you use, including AI assistants and agents, read the Software's documentation, skills and
-   records in order to operate it for you.
+   records in order to operate it for you;
+6. keep a **pinned copy** of an Official Package for a project — extracted and checked by the `pin` command, on
+   computers and build servers you own or control, outside version control and not reachable by others — and run it
+   for that project. A pinned copy is not updated automatically: it changes only when you pin another Official
+   Package, and using `pin` as documented is not disabling the update mechanism. Copies on build servers you control
+   are copies you make, under this License, for your own use.
 
 ## 3. Your Output is yours
 
-You own your Output, and you may use, publish, share and sell it. Where an Output contains parts of the Software that
+You own your Output, and you may use, publish, share and sell it. The documents, records and maps the Software writes
+for you (for example with `init`, `new` and `doc-map`) are Output, including the section headings and guidance it fills in
+from its catalog. Where an Output contains parts of the Software that
 the Software puts there (for example page styles, scripts that make figures interactive, or embedded typefaces), you may
 distribute those parts **as part of that Output**. You may not take them out and distribute them as a product of their own.
 Third-party parts stay under their own licenses (section 8). You are responsible for what your Output says.
@@ -64,7 +72,7 @@ previous version so that you can return to it, and does not run on build servers
 accept them.** Until then you may keep using the version you accepted, under the License that came with it. If you return
 to a previous version, the weekly check does not install the version you left again; it installs a newer one, or the same
 one when you ask for it yourself. If the `CI` variable is set during installation, automatic updating is off for that
-installation. What the update check sends is described in
+installation, and a pinned copy (section 2.6) is never updated automatically. What the update check sends is described in
 `PRIVACY.md`. FreeXStudio may change how updates work in later releases.
 
 ## 6. Price and future versions
@@ -86,11 +94,13 @@ share them. Do not post confidential information, passwords, keys or personal da
 Some parts of the Software, and packages it installs, belong to others and are licensed under their own terms, listed in
 `THIRD_PARTY_NOTICES.md`. For those parts their licenses apply, and nothing here limits the rights they give you.
 
-## 9. Earlier releases
+## 9. Earlier releases and earlier versions of this License
 
 Versions of Ultimate Engine that FreeXStudio released under the Apache License 2.0 (version 1.1.2 and earlier) remain
 available under that license **to the copies obtained under it**. This License applies to version 2.0.0 and later, and to
-any copy FreeXStudio provides under this License.
+any copy FreeXStudio provides under this License. Version 1.1 of this License came with Ultimate Engine 2.1.0: it adds the
+pinned copy (section 2.6), says that what `init`, `new` and `doc-map` write is yours (section 3), and names
+`--accept-license` as acceptance. A version you accepted under version 1.0 stays under version 1.0.
 
 ## 10. Ownership
 

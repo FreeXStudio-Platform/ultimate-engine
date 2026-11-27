@@ -25,7 +25,12 @@ Run `ultimate-engine` with nothing after it:
 ## Commands
 | Command | What it does |
 |---|---|
-| `ultimate-engine init [folder]` | adds the rule layer and a starter document to a project |
+| `ultimate-engine init [folder] --idea "…"` | adds the rule layer and the project brief, the first document, to a project |
+| `ultimate-engine types [TYPE]` | the document types, in the order a project writes them |
+| `ultimate-engine new TYPE "title"` | a new document with every required section, linked to what it builds on |
+| `ultimate-engine doc-map` | writes `DOCUMENT_MAP.json`: every document, its links, what is missing, the order to read them |
+| `ultimate-engine check doc.md [--strict]` | checks a document's header, type, links and sections |
+| `ultimate-engine pin <assets> --into <folder>` | pins one release inside a project ([pinning](PINNING.md)) |
 | `ultimate-engine build doc.md -o out --formats html,blueprint` | builds a page and its record |
 | `ultimate-engine render spec.json --theme dark -o figure.svg` | draws one document figure |
 | `ultimate-engine chart job.json [-o folder]` | draws a chart |

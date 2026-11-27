@@ -1,6 +1,6 @@
 # Ultimate Engine — Privacy Notice
 
-Effective 27 November 2026 · FreeXStudio · https://freexstudio.com · admin@freexstudio.com
+Effective 27 November 2026 (with Ultimate Engine 2.1.0) · FreeXStudio · https://freexstudio.com · admin@freexstudio.com
 
 ## The short version
 
@@ -15,7 +15,8 @@ and FreeXStudio does not receive your documents, figures, data or usage.
 | **Installing and updating** | A private Python environment is created and two Python libraries are installed (from the Python Package Index). If you add the chart or Mermaid components, their packages are installed with npm. | The package services you are configured to use, under their privacy policies. |
 | **Fetching a public fact** (optional, only when you use it) | A tool can fetch a public web address that **you** give it, to cite a number. It refuses private and local addresses. | The website you name. |
 
-Building documents and drawing figures needs no network. Pages the engine creates load nothing from the internet. The graph
+Building documents and drawing figures needs no network, and neither do `init`, `new`, `types`, `check`, `doc-map`
+or `pin`: `pin` verifies release files you have already downloaded, and never fetches anything itself. Pages the engine creates load nothing from the internet. The graph
 viewer, if you use it, serves files from your own computer to your own browser.
 
 ## What is stored on your computer
@@ -24,7 +25,10 @@ In `~/.ultimate-engine` (or the folder you set): the installed versions; a small
 version, the components you chose, when you accepted the license and privacy notice and which texts, and when updates were last
 checked; the public key updates are checked against; the new texts of a release that waits for your acceptance; and an
 update log. It also records where `ssh-keygen`, `node` and `npm` were found, so a scheduled update can use them. In your
-projects: the files you create and the ones `init` adds. `ultimate-engine uninstall` removes the engine folder, its
+projects: the files you create; the ones `init` and `new` add; `DOCUMENT_MAP.json`, which `doc-map` writes and which
+lists your documents' titles, paths relative to the project, links and states — never a home directory; and, if you pin
+a release, the pinned copy and its record `ENGINE_PIN.json` (the version, checksums and which license and privacy texts
+you accepted). Keep the pinned copy out of version control. `ultimate-engine uninstall` removes the engine folder, its
 launcher and the weekly schedule. It does not touch your projects, or the download cache that pip and npm keep for your
 user account.
 

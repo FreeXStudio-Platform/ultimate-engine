@@ -3,6 +3,27 @@
 Version numbers are `MAJOR.MINOR.PATCH`. A large change moves MAJOR, a new capability moves MINOR, and fixes move PATCH.
 Every version from 2.0.0 has its own download on the [releases page](https://github.com/FreeXStudio-Platform/ultimate-engine/releases).
 
+## 2.1.0 — 28 November 2026 · Stable release
+
+The document system: Ultimate Engine now takes a project from one sentence to a complete, linked set of documents.
+
+### New: documents
+- **18 document types**, from the project brief to the runbook, in the order a project writes them, each with its purpose, when it is needed, what it builds on and its required sections ([documents](docs/DOCUMENTS.md)).
+- **Document rules** — how documents are written, linked and kept true: documents first, one fact in one place, claims with their proof, stamps that break when the text changes, stable identifiers, adopting an existing project, with a rank order for conflicts ([rules](docs/DOCUMENT_RULES.md)).
+- **`ultimate-engine init --idea "…"`** — the first document is the project brief, with your idea in it.
+- **`ultimate-engine new TYPE "title"`** — a new document with every section in place, linked to the documents it builds on.
+- **`ultimate-engine doc-map`** — one file an AI reads first: every document, its links, what is missing, and the order to read them.
+- **Links between documents** — `depends_on`, `covers` and `summary` in the header, checked.
+- **Section checks** — `ultimate-engine check` says which required sections are missing or empty.
+
+### New: pin a version in a project or on a build server
+- **`ultimate-engine pin`** — one signed release for one project, checked before each use, with no automatic update ([pinning](docs/PINNING.md)).
+
+### Changed
+- **License 1.1 and the privacy notice.** The license now allows a pinned copy for a project, says that what `init`, `new` and `doc-map` write is yours, and names `--accept-license` as acceptance; the privacy notice lists what `doc-map` and `pin` write and that neither uses the network. Because the texts changed, an installed 2.0.0 shows them and waits for you to accept before it installs 2.1.0: run `ultimate-engine update`.
+- The starter document is now the project brief (`project-brief.md`), replacing `first-document.md`.
+- The rule layer that `init` copies is version 1.3.1.
+
 ## 2.0.0 — 27 November 2026
 
 The first release of Ultimate Engine as a signed, installable product. It includes everything built since 1.1.2.
